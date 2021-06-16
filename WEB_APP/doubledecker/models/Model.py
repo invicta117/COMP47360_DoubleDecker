@@ -30,7 +30,7 @@ class RTTrips(models.Model):
         db_table = 'RT_Trips'
 
 
-class RT_LeaveTimes:
+class RT_LeaveTimes(models.Model):
     tripId = models.IntegerField(db_column='tripId', unique=True, primary_key=True)
     dataSource = models.CharField(db_column='dataSource',max_length=200)
     dayOfService = models.DateTimeField(db_column='dayOfService', blank=True, null=True)
