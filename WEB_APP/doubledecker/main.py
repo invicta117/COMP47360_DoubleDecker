@@ -11,7 +11,7 @@ config_path = local_path+"/.env"
 load_dotenv(config_path)
 
 # no idea the db URI --- need to be solved
-URI = os.getenv("URI")
+URI = "localhost"
 PORT = "3306"
 PASSWORD = os.getenv("PASSWORD")
 DB = os.getenv("DB")
@@ -58,7 +58,7 @@ def main():
 
             # pause for 10 min
             print("sleep for ten min")
-            time.sleep(10 * 60)
+            time.sleep(60 * 60)
 
         except Exception as e:
             print("something wrong", e)
