@@ -56,7 +56,7 @@ def main():
             # request JCD stations data
             weather_api_city_run(weather_api_obj,dao_weather)
 
-            # pause for 10 min
+            # pause for 1 h
             print("sleep for ten min")
             time.sleep(60 * 60)
 
