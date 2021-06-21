@@ -33,8 +33,8 @@ def create_file(filein, fileout, delimiter=";"):
     for num, line in enumerate(fin):
         columns = clean_line(line, delimiter)
         columns = columns_to_string(columns)
-        print(num, columns)
-        #fout.write(columns)
+        #print(num, columns)
+        fout.write(columns)
     fin.close()
     fout.close()
 
