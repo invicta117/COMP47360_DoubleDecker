@@ -1,0 +1,79 @@
+create table db_calender(
+service_id varchar(20) primary key,
+monday int,
+tuesday int,
+wednesday int,
+thursday int,
+friday int,
+saturday int,
+sunday int,
+start_date varchar(15),
+end_date varchar(15)
+);
+
+create table db_agency(
+	agency_id varchar(15) primary key,
+	agency_name varchar(30),
+	agency_url varchar(100),
+	agency_timezone varchar(30),
+	agency_lang varchar(10)
+);
+
+create table db_calender_date(
+	service_id varchar(10) primary key,
+	date varchar(15),
+	exception_type int
+);
+
+create table db_routes(
+	route_id varchar(30) primary key,
+	agency_id varchar(10),
+	route_short_name varchar(20),
+	route_long_name varchar(40),
+	route_type int
+);
+
+create table db_shapes(
+	shape_id varchar(30) primary key,
+	shape_pt_lat double,
+	shape_pt_lon double,
+	shape_pt_sequence int,
+	shape_dist_traveled double
+);
+
+create table db_stop_times(
+	trip_id varchar (50) primary key,
+	arrival_time time,
+	departure_time time,
+	stop_id varchar(30),
+	stop_sequence int,
+	stop_headsign varchar(150),
+	pickup_type int,
+	drop_off_type int,
+	shape_dist_traveled double
+);
+
+create table db_stops(
+	stop_id varchar(30) ,
+	stop_name varchar(100),
+	stop_lat double,
+	stop_lon double,
+	primary key(stop_id, stop_name)
+);
+
+create table db_transfers(
+	from_stop_id varchar(100),
+	to_stop_id varchar(100),
+	transfer_type int,
+	min_transfer_time int,
+	primary key (from_stop_id, to_stop_id)
+);
+
+create table db_trips(
+	route_id varchar(30),
+	service_id varchar(10),
+	trip_id varchar(30) primary key,
+	shape_id varchar(50),
+	trip_headsign varchar(150),
+	direction_id int
+);

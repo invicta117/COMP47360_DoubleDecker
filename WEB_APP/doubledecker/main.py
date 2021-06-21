@@ -31,7 +31,8 @@ api_city =os.getenv("API_W_CITY")
 def weather_api_city_run(weather_api_obj, dao_weather):
     # Dublin city code : 2964574
     weather_api_obj.sendRequest(2964574)
-    # insert rows into RDS
+    # insert rows into Database
+    
     dao_weather.insert_weather_to_db(weather_api_obj.weather)
 
 
