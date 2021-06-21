@@ -13,6 +13,12 @@ def clean_line(line, delimiter):
     line = ["NULL" if cell == " " else cell for cell in line]
     line = [cell.strip(" ") for cell in line]
     line = ["NULL\n" if cell == "\n" else cell for cell in line]
+    if line[0] != "NULL":
+        line[0] = line[0] + ":00"
+    datetime = line[0].split(" ")
+    date = datetime[0].split("-")
+    final = date[2] + "-" + date[1] + "-"+ date[0] + " " + datetime[1]
+    line[0] = final
     #print("Line", line)
     return line
 
