@@ -3,7 +3,7 @@ import os
 import time
 
 def clean_line(line, delimiter):
-    months = {"JAN": "01", "FEB": "02", "MAR": "03", "APR": "04", "MAY": "05", "JUNE": "06", "JLY": "07", "AUG": "08",
+    months = {"JAN": "01", "FEB": "02", "MAR": "03", "APR": "04", "MAY": "05", "JUN": "06", "JUL": "07", "AUG": "08",
               "SEP": "09", "OCT": "10", "NOV": "11", "DEC": "12"}
     for month in months.keys():
         if month.lower() in line:
@@ -33,8 +33,8 @@ def create_file(filein, fileout, delimiter=";"):
     for num, line in enumerate(fin):
         columns = clean_line(line, delimiter)
         columns = columns_to_string(columns)
-        #print(num, columns)
-        fout.write(columns)
+        print(num, columns)
+        #fout.write(columns)
     fin.close()
     fout.close()
 
