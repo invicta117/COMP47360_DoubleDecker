@@ -1,5 +1,5 @@
 import time
-from models.WeatherModel import Base_weather
+from modelLevel.WeatherModel import Base_weather
 from scrapper.WeatherScraping import Weather_scrap
 from sqlalchemy import create_engine
 from dao.CurrentWeatherDao import weather_dao
