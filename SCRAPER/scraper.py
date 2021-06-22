@@ -5,9 +5,9 @@ import mysql.connector
 import datetime
 import time
 
-WEATHERUSER = os.environ("WEATHERUSER")
-DBPASS = os.environ("DBPASS")
-APIKEY_W = os.environ("APIKEY_W")
+WEATHERUSER = os.environ["WEATHERUSER"]
+DBPASS = os.environ["DBPASS"]
+APIKEY_W = os.environ["APIKEY_W"]
 
 
 class scraper():
@@ -63,11 +63,9 @@ class scraper():
         current = parsed["current"]
         future = parsed["hourly"]
         current_res = self.get_columns(current)
-        print(current_res)
         self.database_conn("current", -1, current_res)
         for hour, data in enumerate(future):
             current_res = self.get_columns(data)
-            print(current_res)
             self.database_conn("current", hour, current_res)
 
     def database_conn(self, table, hr, data):
