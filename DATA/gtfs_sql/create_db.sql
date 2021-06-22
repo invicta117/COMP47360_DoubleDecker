@@ -4,7 +4,7 @@ USE gtfs;
 
 DROP TABLE IF EXISTS calendar;
 
-CREATE TABLE `gtfs`.`calendar`
+CREATE TABLE `calendar`
 (
   `service_id` varchar(20) PRIMARY KEY,
   `monday` int,
@@ -20,7 +20,7 @@ CREATE TABLE `gtfs`.`calendar`
 
 DROP TABLE IF EXISTS calendar_dates;
 
-CREATE TABLE `gtfs`.`calendar_dates`
+CREATE TABLE `calendar_dates`
 (
   `service_id` varchar(10),
   `date` varchar(10),
@@ -30,7 +30,7 @@ CREATE TABLE `gtfs`.`calendar_dates`
 
 DROP TABLE IF EXISTS routes;
 
-CREATE TABLE `gtfs`.`routes`
+CREATE TABLE `routes`
 (
   `route_id` varchar(30) PRIMARY KEY,
   `agency_id` varchar(10),
@@ -41,7 +41,7 @@ CREATE TABLE `gtfs`.`routes`
 
 DROP TABLE IF EXISTS shapes;
 
-CREATE TABLE `gtfs`.`shapes`
+CREATE TABLE `shapes`
 (
   `shape_id` varchar(30),
   `shape_pt_lat` double,
@@ -53,7 +53,7 @@ CREATE TABLE `gtfs`.`shapes`
 
 DROP TABLE IF EXISTS stop_times;
 
-CREATE TABLE `gtfs`.`stop_times`
+CREATE TABLE `stop_times`
 (
   `trip_id` varchar(60),
   `arrival_time` time,
@@ -69,7 +69,7 @@ CREATE TABLE `gtfs`.`stop_times`
 
 DROP TABLE IF EXISTS stops;
 
-CREATE TABLE `gtfs`.`stops`
+CREATE TABLE `stops`
 (
   `stop_id` varchar(30),
   `stop_name` varchar(255),
@@ -80,7 +80,7 @@ CREATE TABLE `gtfs`.`stops`
 
 DROP TABLE IF EXISTS trips;
 
-CREATE TABLE `gtfs`.`trips`
+CREATE TABLE `trips`
 (
   `route_id` varchar(30),
   `service_id` varchar(30),
@@ -90,14 +90,14 @@ CREATE TABLE `gtfs`.`trips`
   `direction_id` int
 );
 
-ALTER TABLE `gtfs`.`calendar_dates` ADD FOREIGN KEY (`service_id`) REFERENCES `calendar` (`service_id`);
+ALTER TABLE `calendar_dates` ADD FOREIGN KEY (`service_id`) REFERENCES `calendar` (`service_id`);
 
-ALTER TABLE `gtfs`.`stop_times` ADD FOREIGN KEY (`stop_id`) REFERENCES `stops` (`stop_id`);
+ALTER TABLE `stop_times` ADD FOREIGN KEY (`stop_id`) REFERENCES `stops` (`stop_id`);
 
-ALTER TABLE `gtfs`.`trips` ADD FOREIGN KEY (`route_id`) REFERENCES `routes` (`route_id`);
+ALTER TABLE `trips` ADD FOREIGN KEY (`route_id`) REFERENCES `routes` (`route_id`);
 
-ALTER TABLE `gtfs`.`trips` ADD FOREIGN KEY (`service_id`) REFERENCES `calendar` (`service_id`);
+ALTER TABLE `trips` ADD FOREIGN KEY (`service_id`) REFERENCES `calendar` (`service_id`);
 
-ALTER TABLE `gtfs`.`trips` ADD FOREIGN KEY (`shape_id`) REFERENCES `shapes` (`shape_id`);
+ALTER TABLE `trips` ADD FOREIGN KEY (`shape_id`) REFERENCES `shapes` (`shape_id`);
 
-ALTER TABLE `gtfs`.`stop_times` ADD FOREIGN KEY (`trip_id`) REFERENCES `trips` (`trip_id`);
+ALTER TABLE `stop_times` ADD FOREIGN KEY (`trip_id`) REFERENCES `trips` (`trip_id`);
