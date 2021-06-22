@@ -1,3 +1,5 @@
+#The code This SQL code is based on https://github.com/sbma44/py-gtfs-mysql. changed a little bit Where appropriate.
+
 1. Log into server and naviagte to gtfs directory.
 2. Download gtfs static data into the directory with 'wget' at https://www.transportforireland.ie/transitData/PT_Data.html.
 3. Run:
