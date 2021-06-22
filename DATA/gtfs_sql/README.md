@@ -11,7 +11,7 @@
 ```mysql> quit```
 ``Bye``
 
-6.connect to the server with local-infile system variable :
+6. connect to the server with local-infile system variable :
 ```mysql --local-infile=1 -u USER -pPASSWORD```
 
 7. run the following commands to load the .txt files to your db:
