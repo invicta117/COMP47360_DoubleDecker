@@ -4,12 +4,12 @@
 ``` mysql -u USER -pPASSWORD < create_db.sql``` 
 
 4. Set the global variables by using this command:
-```mysql> SET GLOBAL local_infile=1;
-Query OK, 0 rows affected (0.00 sec)```
+```mysql> SET GLOBAL local_infile=1;```
+`` Query OK, 0 rows affected (0.00 sec)``
 
 5. quit current server:
-```mysql> quit
-Bye```
+```mysql> quit```
+``Bye``
 
 6.connect to the server with local-infile system variable :
 ```mysql --local-infile=1 -u USER -pPASSWORD```
