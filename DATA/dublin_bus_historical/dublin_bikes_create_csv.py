@@ -1,6 +1,7 @@
 
 import os
 import time
+import datetime
 
 def clean_line(line, delimiter):
     months = {"JAN": "01", "FEB": "02", "MAR": "03", "APR": "04", "MAY": "05", "JUN": "06", "JUL": "07", "AUG": "08",
@@ -12,7 +13,18 @@ def clean_line(line, delimiter):
     line = [cell.strip(",") for cell in line]
     line = [cell.strip(" ") for cell in line]
     line = ["NULL" if cell=="" else cell for cell in line]
+    line = [test_datetime(cell) for cell in line]
+    #print(line)
     return line
+
+def test_datetime(val):
+    try:
+        date = datetime.datetime.strptime(val, '%d-%m-%y %H:%M:%S')
+        formatted = date.strftime("%Y-%m-%d %H:%M:%S")
+        return formatted
+    except ValueError:
+        #print(val)
+        return val
 
 def columns_to_string(columns):
     result = ""
