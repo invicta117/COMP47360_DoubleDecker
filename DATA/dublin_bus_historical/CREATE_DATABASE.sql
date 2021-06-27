@@ -1,9 +1,9 @@
 CREATE DATABASE IF NOT exists team11;
 
 CREATE TABLE if not exists team11.rt_trips (
-    TripID int,
     DataSource varchar(255),
     DayOfService datetime,
+    TripID int,
     LineId varchar(255),
     RouteId varchar(255),
     Direction boolean,
@@ -39,3 +39,9 @@ justificationid int,
 lastupdate datetime,
 note varchar(225)
 );
+
+alter table team11.rt_leavetimes
+add index date (dayofservice);
+
+alter table team11.rt_trips
+add index date (dayofservice);
