@@ -244,3 +244,15 @@ class Weather(models.Model):
         managed = False
         db_table = 'weather'
         unique_together = (('current', 'weather_id'),)
+
+
+class RouteStops(models.Model):
+    stop_name = models.CharField(primary_key=True, max_length=255)
+    stop_lat = models.FloatField(blank=True, null=True)
+    stop_lon = models.FloatField(blank=True, null=True)
+    route_short_name = models.CharField(max_length=225)
+
+    class Meta:
+        managed = False
+        db_table = 'route_stops'
+        unique_together = (('stop_name', 'route_short_name'),)
