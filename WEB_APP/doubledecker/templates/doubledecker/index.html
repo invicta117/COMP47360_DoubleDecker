@@ -9,8 +9,26 @@
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <script src="{% static 'javascript/script.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+        </script>
   </head>
   <body>
+  <!--  select the origin and destination-->
+    <div style="display: none">
+      <input
+        id="origin"
+        class="controls"
+        type="text"
+        placeholder="Enter an origin location"
+      />
+      <input
+        id="destination"
+        class="controls"
+        type="text"
+        placeholder="Enter a destination location"
+      />
+    </div>
     <!--The div element for the map -->
     <div id="map"></div>
     <div id="content">
@@ -49,8 +67,8 @@
 
     </div>
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap&libraries=&v=weekly"
+      <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA27WjD_7YdTiZ-9KYcdBGkxxasvbrKlic&callback=initMap&libraries=places&v=weekly"
       async
     ></script>
         <div id="userLocation">
