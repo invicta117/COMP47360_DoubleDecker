@@ -66,9 +66,11 @@ function showError() {
 }
 
 function showCurrentWeather() {
-    $.getJSON('/api/ShowCurrentWeather', data => {
- // data is current weather
-        // get info
+  fetch("/api/ShowCurrentWeather")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
         const current = data['current'];
         const temperature = data['temperature'];
         const description = data['description'];
@@ -76,6 +78,11 @@ function showCurrentWeather() {
         doc.innerHTML += '<p>' + current + '</p>' + '<p>' + temperature + '</p>' + '<p>' + description + '</p>';
     });
 }
+
+showCurrentWeather()
+
+
+
 
 
 class AutocompleteDirectionsHandler {
