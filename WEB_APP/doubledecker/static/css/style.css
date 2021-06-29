@@ -12,9 +12,10 @@ body {
 }
 
 body {
-    background-color: #fff;
+    background-color: #F08080;
     color: #777;
     font: normal 15px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    align-items:center;
 }
 
 p {
@@ -74,4 +75,6 @@ small {
     color: #777;
     font-style: italic;
 }
-
+.row.justify-content-center{
+    padding: 20px;
+}
