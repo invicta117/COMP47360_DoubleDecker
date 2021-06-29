@@ -9,22 +9,19 @@ def clean_line(line, delimiter):
     for month in months.keys():
         if month in line:
             line = line.replace(month, months[month])
+    line = line.replace(",", "")
     line = line.split(delimiter)
-    line = [cell.strip(",") for cell in line]
     line = [cell.strip(" ") for cell in line]
     line = ["NULL" if cell=="" else cell for cell in line]
-    line = [test_datetime(cell) for cell in line]
-    #print(line)
+    line[1] = test_datetime(line[1])
+    line[-2] = test_datetime(line[-2])
     return line
 
 def test_datetime(val):
-    try:
-        date = datetime.datetime.strptime(val, '%d-%m-%y %H:%M:%S')
-        formatted = date.strftime("%Y-%m-%d %H:%M:%S")
-        return formatted
-    except ValueError:
-        #print(val)
-        return val
+    datetime = val.split(" ")
+    date = datetime[0].split("-")
+    final = "20" + date[2] + "-" + date[1] + "-" + date[0] + " " + datetime[1]
+    return final
 
 def columns_to_string(columns):
     result = ""
