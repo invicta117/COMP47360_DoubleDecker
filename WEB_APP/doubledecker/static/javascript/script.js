@@ -11,7 +11,8 @@ function initMap() {
       zoom: 12,
       center: Dublin,
 });
-}
+
+
 // define a variable that get a button
 var x = document.getElementById('userLocation')
 
@@ -106,4 +107,5 @@ class AutocompleteDirectionsHandler {
   }
   // Sets a listener on a radio button to change the filter type on Places
   // Autocomplete.
+}
 }
