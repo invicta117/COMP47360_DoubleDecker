@@ -7,6 +7,7 @@ from .models import Routes, Weather, RouteStops
 
 import pandas as pd
 import os
+
 # from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
@@ -17,10 +18,11 @@ URI = "localhost"
 PORT = "3306"
 PASSWORD = "pass123"
 DB = "gtfs"
-USER = "student"  # note: USER will get user name of this computer.
-mysql_url = "mysql+pymysql://{}:{}@{}:{}/{}".format(
-    USER, PASSWORD, URI, PORT, DB)
-# -------------------------------------------------------
+
+USER = "student" # note: USER will get user name of this computer.
+mysql_url = "mysql://{}:{}@{}:{}/{}".format(USER, PASSWORD, URI, PORT, DB)
+#-------------------------------------------------------
+
 # create the connection
 engine = create_engine(mysql_url, echo=True)
 

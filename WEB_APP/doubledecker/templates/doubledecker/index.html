@@ -24,12 +24,11 @@
     <![endif]-->
     <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <script src="{% static 'javascript/script.js' %}"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-      crossorigin="anonymous"
-    ></script>
+    <script defer src="{% static 'javascript/script.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+        </script>
+
   </head>
   <body>
     <div class="container">
@@ -140,5 +139,10 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&callback=initMap&libraries=&v=weekly"
       async
     ></script>
+        <div id="userLocation">
+  <button onclick="getLocation()">get location</button>
+            <div id="current"></div>
+      </div>
+
   </body>
 </html>
