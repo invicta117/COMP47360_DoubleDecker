@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api.apps.ApiConfig', # from https://www.youtube.com/watch?v=vlxIjXLlmxQ&t=1926s
+    'api.apps.ApiConfig',  # from https://www.youtube.com/watch?v=vlxIjXLlmxQ&t=1926s
     'rest_framework',
 ]
 
@@ -57,8 +57,7 @@ ROOT_URLCONF = 'djangoProject1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gtfs',
-        'USER': 'student',
-        'PASSWORD': os.environ["PASSWORD"],
+        'USER': '',
+        'PASSWORD': "",
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -127,6 +126,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    '/Users/hassa/Projects/COMP47360_DoubleDecker/WEB_APP/doubledecker/static/',
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
