@@ -3,14 +3,6 @@
 var map;
 var infoWindow = null;
 
-function initMap() {
-    // The location of Uluru
-    const Dublin = { lat: 53.3498, lng: -6.2603 };
-    // The map, centered at Uluru
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 12,
-      center: Dublin,
-});
 
 
 // define a variable that get a button
@@ -39,6 +31,22 @@ function showUserLocation(position) {
     // map.set(document.getElementById("map"),myOptions);
     // set the marker
     var marker = new google.maps.Marker({position: pos, map: map, title: "You are here!"});
+
+    // from https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
+    var latlng = {lat: lat, lng: lon}
+    geocoder
+    .geocode({ location: latlng })
+    .then((response) => {
+      if (response.results[0]) {
+          var formatted = response.results[0].formatted_address
+          formatted = formatted.replace("Co. ", "")
+          console.log(formatted)
+          document.getElementById("from").value = formatted
+      } else {
+        window.alert("No results found");
+      }
+    })
+    .catch((e) => window.alert("Geocoder failed due to: " + e));
 
 }
 
@@ -77,42 +85,58 @@ function showCurrentWeather() {
 showCurrentWeather()
 
 
+// the following is based on the code from https://developers.google.com/maps/documentation/javascript/examples/directions-simple#maps_directions_simple-javascript
+  const directionsService = new google.maps.DirectionsService();
+  const directionsRenderer = new google.maps.DirectionsRenderer();
+  const geocoder = new google.maps.Geocoder();
+function initMap() {
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 11,
+    center: { lat: 53.3498, lng: -6.2603 },
+  });
+  directionsRenderer.setMap(map);
+  directionsRenderer.setPanel(document.getElementById("sidebar"));
 
 
-
-class AutocompleteDirectionsHandler {
-    // we don't need to choose the mode of travel
-  map;
-  originPlaceId;
-  destinationPlaceId;
-  directionsService;
-  directionsRenderer;
-  constructor(map) {
-    this.map = map;
-    this.originPlaceId = "";
-    this.destinationPlaceId = "";
-    this.directionsService = new google.maps.DirectionsService();
-    this.directionsRenderer = new google.maps.DirectionsRenderer();
-    this.directionsRenderer.setMap(map);
-    const originInput = document.getElementById("origin");
-    const destinationInput = document.getElementById("destination");
-    const originAutocomplete = new google.maps.places.Autocomplete(originInput);
-    // Specify just the place data fields that you need.
-    originAutocomplete.setFields(["place_id"]);
-    const destinationAutocomplete = new google.maps.places.Autocomplete(
-      destinationInput
-    );
-    // Specify just the place data fields that you need.
-    destinationAutocomplete.setFields(["place_id"]);
-    this.setupPlaceChangedListener(originAutocomplete, "ORIG");
-    this.setupPlaceChangedListener(destinationAutocomplete, "DEST");
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin);
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(
-      destination
-    );
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
-  }
-  // Sets a listener on a radio button to change the filter type on Places
-  // Autocomplete.
+  //const onChangeHandler = function () {
+    // calculateAndDisplayRoute(directionsService, directionsRenderer);
+  //};
+  //document.getElementById("to").addEventListener("change", onChangeHandler);
+  //document.getElementById("from").addEventListener("change", onChangeHandler);
 }
+initMap()
+
+function findRoute(){
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
 }
+
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+    console.log("test" + document.getElementById("from").value)
+  directionsService
+    .route({
+      origin: {
+        query: document.getElementById("from").value,
+      },
+      destination: {
+        query: document.getElementById("to").value,
+      },
+      travelMode: google.maps.TravelMode.TRANSIT,
+    })
+    .then((response) => {
+        console.log(response)
+      directionsRenderer.setDirections(response);
+    })
+    .catch((e) => window.alert("Directions request failed due to " + status));
+}
+
+// the following is based on the code presented in https://www.youtube.com/watch?v=BkGtNBrOhKU also available at https://github.com/sammy007-debug/Google-map-distance-api
+//create autocomplete objects for all inputs
+var options = {
+    componentRestrictions: { country: "IE"}
+}
+
+var input1 = document.getElementById("from");
+var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
+
+var input2 = document.getElementById("to");
+var autocomplete2 = new google.maps.places.Autocomplete(input2, options);

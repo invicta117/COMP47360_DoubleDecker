@@ -80,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gtfs',
-        'USER': '',
-        'PASSWORD': "",
+        'USER': 'student',
+        'PASSWORD': os.environ["PASSWORD"],
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }

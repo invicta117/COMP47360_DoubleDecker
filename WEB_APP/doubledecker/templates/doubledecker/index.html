@@ -24,10 +24,10 @@
     <![endif]-->
     <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <script defer src="{% static 'javascript/script.js' %}"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
         </script>
+          <script defer src="{% static 'javascript/script.js' %}"></script>
 
   </head>
   <body>
@@ -67,7 +67,10 @@
       </div>
       <div class="row justify-content-center">
         <div class="col-9">
-          <div id="map"></div>
+              <div id="container">
+              <div id="map"></div>
+              <div id="sidebar"></div>
+            </div>
         </div>
       </div>
       <div class="row justify-content-center">
@@ -79,7 +82,7 @@
               placeholder="Search for route..."
             />
             <span class="input-group-btn">
-              <button class="btn btn-primary" type="button">Add</button>
+              <button class="btn btn-primary" type="button">Search</button>
             </span>
             <span class="input-group-btn">
               <button
@@ -98,23 +101,27 @@
         <div class="col-9">
           <div class="input-group">
             <input
-              id="origin"
-              class="controls"
-              type="text"
-              placeholder="Enter an origin location"
-            />
+                  id="from"
+                  class="controls"
+                  type="text"
+                  placeholder="Enter a starting location"
+                />
+              <button onclick="getLocation()">my location</button>
+
             <input
-              id="destination"
+              id="to"
               class="controls"
               type="text"
               placeholder="Enter a destination location"
             />
             <span class="input-group-btn">
-              <button class="btn btn-primary" type="button">Add</button>
+              <button class="btn btn-primary" type="button" onclick="findRoute()">Search</button>
             </span>
           </div>
         </div>
       </div>
+
+        <div id="current"></div>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -135,14 +142,11 @@
     ></script>
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&callback=initMap&libraries=&v=weekly"
-      async
-    ></script>
-        <div id="userLocation">
-  <button onclick="getLocation()">get location</button>
-            <div id="current"></div>
-      </div>
+
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&libraries=places"></script>
+
 
   </body>
 </html>
