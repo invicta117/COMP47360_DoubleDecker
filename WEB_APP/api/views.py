@@ -7,7 +7,8 @@ from .models import Routes, Weather, RouteStops
 
 import pandas as pd
 import os
-#from dotenv import load_dotenv
+
+# from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
 local_path = os.path.abspath(os.curdir)
@@ -17,13 +18,17 @@ URI = "localhost"
 PORT = "3306"
 PASSWORD = "pass123"
 DB = "gtfs"
+
 USER = "student" # note: USER will get user name of this computer.
 mysql_url = "mysql://{}:{}@{}:{}/{}".format(USER, PASSWORD, URI, PORT, DB)
 #-------------------------------------------------------
+
 # create the connection
 engine = create_engine(mysql_url, echo=True)
 
 # from https://www.youtube.com/watch?v=vlxIjXLlmxQ&t=1926s
+
+
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
@@ -33,6 +38,8 @@ def apiOverview(request):
     return Response(api_urls)
 
 # from https://www.youtube.com/watch?v=vlxIjXLlmxQ&t=1926s
+
+
 @api_view(['GET'])
 def ShowAllRoutes(request):
     routes = Routes.objects.all()
@@ -40,6 +47,8 @@ def ShowAllRoutes(request):
     return Response(serializer.data)
 
 # from https://www.youtube.com/watch?v=vlxIjXLlmxQ&t=1926s
+
+
 @api_view(['GET'])
 def ShowAllWeather(request):
     weather = Weather.objects.all()
@@ -47,6 +56,8 @@ def ShowAllWeather(request):
     return Response(serializer.data)
 
 # from https://www.youtube.com/watch?v=vlxIjXLlmxQ&t=1926s
+
+
 @api_view(['GET'])
 def ShowAllRouteStops(request):
     routestops = RouteStops.objects.all()
@@ -55,6 +66,8 @@ def ShowAllRouteStops(request):
 
 # we get the recently
 # current weather from database and return the current time, temperature, description
+
+
 @api_view(['GET'])
 def ShowCurrentWeather(request):
     sql = f'''select current, temperature, description from weather order by current desc limit 1

@@ -5,18 +5,13 @@ var infoWindow = null;
 
 function initMap() {
     // The location of Uluru
-    const uluru = {lat: 53.3498, lng: -6.2603};
+    const Dublin = { lat: 53.3498, lng: -6.2603 };
     // The map, centered at Uluru
-    map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 12,
-        center: uluru,
-    });
-// The marker, positioned at Uluru
-    const marker = new google.maps.Marker({
-        position: uluru,
-        map: map,
-    });
-}
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 12,
+      center: Dublin,
+});
+
 
 // define a variable that get a button
 var x = document.getElementById('userLocation')
@@ -119,4 +114,5 @@ class AutocompleteDirectionsHandler {
   }
   // Sets a listener on a radio button to change the filter type on Places
   // Autocomplete.
+}
 }

@@ -1,21 +1,93 @@
-html, body{
-    padding: 0;
-    margin: 0;
-}
 #map {
-    margin: 0;
-    padding: 0;
-height: 80vh;
-/* The height is 400 pixels */
-width: 100vw;
-/* The width is the width of the web page */
+  width: 100%;
+  height: 580px;
+  padding-top: 20px;
 }
-#content{
-    width: 100vw;
-    height: 20vh;
-    background: rgb(235,235,235);
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
-.container{
-    padding: 10px;
-    height: 10vh;
+
+body {
+    background-color: #F08080;
+    color: #777;
+    font: normal 15px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    align-items:center;
+}
+
+p {
+    line-height: 20px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-family: 'Crete Round', serif;
+    font-weight: bold;
+    color: #444;
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-weight: 300;
+    color: #444;
+    font-size: 55px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+}
+h3 {
+    font-size: 30px;
+    color: #444;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+}
+h4 {
+    font-size: 24px;
+    color: #F08080;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+h5 {
+    font-size: 15px;
+    color: #444;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+a {
+    text-decoration: none;
+    color: #444;
+}
+a:hover {
+    color: #F08080;
+}
+strong {
+    font-weight: bold;
+}
+small {
+    font-size: 13px;
+    color: #777;
+    font-style: italic;
+}
+.row.justify-content-center{
+    padding: 20px;
+}
+
+.rounded{
+    border-radius: 40px;
+}
+
+/* nav styling */
+ul li {
+  display: inline-block;
+  padding: 0 30px;
+}
+ul li ~ li {
+  border-left: 1px solid #fff;
 }
