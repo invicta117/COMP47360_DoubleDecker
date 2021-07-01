@@ -124,7 +124,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
             travelMode: 'TRANSIT',
             transitOptions: {
                 departureTime: new Date(datetime),
-                modes: ["BUS"]
+                modes: ["BUS", "WALKING"]
             }
         };
         console.log(latlng)
