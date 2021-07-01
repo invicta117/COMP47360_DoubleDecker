@@ -15,7 +15,7 @@ function getLocation() {
         x.innerHTML = 'your browser not support get the location';
     }
 }
-
+var latlng
 // get user location and print marker
 function showUserLocation(position) {
     lat = position.coords.latitude;
@@ -27,27 +27,26 @@ function showUserLocation(position) {
         mapTypeControl: false,
         navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL}
     };
-    map = new google.maps.Map(document.getElementById("map"), myOptions);
-    // map.set(document.getElementById("map"),myOptions);
+    //map = new google.maps.Map(document.getElementById("map"), myOptions);
+    //map.set(document.getElementById("map"),myOptions);
     // set the marker
-    var marker = new google.maps.Marker({position: pos, map: map, title: "You are here!"});
-
+    //var marker = new google.maps.Marker({position: pos, map: map, title: "You are here!"});
     // from https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
-    var latlng = {lat: lat, lng: lon}
-    geocoder
-    .geocode({ location: latlng })
-    .then((response) => {
-      if (response.results[0]) {
-          var formatted = response.results[0].formatted_address
-          formatted = formatted.replace("Co. ", "")
-          console.log(formatted)
-          document.getElementById("from").value = formatted
-      } else {
-        window.alert("No results found");
-      }
-    })
-    .catch((e) => window.alert("Geocoder failed due to: " + e));
-
+    latlng = {lat: lat, lng: lon};
+    //geocoder
+    //.geocode({ location: latlng })
+    //.then((response) => {
+    //  if (response.results[0]) {
+    //      var formatted = response.results[0].formatted_address
+    //      formatted = formatted.replace("Co. ", "")
+    //      console.log(formatted)
+    //
+    //  } else {
+    //    window.alert("No results found");
+    //  }
+    //})
+    //.catch((e) => window.alert("Geocoder failed due to: " + e));
+    document.getElementById("from").value = "CURRENT LOCATION"
 }
 
 // handle error
@@ -110,23 +109,44 @@ function findRoute(){
     calculateAndDisplayRoute(directionsService, directionsRenderer);
 }
 
+
+// the following code is based on the google docs documentation from https://developers.google.com/maps/documentation/javascript/directions
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     console.log("test" + document.getElementById("from").value)
-  directionsService
-    .route({
-      origin: {
-        query: document.getElementById("from").value,
-      },
-      destination: {
-        query: document.getElementById("to").value,
-      },
-      travelMode: google.maps.TravelMode.TRANSIT,
-    })
-    .then((response) => {
-        console.log(response)
-      directionsRenderer.setDirections(response);
-    })
-    .catch((e) => window.alert("Directions request failed due to " + status));
+    if (document.getElementById("from").value == "CURRENT LOCATION") {
+        var request = {
+            origin: latlng,
+            destination: {
+                query: document.getElementById("to").value,
+            },
+            travelMode: 'TRANSIT'
+        };
+        console.log(latlng)
+        console.log(request)
+        directionsService.route(request, function (response, status) {
+            if (status == 'OK') {
+                directionsRenderer.setDirections(response);
+            }
+        });
+    }
+    else {
+        // the following is based on the following google documentation https://developers.google.cn/maps/documentation/javascript/examples/directions-simple?hl=zh-cn
+        directionsService
+            .route({
+                origin: {
+                    query: document.getElementById("from").value,
+                },
+                destination: {
+                    query: document.getElementById("to").value,
+                },
+                travelMode: google.maps.TravelMode.TRANSIT,
+            })
+            .then((response) => {
+                console.log(response)
+                directionsRenderer.setDirections(response);
+            })
+            .catch((e) => window.alert("Directions request failed due to " + status));
+    }
 }
 
 // the following is based on the code presented in https://www.youtube.com/watch?v=BkGtNBrOhKU also available at https://github.com/sammy007-debug/Google-map-distance-api
