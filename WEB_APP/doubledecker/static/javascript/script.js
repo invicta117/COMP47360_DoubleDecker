@@ -113,18 +113,25 @@ function findRoute(){
 // the following code is based on the google docs documentation from https://developers.google.com/maps/documentation/javascript/directions
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     console.log("test" + document.getElementById("from").value)
+    var datetime = $('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"]
+    console.log(datetime)
     if (document.getElementById("from").value == "CURRENT LOCATION") {
         var request = {
             origin: latlng,
             destination: {
                 query: document.getElementById("to").value,
             },
-            travelMode: 'TRANSIT'
+            travelMode: 'TRANSIT',
+            transitOptions: {
+                departureTime: new Date(datetime),
+                modes: ["BUS"]
+            }
         };
         console.log(latlng)
         console.log(request)
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
+                console.log(response)
                 directionsRenderer.setDirections(response);
             }
         });
