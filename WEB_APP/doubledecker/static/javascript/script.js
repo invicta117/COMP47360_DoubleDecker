@@ -7,8 +7,8 @@ function initMap() {
     const map = new google.maps.Map(document.getElementById("map"), {
       zoom: 12,
       center: Dublin,
-});
-}
+    });
+  }
 // define a variable that get a button
 var x = document.getElementById('userLocation')
 function getLocation() {
