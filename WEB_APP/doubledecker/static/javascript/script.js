@@ -7,6 +7,7 @@ var infoWindow = null;
 $(function () {
 $("#datetimepicker1").datetimepicker();
 });
+
 // define a variable that get a button
 var x = document.getElementById('userLocation')
 
@@ -83,6 +84,7 @@ function showCurrentWeather() {
     });
 }
 
+
 showCurrentWeather()
 
 
@@ -97,6 +99,7 @@ function initMap() {
   });
   directionsRenderer.setMap(map);
   directionsRenderer.setPanel(document.getElementById("sidebar"));
+
 
 
   //const onChangeHandler = function () {
