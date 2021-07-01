@@ -83,11 +83,3 @@ small {
     border-radius: 40px;
 }
 
-/* nav styling */
-ul li {
-  display: inline-block;
-  padding: 0 30px;
-}
-ul li ~ li {
-  border-left: 1px solid #fff;
-}
