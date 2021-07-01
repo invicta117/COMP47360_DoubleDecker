@@ -6,3 +6,8 @@ from django.http import HttpResponse
 
 def main(request):  # origionated from  https://docs.djangoproject.com/en/3.2/intro/tutorial01/
     return render(request, 'doubledecker/index.html')
+
+
+# origionated from  https://docs.djangoproject.com/en/3.2/intro/tutorial01/
+def explore_view(request):
+    return render(request, 'doubledecker/explore.html')

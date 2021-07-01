@@ -53,12 +53,20 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
+<<<<<<< HEAD
                     <a class="nav-link" href="#"
+=======
+                    <a class="nav-link" href="index/"
+>>>>>>> UI
                       >Plan <span class="sr-only">(current)</span></a
                     >
                   </li>
                   <li class="nav-item">
+<<<<<<< HEAD
                     <a class="nav-link" href="#">Explore</a>
+=======
+                    <a class="nav-link" href="explore/">Explore</a>
+>>>>>>> UI
                   </li>
                 </ul>
               </div>
@@ -73,23 +81,35 @@
       </div>
       <div class="row justify-content-center">
         <div class="col-9">
+          <span class="input-group-btn">
+            <button
+              class="btn btn-secondary"
+              onclick="getLocation()"
+              type="button"
+            >
+              User Location
+            </button>
+          </span>
+        </div>
+      </div>
+      <!--  select the origin and destination-->
+      <div class="row justify-content-center">
+        <div class="col-9">
           <div class="input-group">
             <input
+              id="origin"
+              class="controls"
               type="text"
-              class="form-control"
-              placeholder="Search for route..."
+              placeholder="Enter an origin location"
+            />
+            <input
+              id="destination"
+              class="controls"
+              type="text"
+              placeholder="Enter a destination location"
             />
             <span class="input-group-btn">
               <button class="btn btn-primary" type="button">Add</button>
-            </span>
-            <span class="input-group-btn">
-              <button
-                class="btn btn-secondary"
-                onclick="getLocation()"
-                type="button"
-              >
-                User Location
-              </button>
             </span>
           </div>
         </div>
