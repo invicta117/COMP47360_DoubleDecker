@@ -24,7 +24,12 @@
     <![endif]-->
     <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <script src="{% static 'javascript/script.js' %}"></script>
+    <script defer src="{% static 'javascript/script.js' %}"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <div class="container">
@@ -48,12 +53,12 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
-                    <a class="nav-link" href="#"
-                      >Explore <span class="sr-only">(current)</span></a
+                    <a class="nav-link" href="index/"
+                      >Plan <span class="sr-only">(current)</span></a
                     >
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Plan</a>
+                    <a class="nav-link" href="explore/">Explore</a>
                   </li>
                 </ul>
               </div>
@@ -68,23 +73,35 @@
       </div>
       <div class="row justify-content-center">
         <div class="col-9">
+          <span class="input-group-btn">
+            <button
+              class="btn btn-secondary"
+              onclick="getLocation()"
+              type="button"
+            >
+              User Location
+            </button>
+          </span>
+        </div>
+      </div>
+      <!--  select the origin and destination-->
+      <div class="row justify-content-center">
+        <div class="col-9">
           <div class="input-group">
             <input
+              id="origin"
+              class="controls"
               type="text"
-              class="form-control"
-              placeholder="Search for route..."
+              placeholder="Enter an origin location"
+            />
+            <input
+              id="destination"
+              class="controls"
+              type="text"
+              placeholder="Enter a destination location"
             />
             <span class="input-group-btn">
               <button class="btn btn-primary" type="button">Add</button>
-            </span>
-            <span class="input-group-btn">
-              <button
-                class="btn btn-secondary"
-                onclick="getLocation()"
-                type="button"
-              >
-                User Location
-              </button>
             </span>
           </div>
         </div>
