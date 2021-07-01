@@ -25,10 +25,11 @@
     <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <script defer src="{% static 'javascript/script.js' %}"></script>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
-        </script>
-
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <div class="container">
@@ -53,11 +54,11 @@
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
                     <a class="nav-link" href="#"
-                      >Explore <span class="sr-only">(current)</span></a
+                      >Plan <span class="sr-only">(current)</span></a
                     >
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Plan</a>
+                    <a class="nav-link" href="#">Explore</a>
                   </li>
                 </ul>
               </div>
@@ -139,10 +140,9 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&callback=initMap&libraries=&v=weekly"
       async
     ></script>
-        <div id="userLocation">
-  <button onclick="getLocation()">get location</button>
-            <div id="current"></div>
-      </div>
-
+    <div id="userLocation">
+      <button onclick="getLocation()">get location</button>
+      <div id="current"></div>
+    </div>
   </body>
 </html>

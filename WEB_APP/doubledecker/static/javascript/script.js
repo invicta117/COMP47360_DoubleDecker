@@ -76,10 +76,7 @@ function showCurrentWeather() {
     });
 }
 
-showCurrentWeather()
-
-
-
+showCurrentWeather();
 
 
 class AutocompleteDirectionsHandler {
