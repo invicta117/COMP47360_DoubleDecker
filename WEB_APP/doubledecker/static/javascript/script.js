@@ -3,8 +3,10 @@
 var map;
 var infoWindow = null;
 
-
-
+// the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html
+$(function () {
+$("#datetimepicker1").datetimepicker();
+});
 // define a variable that get a button
 var x = document.getElementById('userLocation')
 
@@ -124,7 +126,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
             travelMode: 'TRANSIT',
             transitOptions: {
                 departureTime: new Date(datetime),
-                modes: ["BUS", "WALKING"]
+                modes: ["BUS"]
             }
         };
         console.log(latlng)
@@ -138,21 +140,25 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     }
     else {
         // the following is based on the following google documentation https://developers.google.cn/maps/documentation/javascript/examples/directions-simple?hl=zh-cn
-        directionsService
-            .route({
-                origin: {
-                    query: document.getElementById("from").value,
-                },
-                destination: {
-                    query: document.getElementById("to").value,
-                },
-                travelMode: google.maps.TravelMode.TRANSIT,
-            })
-            .then((response) => {
+        var request = {
+            origin: document.getElementById("from").value,
+            destination: {
+                query: document.getElementById("to").value,
+            },
+            travelMode: 'TRANSIT',
+            transitOptions: {
+                departureTime: new Date(datetime),
+                modes: ["BUS"]
+            }
+        };
+        console.log(latlng)
+        console.log(request)
+        directionsService.route(request, function (response, status) {
+            if (status == 'OK') {
                 console.log(response)
                 directionsRenderer.setDirections(response);
-            })
-            .catch((e) => window.alert("Directions request failed due to " + status));
+            }
+        });
     }
 }
 
