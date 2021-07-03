@@ -70,22 +70,7 @@ function showError() {
     }
 }
 
-function showCurrentWeather() {
-  fetch("/api/ShowCurrentWeather")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-        const current = data['current'];
-        const temperature = data['temperature'];
-        const description = data['description'];
-        var doc = document.getElementById('current');
-        doc.innerHTML += '<p>' + current + '</p>' + '<p>' + temperature + '</p>' + '<p>' + description + '</p>';
-    });
-}
 
-
-showCurrentWeather()
 
 
 // the following is based on the code from https://developers.google.com/maps/documentation/javascript/examples/directions-simple#maps_directions_simple-javascript

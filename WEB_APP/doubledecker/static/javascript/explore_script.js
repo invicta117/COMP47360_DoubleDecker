@@ -1,11 +1,12 @@
 // This code origionated from https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 // Initialize and add the map
+var map;
 function initMap() {
   const directionsService = new google.maps.DirectionsService();
   // The location of Dublin
   const Dublin = { lat: 53.3498, lng: -6.2603 };
   // The map, centered at Uluru
-  const map = new google.maps.Map(document.getElementById("map"), {
+   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
     center: Dublin,
   });

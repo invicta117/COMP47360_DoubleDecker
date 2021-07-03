@@ -17,6 +17,16 @@ body {
     font: normal 15px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
     align-items:center;
 }
+/*
+this is current weather style. can make it look better
+ */
+.location {
+    background-color: cornflowerblue;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+  font-size: 2.1em;
+}
 
 p {
     line-height: 20px;
