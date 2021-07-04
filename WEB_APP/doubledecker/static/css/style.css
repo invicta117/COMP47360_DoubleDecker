@@ -6,12 +6,6 @@
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body {
     background-color: #F08080;
     color: #777;
     font: normal 15px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
@@ -21,7 +15,6 @@ body {
 this is current weather style. can make it look better
  */
 .location {
-    background-color: cornflowerblue;
   text-align: center;
   padding: 0;
   margin: 0 auto;
@@ -89,12 +82,9 @@ small {
     padding: 20px;
 }
 
-.rounded{
-    border-radius: 40px;
-}
-
 .container-fluid{
-    width: 1200px;
+    width: 100%;
+    padding:30px;
 }
 
 .input-group{
@@ -171,17 +161,9 @@ small {
     cursor: pointer;
 }
 
-.temperature-value:hover{
-
-}
-
 .temperature-value span{
     color: #293251;
     font-size: 0.5em;
-}
-
-.temperature-description{
-
 }
 
 .temperature-description{
