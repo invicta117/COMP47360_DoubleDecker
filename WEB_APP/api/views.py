@@ -70,7 +70,7 @@ def ShowAllRouteStops(request):
 
 @api_view(['GET'])
 def ShowCurrentWeather(request):
-    sql = f'''select current, temperature, description from weather order by current desc limit 1
+    sql = f'''select current, temperature, description, weather_icon from weather order by current desc limit 1
     '''
     df = pd.read_sql_query(sql, engine)
     return Response(df)

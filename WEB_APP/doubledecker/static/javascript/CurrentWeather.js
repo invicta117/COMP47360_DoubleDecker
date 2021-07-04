@@ -1,18 +1,22 @@
-//show the weather info when load the page
-const locationEle = document.querySelector(".location");
-const iconEle = document.querySelector(".weatherIcon");
-const temperatureEle = document.querySelector(".temperature p");
-const descriptionEle = document.querySelector(".description p");
+//Weather
+//SELECT ELEMENTS
+const locationEle = locationElement = document.querySelector(".location");
+const iconEle = document.querySelector(".weather-icon");
+const temperatureEle = document.querySelector(".temperature-value");
+const descriptionEle = document.querySelector(".temperature-description");
 
-//Create the empty weather object
+
+
+//APP DATA
 const weather = {};
-
-//Define the temperature units
 weather.temperature = {
-    unit: "celcius"
+   unit: "celsius"
 }
 
-function showCurrentWeather() {
+//Get weather from API
+//window.onload = function getWeather(){
+function ShowCurrentWeather(){
+
     fetch("/api/ShowCurrentWeather")
         .then((response) => {
             return response.json();
@@ -23,20 +27,21 @@ function showCurrentWeather() {
             weather.iconId = data['weather_icon'];
             weather.city = 'Dublin City';
             weather.country = 'IE';
+            console.log(weather.iconId);
         }).then(function () {
-        renderPage();
+        displayWeather();
     })
 }
 
-function renderPage() {
-    locationEle.innerHTML = `${weather.city}, ${weather.country}`;
+
+//DISPLAY WEATHER TO UI
+function displayWeather() {
+    locationEle.innerHTML = "Dublin";
     iconEle.innerHTML = `<img src="static/icons/${weather.iconId}.png"/>`;
     temperatureEle.innerHTML = `${weather.temperature.value}°<span>C</span>`;
     descriptionEle.innerHTML = weather.description;
 }
 
-
-
-window.onload = function () {
-  showCurrentWeather();
-};
+window.onload = function() {
+    ShowCurrentWeather();
+}
