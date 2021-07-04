@@ -19,9 +19,9 @@ USER = "" # note: USER will get user name of this computer.
 
 
 #weather api key
-appid="https://api.openweathermap.org/data/2.5/onecall/timemachine"
-api="https://api.openweathermap.org/data/2.5/weather"
-api_city = "92fb08f48a98e0f39b990060352ffebe"
+appid="92fb08f48a98e0f39b990060352ffebe"
+api="https://api.openweathermap.org/data/2.5/onecall/timemachine"
+api_city = "https://api.openweathermap.org/data/2.5/weather"
 
 
 
