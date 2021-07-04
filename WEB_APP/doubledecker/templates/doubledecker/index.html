@@ -6,10 +6,7 @@
     <title>D.Decker</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width initial-scale=1.0" />
 
     <!-- Bootstrap CSS -->
     <link
@@ -78,66 +75,76 @@
 
     <script defer src="{% static 'javascript/script.js' %}"></script>
   </head>
+
   <body>
-
-      <div class="row justify-content-center">
-        <div class="col-9">
-          <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#">Double Decker</a>
-              <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span class="navbar-toggler-icon"></span>
-              </button>
-
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="#"
-                      >Plan <span class="sr-only">(current)</span></a
-                    >
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="explore/">Explore</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </div>
-      <div class ="container-fluid">
-  <div class ="row">
-    <div class ="col-md-6 col-sm-6">
-           <div class="input-group input-group-sm mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text" >Start</span>
-  </div>
-  <input id="from"type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-</div>
-<div class="input-group input-group-sm mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text">Destination</span>
-  </div>
-  <input id="to" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-</div>
-            <span class="input-group-btn">
+    <div class="row">
+      <div class="col-12">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">Double Decker</a>
             <button
-              class="btn btn-secondary"
-              onclick="getLocation()"
+              class="navbar-toggler"
               type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
             >
-              User Location
+              <span class="navbar-toggler-icon"></span>
             </button>
-            </span>
 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#"
+                    >Plan <span class="sr-only">(current)</span></a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="explore/">Explore</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="conatiner-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <!-- Current Weather Feature -->
+          <div class="container">
+            <div class="app-title">
+              <p>Weather</p>
+            </div>
+            <div class="notification"></div>
+            <div class="weather-container">
+              <div class="weather-icon">
+                <img src="{% static '/icons/unknown.png' %}" alt="" />
+              </div>
+              <div class="temperature-value">
+                <p>- °<span>C</span></p>
+              </div>
+              <div class="temperature-description">
+                <p>-</p>
+              </div>
+              <div class="location"></div>
+            </div>
+          </div>
+          <div class="input-group">
+            <input
+              id="from"
+              class="controls"
+              type="text"
+              placeholder="Enter a starting location"
+            />
+            <input
+              id="to"
+              class="controls"
+              type="text"
+              placeholder="Enter a destination location"
+            />
             <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
             <div
               class="input-group date"
@@ -161,6 +168,15 @@
             </div>
             <span class="input-group-btn">
               <button
+                class="btn btn-secondary"
+                onclick="getLocation()"
+                type="button"
+              >
+                User Location
+              </button>
+            </span>
+            <span class="input-group-btn">
+              <button
                 class="btn btn-primary"
                 type="button"
                 onclick="findRoute()"
@@ -168,27 +184,15 @@
                 Search
               </button>
             </span>
+          </div>
 
-      <!-- Current Weather Feature -->
- <div class="container">
-    <div class="app-title"><p>Weather</p></div>
-    <div class="notification"></div>
-    <div class="weather-container">
-        <div class="weather-icon">
-          <img src="{% static '/icons/unknown.png' %}" alt="" />
+          <div id="sidebar"></div>
         </div>
-        <div class="temperature-value"><p>- °<span>C</span></p></div>
-        <div class="temperature-description"><p> - </p></div>
-        <div class="location"></div>
-    </div>
-</div>
-    </div>
-    <div class ="col-md-6 col-sm-6">
+        <div class="col-md-8 ml-md-auto">
           <div id="map"></div>
-     </div>
-  </div>
-</div>
-
+        </div>
+      </div>
+    </div>
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
 
