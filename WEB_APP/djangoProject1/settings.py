@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gtfs',
         'USER': 'student',
-        'PASSWORD': os.environ["PASSWORD"],
+        'PASSWORD': "123",
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
