@@ -93,6 +93,14 @@ small {
     border-radius: 40px;
 }
 
+.container-fluid{
+    width: 1200px;
+}
+
+.input-group{
+    padding: 10px;
+}
+
 /*CSS code for the weather */
 
 *{

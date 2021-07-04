@@ -116,19 +116,18 @@
       <div class ="container-fluid">
   <div class ="row">
     <div class ="col-md-6 col-sm-6">
-      <div class="input-group form">
-            <input
-              id="from"
-              class="controls"
-              type="text"
-              placeholder="Enter a starting location"
-            />
-            <input
-              id="to"
-              class="controls"
-              type="text"
-              placeholder="Enter a destination location"
-            />
+           <div class="input-group input-group-sm mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" >Start</span>
+  </div>
+  <input id="from"type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+</div>
+<div class="input-group input-group-sm mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Destination</span>
+  </div>
+  <input id="to" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+</div>
             <span class="input-group-btn">
             <button
               class="btn btn-secondary"
@@ -169,7 +168,7 @@
                 Search
               </button>
             </span>
-          </div>
+
       <!-- Current Weather Feature -->
  <div class="container">
     <div class="app-title"><p>Weather</p></div>
