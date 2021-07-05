@@ -11,3 +11,7 @@ def main(request):  # origionated from  https://docs.djangoproject.com/en/3.2/in
 # origionated from  https://docs.djangoproject.com/en/3.2/intro/tutorial01/
 def explore_view(request):
     return render(request, 'doubledecker/explore.html')
+
+
+# def explore_vue(request):
+#     return render(request, 'doubledecker/explore_vue.html')
