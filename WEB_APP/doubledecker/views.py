@@ -41,7 +41,7 @@ def model(request):
         days[day] = 1
 
         current = Weather.objects.order_by('current').first()
-        stop = RouteStops.objects.all().filter(stop_lat__lt=ceil(lat * 1000) / 1000).filter(stop_lat__gt=floor(lat * 1000) / 1000).filter(stop_lon__lt=ceil(lng * 1000) / 1000).filter(stop_lon__gt=floor(lng * 1000) / 1000).first()
+        stop = RouteStops.objects.all().filter(stop_lat__lt=ceil((lat * 1000) / 1000)).filter(stop_lat__gt=floor((lat * 1000) / 1000)).filter(stop_lon__lt=(ceil(lng * 1000) / 1000)).filter(stop_lon__gt=(floor(lng * 1000) / 1000)).first()
         stoppointid = int(getattr(stop, "stop_name").split(" stop ")[1])
         temp = (getattr(current, 'temperature') - 273) # convert to celcius
         rain = getattr(current, 'rain_1h')

@@ -144,6 +144,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         console.log(request)
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
+                console.log(response)
                 directionsRenderer.setDirections(response);
                 get_predict(response)
             }
@@ -159,10 +160,28 @@ $(document).on('submit', '#post-form',function (e) {
 })
 
 function get_predict(directions_response){
-    var line = directions_response["routes"][0]["legs"][0]["steps"][1]["transit"]["line"]["short_name"]
-    var expectedarrival = directions_response["routes"][0]["legs"][0]["steps"][1]["transit"]["arrival_time"]["value"].getTime()
-    var lat = directions_response["routes"][0]["legs"][0]["steps"][1]["transit"]["arrival_stop"]["location"]["lat"]
-    var lng = directions_response["routes"][0]["legs"][0]["steps"][1]["transit"]["arrival_stop"]["location"]["lng"]
+    var first_bus = null;
+    var steps = directions_response["routes"][0]["legs"][0]["steps"]
+    for(var step in steps){
+        var step_options = directions_response["routes"][0]["legs"][0]["steps"][step]
+        for (var step_option in step_options){
+            if (step_option == "transit"){
+                console.log(step_options[step_option])
+                if (step_options[step_option]["line"]["agencies"][0]["name"] == "Dublin Bus") {
+                    first_bus = step_options
+                }
+
+            }
+        }
+    }
+    if (first_bus == null){
+        document.getElementById("result").innerHTML = "<h2> No Dublin Bus on Route "+ "</h2>"
+        return
+    }
+    var line = first_bus["transit"]["line"]["short_name"]
+    var expectedarrival = first_bus["transit"]["arrival_time"]["value"].getTime()
+    var lat = first_bus["transit"]["arrival_stop"]["location"]["lat"]
+    var lng = first_bus["transit"]["arrival_stop"]["location"]["lng"]
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var date = $('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"];
     var datetime = date.setHours(0, 0, 0, 0)
