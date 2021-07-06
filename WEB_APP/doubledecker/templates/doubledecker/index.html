@@ -9,6 +9,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width initial-scale=1.0" />
 
+
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
@@ -16,9 +17,7 @@
   <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-  </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
     integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
   </script>
@@ -132,6 +131,19 @@
           </span>
         </div>
         <div id="sidebar"></div>
+          <div id="result"></div>
+
+            <!-- from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html-->
+          <form action="" id="post-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="petal_width">Petal Width</label>
+                    <input type="number" step="0.1" class="form-control" id="petal_width" placeholder="" required>
+                </div>
+                <button type="submit" value="Submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Submit</button>
+            </form>
+
+
       </div>
       <div class="col-md-8 ml-md-auto">
         <div id="map"></div>
@@ -146,6 +158,44 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&libraries=places">
   </script>
   <script src="{% static 'javascript/CurrentWeather.js' %}"></script>
+
+
+<script>
+    // from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html
+    $(document).on('submit', '#post-form',function(e){
+        e.preventDefault();
+        var line = directions_response["routes"][0]["legs"][0]["steps"][0]["transit"]["line"]["short_name"]
+        var expectedarrival = directions_response["routes"][0]["legs"][0]["steps"][0]["transit"]["arrival_time"]["value"]
+        var lat = directions_response["routes"][0]["legs"][0]["steps"][0]["transit"]["arrival_stop"]["location"]["lat"]
+        var lng = directions_response["routes"][0]["legs"][0]["steps"][0]["transit"]["arrival_stop"]["location"]["lng"]
+        var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        var date = $('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"];
+        var datetime = date.setHours(0, 0, 0, 0)
+        var day = days[date.getDay()]
+        console.log("error")
+        $.ajax({
+            type:'POST',
+            url:'{% url "doubledecker:model" %}',
+            data:{
+                dayofservice: datetime,
+                line: line,
+                expectedarrival: expectedarrival,
+                lat: lat,
+                lng: lng,
+                day: day,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            success:function(json) {
+                document.getElementById("result").innerHTML = json['result']
+            },
+            error : function(xhr,errmsg,err) {
+
+            }
+        });
+    })
+</script>
+
 </body>
 
 </html>

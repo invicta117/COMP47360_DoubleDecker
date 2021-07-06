@@ -99,6 +99,7 @@ function findRoute(){
     calculateAndDisplayRoute(directionsService, directionsRenderer);
 }
 
+var directions_response;
 
 // the following code is based on the google docs documentation from https://developers.google.com/maps/documentation/javascript/directions
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
@@ -122,6 +123,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
                 console.log(response)
+                directions_response = response
                 directionsRenderer.setDirections(response);
             }
         });
@@ -139,10 +141,10 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
                 modes: ["BUS"]
             }
         };
-        console.log(latlng)
         console.log(request)
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
+                directions_response = response
                 console.log(response)
                 directionsRenderer.setDirections(response);
             }
