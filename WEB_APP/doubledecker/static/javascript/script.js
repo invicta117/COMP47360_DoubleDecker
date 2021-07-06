@@ -95,11 +95,11 @@ function initMap() {
 }
 initMap()
 
+var direction
+
 function findRoute(){
     calculateAndDisplayRoute(directionsService, directionsRenderer);
 }
-
-var directions_response;
 
 // the following code is based on the google docs documentation from https://developers.google.com/maps/documentation/javascript/directions
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
@@ -123,8 +123,8 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
                 console.log(response)
-                directions_response = response
                 directionsRenderer.setDirections(response);
+                get_predict(response)
             }
         });
     }
@@ -144,12 +144,49 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         console.log(request)
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
-                directions_response = response
-                console.log(response)
                 directionsRenderer.setDirections(response);
+                get_predict(response)
             }
         });
     }
+}
+
+// from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html
+$(document).on('submit', '#post-form',function (e) {
+    e.preventDefault();
+    findRoute()
+
+})
+
+function get_predict(directions_response){
+    var line = directions_response["routes"][0]["legs"][0]["steps"][1]["transit"]["line"]["short_name"]
+    var expectedarrival = directions_response["routes"][0]["legs"][0]["steps"][1]["transit"]["arrival_time"]["value"].getTime()
+    var lat = directions_response["routes"][0]["legs"][0]["steps"][1]["transit"]["arrival_stop"]["location"]["lat"]
+    var lng = directions_response["routes"][0]["legs"][0]["steps"][1]["transit"]["arrival_stop"]["location"]["lng"]
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var date = $('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"];
+    var datetime = date.setHours(0, 0, 0, 0)
+    var day = days[date.getDay()]
+    $.ajax({
+        type: 'POST',
+        url: 'http://127.0.0.1:8000/model/',
+        data: {
+            dayofservice: datetime,
+            line: line,
+            expectedarrival: expectedarrival - datetime,
+            lat: lat,
+            lng: lng,
+            day: day,
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        success: function (json) {
+            document.getElementById("result").innerHTML = "<h2> Expected bus arrival time: " +json['result'] + "</h2>>"
+        },
+        error: function (xhr, errmsg, err) {
+
+        }
+    });
 }
 
 // the following is based on the code presented in https://www.youtube.com/watch?v=BkGtNBrOhKU also available at https://github.com/sammy007-debug/Google-map-distance-api
