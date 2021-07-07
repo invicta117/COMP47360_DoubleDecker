@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import RoutesSerializer, WeatherSerializer, RoutesStopSerializer
-from .models import Routes, Weather, RouteStops
+from .serializers import RoutesSerializer, WeatherSerializer, RoutesStopSerializer, RouteLineSerializer
+from .models import SeqRoutes, Routes, Weather, RouteStops
 # Create your views here.
 
 import pandas as pd
@@ -19,9 +19,9 @@ PORT = "3306"
 PASSWORD = "123"
 DB = "gtfs"
 
-USER = "student" # note: USER will get user name of this computer.
+USER = "student"  # note: USER will get user name of this computer.
 mysql_url = "mysql://{}:{}@{}:{}/{}".format(USER, PASSWORD, URI, PORT, DB)
-#-------------------------------------------------------
+# -------------------------------------------------------
 
 # create the connection
 engine = create_engine(mysql_url, echo=True)
@@ -74,3 +74,12 @@ def ShowCurrentWeather(request):
     '''
     df = pd.read_sql_query(sql, engine)
     return Response(df)
+
+# from https://www.youtube.com/watch?v=vlxIjXLlmxQ&t=1926s
+
+
+@api_view(['GET'])
+def ShowAllRouteLine(request):
+    routeline = SeqRoutes.objects.all()
+    serializer = RouteLineSerializer(routeline, many=True)
+    return Response(serializer.data)
