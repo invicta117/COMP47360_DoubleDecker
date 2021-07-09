@@ -9,4 +9,5 @@ urlpatterns = [  # from https://www.youtube.com/watch?v=vlxIjXLlmxQ&t=1926s
     path('route-stops/', views.ShowAllRouteStops, name='Weather'),
     path('ShowCurrentWeather/', views.ShowCurrentWeather, name='currentWeather'),
     path('route-line/', views.ShowAllRouteLine, name='route-line'),
+    path('route-line/<int:s>', views.ShowRouteLine, name='line'),
 ]

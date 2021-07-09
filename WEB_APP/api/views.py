@@ -33,7 +33,8 @@ engine = create_engine(mysql_url, echo=True)
 def apiOverview(request):
     api_urls = {
         'weather': '/weather/',
-        'routes': '/routes/'
+        'routes': '/routes/',
+        'route-detail': '/route-line/<int:id>'
     }
     return Response(api_urls)
 
@@ -81,5 +82,13 @@ def ShowCurrentWeather(request):
 @api_view(['GET'])
 def ShowAllRouteLine(request):
     routeline = SeqRoutes.objects.all()
+    serializer = RouteLineSerializer(routeline, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def ShowRouteLine(request, s):
+
+    routeline = SeqRoutes.objects.filter(route_short_name=s)
     serializer = RouteLineSerializer(routeline, many=True)
     return Response(serializer.data)

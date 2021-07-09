@@ -71,21 +71,16 @@
         <div class="row">
           <div class="col-12">
             <div class="input-group">
-              {% comment %}
               <input
-                id="start"
+                id="searchTxt"
                 type="text"
                 class="form-control"
                 placeholder="Search for route..."
               />
-              {% endcomment %}
-              <select id="start">
-                <option value="">
-                  Select a beginning(user's location inc)
-                </option>
-              </select>
               <span class="input-group-btn">
-                <button class="btn btn-primary" type="button">Add</button>
+                <button class="btn btn-primary" type="submit" id="myBtn">
+                  Add
+                </button>
               </span>
               <span class="input-group-btn">
                 <button
@@ -99,36 +94,7 @@
             </div>
           </div>
         </div>
-        <div id="root">
-          <ul>
-            {% comment %}
-            <li v-for="name in names" v-text="name"></li>
-          </ul>
-          <input id="input" type="text" v-model="newName" />
-          <button @click="addName">Add number</button> {% endcomment %}
-        </div>
       </div>
-
-      {% comment %}
-      <script>
-        var app = new Vue({
-          delimiters: ["[[", "]]"],
-
-          el: "#root",
-
-          data: {
-            newName: "",
-            names: [],
-          },
-          methods: {
-            addName() {
-              this.names.push(this.newName);
-              this.newName = "";
-            },
-          },
-        });
-      </script>
-      {% endcomment %}
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

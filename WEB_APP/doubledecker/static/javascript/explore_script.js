@@ -3,6 +3,9 @@
 var map;
 const listPos=[
 ];
+const route_name = []
+
+
 function initMap() {
   const directionsService = new google.maps.DirectionsService();
   // The location of Dublin
@@ -13,43 +16,51 @@ function initMap() {
     center: Dublin,
   });
 
-  fetch("/api/route-stops")
+
+  fetch("/api/route-line")
       .then((response) => {
           return response.json();
       })
       .then((data) => {
-        console.log(data)
-          var originDropDown = document.getElementById("start");
-          var opt = document.createElement("option");
-          // let f_lat = data['stop_lat'][0];
-          // let f_lon = data['stop_lon'][0];
-          // let l_lat = data['stop_lat'][data['stop_lat'].length -1];
-          // let l_lon = data['stop_lon'][data['stop_lon'].length -1];
-          let f_lat = 53.3911764950851;
-          let f_lon = -6.26219900048751;
-          let l_lat = 53.3244315442597;
-          let l_lon = -6.21176919149074;
-            opt.value= [f_lat,f_lon,l_lat,l_lon]
-            // opt.innerHTML = data['route_short_name'][0];
-            // originDropDown.add(opt);
-            // console.log(opt.value)
-        // data.forEach(stop =>{
-        //     listPos.push({
-        //       key: ["name","lat","lng"],
-        //       value: [stop['route_short_name'],stop['stop_lat'],stop['stop_lon']],
-        //     })
 
-        // })
-        // console.log(listPos)
+        // console.log(data)
+        document.getElementById("myBtn").addEventListener("click", function(){
+          let routeID = []
+        r = document.getElementById("searchTxt").value;
+        data.forEach(route =>{
+          if(route.route_short_name == r)
+          {
+            routeID.push(route.shape_pt_sequence,
+              route.route_short_name,
+              route.route_id,
+              route.shape_pt_lat, 
+              route.shape_pt_lon)
+          }
 
-        const bounds = new google.maps.LatLngBounds();
+          })
+          console.log("routeID:",routeID)
+          const stop1 = routeID.slice(0, 5);
+          console.log(stop1)
+          const stoplast = routeID.slice(-5);
+          console.log(stoplast)
+
+          listPos.push({
+            key: ["f_lat","f_lng","l_lat", "l_lng"],
+            value: [stop1[3],stop1[4],stoplast[3],stoplast[4]],
+          })
+
+        console.log(listPos)
+        // console.log(listPos[0].value[0])
+        // this here is the function which works out the distance of the way points
+        for (var i =0; i<listPos.length;i++){
+          const bounds = new google.maps.LatLngBounds();
           const startPoint = new google.maps.LatLng(
-            f_lat,
-            f_lon
+            listPos[i].value[0],
+            listPos[i].value[1]
           );
           const endPoint = new google.maps.LatLng(
-            l_lat,
-            l_lon
+            listPos[i].value[2],
+            listPos[i].value[3]
           );
       
           const directionsDisplay = new google.maps.DirectionsRenderer({
@@ -63,10 +74,12 @@ function initMap() {
             endPoint,
             bounds
           );
-      
+        }
+      });
 
-      })
- 
+      
+    })
+
 }
 
 function calculateAndDisplayRoute(
@@ -93,6 +106,7 @@ function calculateAndDisplayRoute(
     }
   );
 }
+
 // define a variable that get a button
 var x = document.getElementById('userLocation')
 
@@ -146,28 +160,3 @@ function showError() {
       break;
   }
 }
-
-// const listPos=[{
-// }];
-
-// function showStop(){
-
-//   fetch("/api/stop4")
-//       .then((response) => {
-//           return response.json();
-//       })
-//       .then((data) => {
-//         console.log(data)
-//         listPos.arriveeLat = data['stop_lat'][0];
-//         listPos.arriveeLng = data['stop_lon'][0];
-//         listPos.departLat = data['stop_lat'][data['stop_lat'].length-1];
-//         listPos.departLng = data['stop_lon'][data['stop_lat'].length-1];
-//         console.log(listPos)
-//       })
-//       .then(function () {
-//         calculateAndDisplayRoute();
-//     })
-// }
-// window.onload = function() {
-//   showStop();
-// }
