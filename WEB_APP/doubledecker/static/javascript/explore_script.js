@@ -1,58 +1,68 @@
 // This code origionated from https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 // Initialize and add the map
 var map;
-const listPos=[
-];
+const listPos = [];
 const route_name = []
 
 
 function initMap() {
+  // nav bar work
+
+  const menuI = document.querySelector(".hamburger-menu");
+
+  const navbar = document.querySelector(".navbar");
+
+  menuI.addEventListener("click", () => {
+    navbar.classList.toggle("change");
+  });
   const directionsService = new google.maps.DirectionsService();
   // The location of Dublin
-  const Dublin = { lat: 53.3498, lng: -6.2603 };
+  const Dublin = {
+    lat: 53.3498,
+    lng: -6.2603
+  };
   // The map, centered at Uluru
-   map = new google.maps.Map(document.getElementById("map"), {
+  map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
     center: Dublin,
   });
 
 
   fetch("/api/route-line")
-      .then((response) => {
-          return response.json();
-      })
-      .then((data) => {
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
 
-        // console.log(data)
-        document.getElementById("myBtn").addEventListener("click", function(){
-          let routeID = []
+      // console.log(data)
+      document.getElementById("myBtn").addEventListener("click", function () {
+        let routeID = []
         r = document.getElementById("searchTxt").value;
-        data.forEach(route =>{
-          if(route.route_short_name == r)
-          {
+        data.forEach(route => {
+          if (route.route_short_name == r) {
             routeID.push(route.shape_pt_sequence,
               route.route_short_name,
               route.route_id,
-              route.shape_pt_lat, 
+              route.shape_pt_lat,
               route.shape_pt_lon)
           }
 
-          })
-          console.log("routeID:",routeID)
-          const stop1 = routeID.slice(0, 5);
-          console.log(stop1)
-          const stoplast = routeID.slice(-5);
-          console.log(stoplast)
+        })
+        console.log("routeID:", routeID)
+        const stop1 = routeID.slice(0, 5);
+        console.log(stop1)
+        const stoplast = routeID.slice(-5);
+        console.log(stoplast)
 
-          listPos.push({
-            key: ["f_lat","f_lng","l_lat", "l_lng"],
-            value: [stop1[3],stop1[4],stoplast[3],stoplast[4]],
-          })
+        listPos.push({
+          key: ["f_lat", "f_lng", "l_lat", "l_lng"],
+          value: [stop1[3], stop1[4], stoplast[3], stoplast[4]],
+        })
 
         console.log(listPos)
         // console.log(listPos[0].value[0])
         // this here is the function which works out the distance of the way points
-        for (var i =0; i<listPos.length;i++){
+        for (var i = 0; i < listPos.length; i++) {
           const bounds = new google.maps.LatLngBounds();
           const startPoint = new google.maps.LatLng(
             listPos[i].value[0],
@@ -62,7 +72,7 @@ function initMap() {
             listPos[i].value[2],
             listPos[i].value[3]
           );
-      
+
           const directionsDisplay = new google.maps.DirectionsRenderer({
             map: map,
             preserveViewport: true,
@@ -77,7 +87,7 @@ function initMap() {
         }
       });
 
-      
+
     })
 
 }

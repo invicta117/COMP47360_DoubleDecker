@@ -5,7 +5,7 @@ var infoWindow = null;
 
 // the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html
 $(function () {
-$("#datetimepicker1").datetimepicker();
+    $("#datetimepicker1").datetimepicker();
 });
 
 // define a variable that get a button
@@ -25,17 +25,23 @@ function showUserLocation(position) {
     lon = position.coords.longitude;
     pos = new google.maps.LatLng(lat, lon);
     var myOptions = {
-        center: pos, zoom: 12,
+        center: pos,
+        zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         mapTypeControl: false,
-        navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL}
+        navigationControlOptions: {
+            style: google.maps.NavigationControlStyle.SMALL
+        }
     };
     //map = new google.maps.Map(document.getElementById("map"), myOptions);
     //map.set(document.getElementById("map"),myOptions);
     // set the marker
     //var marker = new google.maps.Marker({position: pos, map: map, title: "You are here!"});
     // from https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
-    latlng = {lat: lat, lng: lon};
+    latlng = {
+        lat: lat,
+        lng: lon
+    };
     //geocoder
     //.geocode({ location: latlng })
     //.then((response) => {
@@ -74,28 +80,40 @@ function showError() {
 
 
 // the following is based on the code from https://developers.google.com/maps/documentation/javascript/examples/directions-simple#maps_directions_simple-javascript
-  const directionsService = new google.maps.DirectionsService();
-  const directionsRenderer = new google.maps.DirectionsRenderer();
-  const geocoder = new google.maps.Geocoder();
+const directionsService = new google.maps.DirectionsService();
+const directionsRenderer = new google.maps.DirectionsRenderer();
+const geocoder = new google.maps.Geocoder();
+
 function initMap() {
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 11,
-    center: { lat: 53.3498, lng: -6.2603 },
-  });
-  directionsRenderer.setMap(map);
-  directionsRenderer.setPanel(document.getElementById("sidebar"));
+    const menuI = document.querySelector(".hamburger-menu");
+
+    const navbar = document.querySelector(".navbar");
+
+    menuI.addEventListener("click", () => {
+        navbar.classList.toggle("change");
+    });
+    const directionsService = new google.maps.DirectionsService();
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 11,
+        center: {
+            lat: 53.3498,
+            lng: -6.2603
+        },
+    });
+    directionsRenderer.setMap(map);
+    directionsRenderer.setPanel(document.getElementById("sidebar"));
 
 
 
-  //const onChangeHandler = function () {
+    //const onChangeHandler = function () {
     // calculateAndDisplayRoute(directionsService, directionsRenderer);
-  //};
-  //document.getElementById("to").addEventListener("change", onChangeHandler);
-  //document.getElementById("from").addEventListener("change", onChangeHandler);
+    //};
+    //document.getElementById("to").addEventListener("change", onChangeHandler);
+    //document.getElementById("from").addEventListener("change", onChangeHandler);
 }
 initMap()
 
-function findRoute(){
+function findRoute() {
     calculateAndDisplayRoute(directionsService, directionsRenderer);
 }
 
@@ -125,8 +143,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
                 directionsRenderer.setDirections(response);
             }
         });
-    }
-    else {
+    } else {
         // the following is based on the following google documentation https://developers.google.cn/maps/documentation/javascript/examples/directions-simple?hl=zh-cn
         var request = {
             origin: document.getElementById("from").value,
@@ -153,7 +170,9 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
 // the following is based on the code presented in https://www.youtube.com/watch?v=BkGtNBrOhKU also available at https://github.com/sammy007-debug/Google-map-distance-api
 //create autocomplete objects for all inputs
 var options = {
-    componentRestrictions: { country: "IE"}
+    componentRestrictions: {
+        country: "IE"
+    }
 }
 
 var input1 = document.getElementById("from");
