@@ -1,6 +1,11 @@
 // This code origionated from https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 // Initialize and add the map
 var map;
+const listPos=[
+];
+const route_name = []
+
+
 function initMap() {
   const directionsService = new google.maps.DirectionsService();
   // The location of Dublin
@@ -10,42 +15,71 @@ function initMap() {
     zoom: 12,
     center: Dublin,
   });
-  var listPos = [
-    {
-      arriveeLat: 53.2864489905228,
-      arriveeLng: -6.15989900807043,
-      departLat: 53.4173526533912,
-      departLng: -6.27853875647111,
-    },
-    {
-      arriveeLat: 53.3996460936412,
-      arriveeLng: -6.12803757377896,
-      departLat: 53.3505177759176,
-      departLng: -6.25626764847559,
-    },
-  ];
-  var bounds = new google.maps.LatLngBounds();
-  for (var i = 0; i < listPos.length; i++) {
-    var startPoint = new google.maps.LatLng(
-      listPos[i]["departLat"],
-      listPos[i]["departLng"]
-    );
-    var endPoint = new google.maps.LatLng(
-      listPos[i]["arriveeLat"],
-      listPos[i]["arriveeLng"]
-    );
-    var directionsDisplay = new google.maps.DirectionsRenderer({
-      map: map,
-      preserveViewport: true,
-    });
-    calculateAndDisplayRoute(
-      directionsService,
-      directionsDisplay,
-      startPoint,
-      endPoint,
-      bounds
-    );
-  }
+
+
+  fetch("/api/route-line")
+      .then((response) => {
+          return response.json();
+      })
+      .then((data) => {
+
+        // console.log(data)
+        document.getElementById("myBtn").addEventListener("click", function(){
+          let routeID = []
+        r = document.getElementById("searchTxt").value;
+        data.forEach(route =>{
+          if(route.route_short_name == r)
+          {
+            routeID.push(route.shape_pt_sequence,
+              route.route_short_name,
+              route.route_id,
+              route.shape_pt_lat, 
+              route.shape_pt_lon)
+          }
+
+          })
+          console.log("routeID:",routeID)
+          const stop1 = routeID.slice(0, 5);
+          console.log(stop1)
+          const stoplast = routeID.slice(-5);
+          console.log(stoplast)
+
+          listPos.push({
+            key: ["f_lat","f_lng","l_lat", "l_lng"],
+            value: [stop1[3],stop1[4],stoplast[3],stoplast[4]],
+          })
+
+        console.log(listPos)
+        // console.log(listPos[0].value[0])
+        // this here is the function which works out the distance of the way points
+        for (var i =0; i<listPos.length;i++){
+          const bounds = new google.maps.LatLngBounds();
+          const startPoint = new google.maps.LatLng(
+            listPos[i].value[0],
+            listPos[i].value[1]
+          );
+          const endPoint = new google.maps.LatLng(
+            listPos[i].value[2],
+            listPos[i].value[3]
+          );
+      
+          const directionsDisplay = new google.maps.DirectionsRenderer({
+            map: map,
+            preserveViewport: true,
+          });
+          calculateAndDisplayRoute(
+            directionsService,
+            directionsDisplay,
+            startPoint,
+            endPoint,
+            bounds
+          );
+        }
+      });
+
+      
+    })
+
 }
 
 function calculateAndDisplayRoute(
@@ -55,8 +89,7 @@ function calculateAndDisplayRoute(
   endPoint,
   bounds
 ) {
-  directionsService.route(
-    {
+  directionsService.route({
       origin: startPoint,
       destination: endPoint,
       travelMode: "TRANSIT",
@@ -73,49 +106,57 @@ function calculateAndDisplayRoute(
     }
   );
 }
+
 // define a variable that get a button
 var x = document.getElementById('userLocation')
+
 function getLocation() {
   if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showUserLocation, showError)
+    navigator.geolocation.getCurrentPosition(showUserLocation, showError)
   } else {
-      x.innerHTML='your browser not support get the location';
+    x.innerHTML = 'your browser not support get the location';
   }
 }
 
 // get user location and print marker
 function showUserLocation(position) {
-lat = position.coords.latitude;
-lon = position.coords.longitude;
-pos = new google.maps.LatLng(lat, lon);
-  var myOptions={
-  center:pos,zoom:12,
-  mapTypeId:google.maps.MapTypeId.ROADMAP,
-  mapTypeControl:false,
-  navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
-};
-  map = new google.maps.Map(document.getElementById("map"),myOptions);
+  lat = position.coords.latitude;
+  lon = position.coords.longitude;
+  pos = new google.maps.LatLng(lat, lon);
+  var myOptions = {
+    center: pos,
+    zoom: 12,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControl: false,
+    navigationControlOptions: {
+      style: google.maps.NavigationControlStyle.SMALL
+    }
+  };
+  map = new google.maps.Map(document.getElementById("map"), myOptions);
   // map.set(document.getElementById("map"),myOptions);
-// set the marker
-  var marker = new google.maps.Marker({position:pos,map:map,title:"You are here!"});
+  // set the marker
+  var marker = new google.maps.Marker({
+    position: pos,
+    map: map,
+    title: "You are here!"
+  });
 
 }
 
 // handle error
 function showError() {
-    switch(error.code)
-{
-  case error.PERMISSION_DENIED:
-    x.innerHTML="The user rejected the request for a geographic location."
-    break;
-  case error.POSITION_UNAVAILABLE:
-    x.innerHTML="Location information is not available."
-    break;
-  case error.TIMEOUT:
-    x.innerHTML="Request user location timeout。"
-    break;
-  case error.UNKNOWN_ERROR:
-    x.innerHTML="UNKNOWN_ERROR"
-    break;
-}
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      x.innerHTML = "The user rejected the request for a geographic location."
+      break;
+    case error.POSITION_UNAVAILABLE:
+      x.innerHTML = "Location information is not available."
+      break;
+    case error.TIMEOUT:
+      x.innerHTML = "Request user location timeout。"
+      break;
+    case error.UNKNOWN_ERROR:
+      x.innerHTML = "UNKNOWN_ERROR"
+      break;
+  }
 }
