@@ -37,8 +37,19 @@ def model(request):
         DayOfService = int(request.POST.get('dayofservice')) *1e6
         day = request.POST.get('day')
         LineId = request.POST.get('line')
-        origin = request.POST.get('origin')
-        destination = request.POST.get('destination')
+        olat = float(request.POST.get('olat'))
+        olng = float(request.POST.get('olng'))
+        dlat = float(request.POST.get('dlat'))
+        dlng =  float(request.POST.get('dlng'))
+
+        origin = RouteStops.objects.all().filter(stop_lat__lt=ceil((olat * 1000) / 1000)).filter(
+            stop_lat__gt=floor((olat * 1000) / 1000)).filter(stop_lon__lt=(ceil(olng * 1000) / 1000)).filter(
+            stop_lon__gt=(floor(olng * 1000) / 1000)).first()
+
+        destination = RouteStops.objects.all().filter(stop_lat__lt=ceil((dlat * 1000) / 1000)).filter(
+            stop_lat__gt=floor((dlat * 1000) / 1000)).filter(stop_lon__lt=(ceil(dlng * 1000) / 1000)).filter(
+            stop_lon__gt=(floor(dlng * 1000) / 1000)).first()
+
         departure = int(request.POST.get('departure'))
         departure = datetime.fromtimestamp(departure/ 1e3).strftime("%H:%M:%S")
 
