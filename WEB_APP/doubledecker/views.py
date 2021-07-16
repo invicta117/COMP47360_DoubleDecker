@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import os
 
 from django.shortcuts import render
@@ -10,6 +10,17 @@ from joblib import load
 import os
 from .models import Weather, RouteStops
 from math import ceil, floor
+import pickle
+import pandas as pd
+import re
+
+stop_times = pd.read_csv("../DATA_ANALYTICS/RAW_DATA/gtfs/stop_times.txt", delimiter=",")
+stops = pd.read_csv("../DATA_ANALYTICS/RAW_DATA/gtfs/stops.txt", delimiter=",")
+routes = pd.read_csv("../DATA_ANALYTICS/RAW_DATA/gtfs/routes.txt", delimiter=",")
+trips = pd.read_csv("../DATA_ANALYTICS/RAW_DATA/gtfs/trips.txt", delimiter=",")
+calendar = pd.read_csv("../DATA_ANALYTICS/RAW_DATA/gtfs/calendar.txt", delimiter=",")
+stop_times["arrival_time"] = pd.to_timedelta(stop_times["arrival_time"])
+
 
 def main(request):  # origionated from  https://docs.djangoproject.com/en/3.2/intro/tutorial01/
     return render(request, 'doubledecker/index.html')
@@ -26,46 +37,47 @@ def model(request):
         DayOfService = int(request.POST.get('dayofservice')) *1e6
         day = request.POST.get('day')
         LineId = request.POST.get('line')
-        olat = float(request.POST.get('olat'))
-        olng = float(request.POST.get('olng'))
-        dlat = float(request.POST.get('dlat'))
-        dlng =  float(request.POST.get('dlng'))
-
-        departure = str(request.POST.get('departure'))
+        origin = request.POST.get('origin')
+        destination = request.POST.get('destination')
+        departure = int(request.POST.get('departure'))
+        departure = datetime.fromtimestamp(departure/ 1e3).strftime("%H:%M:%S")
 
         print(DayOfService)
         print(day)
         print(LineId)
-        print(olat)
-        print(olng)
-        print(dlat)
-        print(dlng)
         print(departure)
+        print(origin)
+        print(destination)
 
         days = {"Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday": 0, "Sunday": 0}
         days[day] = 1
 
         current = Weather.objects.order_by('current').first()
-        stop = RouteStops.objects.all().filter(stop_lat__lt=ceil((lat * 1000) / 1000)).filter(stop_lat__gt=floor((lat * 1000) / 1000)).filter(stop_lon__lt=(ceil(lng * 1000) / 1000)).filter(stop_lon__gt=(floor(lng * 1000) / 1000)).first()
-        stoppointid = int(getattr(stop, "stop_name").split(" stop ")[1])
         temp = (getattr(current, 'temperature') - 273) # convert to celcius
         rain = getattr(current, 'rain_1h')
         msl = getattr(current, 'pressure')
         rhum = getattr(current, 'humidity')
-        features = {'TPlannedTime_Arr': 0, 'stoppointid': 0, 'Monday': 0, 'Tuesday': 0, 'Wednesday': 0,
-         'Thursday': 0, 'Friday': 0, 'Saturday': 0, 'Sunday': 0, 'rain': 0, 'temp': 0, 'rhum': 0, 'msl': 0,
-         'LineId_1': 0, 'LineId_102': 0, 'LineId_11': 0, 'LineId_120': 0, 'LineId_123': 0, 'LineId_13': 0,
-         'LineId_130': 0, 'LineId_14': 0, 'LineId_140': 0, 'LineId_145': 0, 'LineId_14C': 0, 'LineId_15': 0,
-         'LineId_151': 0, 'LineId_16': 0, 'LineId_16C': 0, 'LineId_17A': 0, 'LineId_18': 0, 'LineId_184': 0,
-         'LineId_220': 0, 'LineId_25A': 0, 'LineId_25B': 0, 'LineId_26': 0, 'LineId_27': 0, 'LineId_270': 0,
-         'LineId_27A': 0, 'LineId_27B': 0, 'LineId_29A': 0, 'LineId_31': 0, 'LineId_32': 0, 'LineId_33': 0,
-         'LineId_33A': 0, 'LineId_33B': 0, 'LineId_37': 0, 'LineId_38': 0, 'LineId_38A': 0, 'LineId_39': 0,
-         'LineId_39A': 0, 'LineId_4': 0, 'LineId_40': 0, 'LineId_40B': 0, 'LineId_40D': 0, 'LineId_41': 0,
-         'LineId_41B': 0, 'LineId_41C': 0, 'LineId_42': 0, 'LineId_44': 0, 'LineId_45A': 0, 'LineId_46A': 0,
-         'LineId_47': 0, 'LineId_49': 0, 'LineId_53': 0, 'LineId_56A': 0, 'LineId_61': 0, 'LineId_65': 0,
-         'LineId_66': 0, 'LineId_66A': 0, 'LineId_67': 0, 'LineId_68': 0, 'LineId_69': 0, 'LineId_7': 0, 'LineId_75': 0,
-         'LineId_76': 0, 'LineId_79': 0, 'LineId_7A': 0, 'LineId_83': 0, 'LineId_83A': 0, 'LineId_84': 0,
-         'LineId_9': 0}
+
+        get_route(departure, origin, destination, day, LineId)
+
+
+
+
+        # https://stackoverflow.com/questions/11218477/how-can-i-use-pickle-to-save-a-dict
+        with open('distances.pickle', 'rb') as handle:
+            distances = pickle.load(handle)
+
+        features = {'Monday': 0, 'Tuesday': 0, 'Wednesday': 0,
+         'Thursday': 0, 'Friday': 0, 'Saturday': 0, 'Sunday': 0,
+        # timetabledtimes
+
+        # distances
+
+        'rain': 0, 'temp': 0, 'rhum': 0, 'msl': 0,
+        # holiday
+
+        # hour
+        }
         features["TPlannedTime_Arr"] = TPlannedTime_Arr
         features["stoppointid"] = stoppointid
         features["TPlannedTime_Arr"] = TPlannedTime_Arr
@@ -86,3 +98,55 @@ def model(request):
         print("result", result[0])
         arrival_time  = datetime.datetime.fromtimestamp(floor(result[0]) + (DayOfService * 1e-9)).strftime("%m/%d/%Y, %H:%M:%S")
     return JsonResponse({'result': arrival_time}, safe=False)
+
+
+def get_route(departure, origin, destination, day, bus_route):
+    day = day.lower()
+    days = list(calendar[calendar[day] == 1]["service_id"].values)
+    day_trips = set(trips[trips["service_id"].isin(days)]["trip_id"].values)
+    route_trips = set(
+        trips[trips["route_id"].isin(list(routes[routes["route_short_name"] == bus_route]["route_id"].values))][
+            "trip_id"].values)
+    start_trips = stops[stops["stop_name"] == origin]["stop_id"].values[0]
+    end_trips = stops[stops["stop_name"] == destination]["stop_id"].values[0]
+    start_trips = set(stop_times[stop_times["stop_id"] == start_trips]["trip_id"].values)
+    end_trips = set(stop_times[stop_times["stop_id"] == end_trips]["trip_id"].values)
+    r = start_trips.intersection(end_trips)
+    r = r.intersection(route_trips)
+    r = r.intersection(day_trips)
+    I = None
+    O = None
+
+    for trip in r:
+        if re.search(".I$", trip):
+            I = trip
+            break
+
+    for trip in r:
+        if re.search(".O$", trip):
+            O = trip
+            break
+    print(O)
+    print(I)
+    if O != None and (
+            (stop_times[(stop_times["trip_id"] == O) & (stop_times["stop_id"] == start_trips)]["stop_sequence"].values[0]) < (
+    stop_times[(stop_times["trip_id"] == O) & (stop_times["stop_id"] == end_trips)]["stop_sequence"].values[0])):
+        correct_direction = [trip for trip in r if re.search(".O$", trip)]
+    elif I != None and (
+            (stop_times[(stop_times["trip_id"] == I) & (stop_times["stop_id"] == start_trips)]["stop_sequence"].values[0]) < (
+    stop_times[(stop_times["trip_id"] == I) & (stop_times["stop_id"] == end_trips)]["stop_sequence"].values[0])):
+        correct_direction = [trip for trip in r if re.search(".I$", trip)]
+    final = stop_times[(stop_times["trip_id"].isin(correct_direction)) & (stop_times["stop_id"] == start_trips)][
+        ["trip_id", "arrival_time"]]
+    final["arrival_time"] = abs(final["arrival_time"] - pd.to_timedelta(departure))
+    final = final.sort_values(by="arrival_time")
+    tripid = final.iloc[0]["trip_id"]
+    seq = stop_times[stop_times["trip_id"] == tripid][["stop_id", "stop_sequence"]].sort_values(by="stop_sequence")
+    rstart = seq[seq["stop_id"] == start_trips].index[0]
+    rfin = seq[seq["stop_id"] == end_trips].index[0]
+    test = seq.loc[rstart:rfin]
+    final = test.merge(stops, how='left', on='stop_id')
+    flist = list(final["stop_name"].values)
+    flist = [stop.split(" stop ")[1] for stop in flist]
+    return flist
+

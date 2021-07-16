@@ -180,10 +180,8 @@ function get_predict(directions_response){
     }
     var line = first_bus["transit"]["line"]["short_name"]
     var departure = first_bus["transit"]["departure_time"]["value"].getTime()
-    var olat = first_bus["transit"]["arrival_stop"]["location"]["lat"]
-    var olng = first_bus["transit"]["arrival_stop"]["location"]["lng"]
-    var dlat = first_bus["transit"]["departure_stop"]["location"]["lat"]
-    var dlng = first_bus["transit"]["departure_stop"]["location"]["lng"]
+    var origin = first_bus["transit"]["departure_stop"]["name"]
+    var destination = first_bus["transit"]["arrival_stop"]["name"]
 
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var date = $('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"];
@@ -196,10 +194,8 @@ function get_predict(directions_response){
             dayofservice: datetime,
             line: line,
             departure: departure,
-            olat: olat,
-            olng: olng,
-            dlat: dlat,
-            dlng: dlng,
+            origin: origin,
+            destination: destination,
             day: day,
             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             action: 'post'
