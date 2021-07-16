@@ -26,16 +26,21 @@ def model(request):
         DayOfService = int(request.POST.get('dayofservice')) *1e6
         day = request.POST.get('day')
         LineId = request.POST.get('line')
-        lat = float(request.POST.get('lat'))
-        lng = float(request.POST.get('lng'))
-        TPlannedTime_Arr = int(request.POST.get('expectedarrival')) * 1e-3
+        olat = float(request.POST.get('olat'))
+        olng = float(request.POST.get('olng'))
+        dlat = float(request.POST.get('dlat'))
+        dlng =  float(request.POST.get('dlng'))
+
+        departure = str(request.POST.get('departure'))
 
         print(DayOfService)
         print(day)
         print(LineId)
-        print(lat)
-        print(lng)
-        print(TPlannedTime_Arr)
+        print(olat)
+        print(olng)
+        print(dlat)
+        print(dlng)
+        print(departure)
 
         days = {"Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday": 0, "Sunday": 0}
         days[day] = 1
