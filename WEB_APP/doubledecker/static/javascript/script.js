@@ -167,7 +167,7 @@ function get_predict(directions_response){
         for (var step_option in step_options){
             if (step_option == "transit"){
                 console.log(step_options[step_option])
-                if (step_options[step_option]["line"]["agencies"][0]["name"] == "Dublin Bus") {
+                if (step_options[step_option]["line"]["agencies"][0]["name"].includes("Dublin Bus")) {
                     first_bus = step_options
                 }
 
@@ -180,8 +180,10 @@ function get_predict(directions_response){
     }
     var line = first_bus["transit"]["line"]["short_name"]
     var departure = first_bus["transit"]["departure_time"]["value"].getTime()
-    var origin = first_bus["transit"]["departure_stop"]["name"]
-    var destination = first_bus["transit"]["arrival_stop"]["name"]
+    var olat = first_bus["transit"]["departure_stop"]["location"]["lat"]
+    var olng = first_bus["transit"]["departure_stop"]["location"]["lng"]
+    var dlat = first_bus["transit"]["arrival_stop"]["location"]["lat"]
+    var dlng = first_bus["transit"]["arrival_stop"]["location"]["lng"]
 
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var date = $('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"];
@@ -193,18 +195,20 @@ function get_predict(directions_response){
         data: {
             dayofservice: datetime,
             line: line,
+            olat: olat,
+            olng: olng,
+            dlat: dlat,
+            dlng: dlng,
             departure: departure,
-            origin: origin,
-            destination: destination,
             day: day,
             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             action: 'post'
         },
         success: function (json) {
-            document.getElementById("result").innerHTML = "<h2> Expected bus arrival time: " +json['result'] + "</h2>>"
+            document.getElementById("result").innerHTML = "<h2> Expected journey time: " +json['result'] + "</h2>"
         },
         error: function (xhr, errmsg, err) {
-
+            console.log("error")
         }
     });
 }

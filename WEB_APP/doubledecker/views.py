@@ -1,6 +1,6 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
-
+import math
 from django.shortcuts import render
 # origionated from https://docs.djangoproject.com/en/3.2/intro/tutorial01/
 from django.http import HttpResponse
@@ -41,14 +41,11 @@ def model(request):
         olng = float(request.POST.get('olng'))
         dlat = float(request.POST.get('dlat'))
         dlng =  float(request.POST.get('dlng'))
+        print(olat, olng)
+        print(dlat, dlng)
+        origin = stops[(stops["stop_lat"] > floor(olat * 1000)/ 1000) & (stops["stop_lat"] < ceil(olat * 1000) / 1000) & (stops["stop_lon"] < ceil(olng * 1000) / 1000) & (stops["stop_lon"] > floor(olng * 1000) / 1000)][:1]["stop_name"].values[0]
 
-        origin = RouteStops.objects.all().filter(stop_lat__lt=ceil((olat * 1000) / 1000)).filter(
-            stop_lat__gt=floor((olat * 1000) / 1000)).filter(stop_lon__lt=(ceil(olng * 1000) / 1000)).filter(
-            stop_lon__gt=(floor(olng * 1000) / 1000)).first()
-
-        destination = RouteStops.objects.all().filter(stop_lat__lt=ceil((dlat * 1000) / 1000)).filter(
-            stop_lat__gt=floor((dlat * 1000) / 1000)).filter(stop_lon__lt=(ceil(dlng * 1000) / 1000)).filter(
-            stop_lon__gt=(floor(dlng * 1000) / 1000)).first()
+        destination = stops[(stops["stop_lat"] > floor(dlat * 1000)/ 1000) & (stops["stop_lat"] < ceil(dlat * 1000) / 1000) & (stops["stop_lon"] < ceil(dlng * 1000) / 1000) & (stops["stop_lon"] > floor(dlng * 1000) / 1000)][:1]["stop_name"].values[0]
 
         departure = int(request.POST.get('departure'))
         departure = datetime.fromtimestamp(departure/ 1e3).strftime("%H:%M:%S")
@@ -69,50 +66,83 @@ def model(request):
         msl = getattr(current, 'pressure')
         rhum = getattr(current, 'humidity')
 
-        get_route(departure, origin, destination, day, LineId)
-
-
-
-
         # https://stackoverflow.com/questions/11218477/how-can-i-use-pickle-to-save-a-dict
-        with open('distances.pickle', 'rb') as handle:
+        with open('../DATA_ANALYTICS/journeytimes.pickle', 'rb') as handle:
+            journeytimes = pickle.load(handle)
+        # https://stackoverflow.com/questions/11218477/how-can-i-use-pickle-to-save-a-dict
+        with open('../DATA_ANALYTICS/distances.pickle', 'rb') as handle:
             distances = pickle.load(handle)
 
-        features = {'Monday': 0, 'Tuesday': 0, 'Wednesday': 0,
-         'Thursday': 0, 'Friday': 0, 'Saturday': 0, 'Sunday': 0,
-        # timetabledtimes
+        routes = get_route(departure, origin, destination, day, LineId)
+        # from www.mummypages.ie%2Fschool-calendar-and-holidays-20172018-republic-of-ireland&usg=AOvVaw0I7h3OF8HhiK1Om33irR_P
+        # assume june july and august all schools off and we are using monthly data so do not need to give model that detail for those months as will be constant col
+        holidays = ['2018-01-01','2018-01-02','2018-01-03','2018-01-04','2018-01-05','2018-02-12','2018-02-13','2018-02-14','2018-02-15','2018-02-16','2018-03-23','2018-03-23','2018-03-26','2018-03-27','2018-03-28','2018-03-29','2018-03-30','2018-04-02','2018-04-03','2018-04-04','2018-04-05','2018-04-06','2018-05-01','2018-10-29','2018-10-30','2018-10-31','2018-11-01','2018-11-02','2018-12-24','2018-12-25','2018-12-26','2018-12-27','2018-12-28','2018-12-31']
+        holiday = 0
+        if datetime.fromtimestamp(1.62639e+18/ 1e9).strftime("%Y-%m-%d") in holidays:
+            holiday = 1
 
-        # distances
+        total_time = 0
+        for route in routes:
+            print(route)
+            try:
+                timetabledjourneytime = math.log(journeytimes[route])
+                distance = math.log(distances[route])
+            except IndexError as e:
+                return JsonResponse({'result': "NO PREDICTION AVAILABLE"}, safe=False)
 
-        'rain': 0, 'temp': 0, 'rhum': 0, 'msl': 0,
-        # holiday
+            features = {'Monday': 0, 'Tuesday': 0, 'Wednesday': 0,
+             'Thursday': 0, 'Friday': 0, 'Saturday': 0, 'Sunday': 0,
+            # timetabledtimes
+            'timetabledtimes': timetabledjourneytime,
+            # distances
+            'distance': distance,
+            'rain': 0, 'temp': 0, 'rhum': 0, 'msl': 0,
+            # holiday
+            'holiday': holiday,
+            # hour
+            "hour_0": 0,
+            "hour_1": 0,
+            "hour_5": 0,
+            "hour_6": 0,
+            "hour_7": 0,
+            "hour_8": 0,
+            "hour_9": 0,
+            "hour_10": 0,
+            "hour_11": 0,
+            "hour_12": 0,
+            "hour_13": 0,
+            "hour_15": 0,
+            "hour_16": 0,
+            "hour_17": 0,
+            "hour_18": 0,
+            "hour_19": 0,
+            "hour_20": 0,
+            "hour_21": 0,
+            "hour_22": 0,
+            "hour_23": 0,
+            }
 
-        # hour
-        }
-        features["TPlannedTime_Arr"] = TPlannedTime_Arr
-        features["stoppointid"] = stoppointid
-        features["TPlannedTime_Arr"] = TPlannedTime_Arr
-        for day in days:
-            features[day] = days[day]
-        features["rain"] = rain
-        features["temp"] = temp
-        features["rhum"] = rhum
-        features["msl"] = msl
-        if str("LineId_" + LineId) in features.keys():
-            features["LineId_" + LineId] = 1
-        else:
-            return JsonResponse({'result': "NO PREDICTION AVAILABLE"}, safe=False)
-        model = load("../DATA_ANALYTICS/MODELS/january.joblib")
-        extracted_features = list(features.values())
-        print(extracted_features)
-        result = model.predict([extracted_features])
-        print("result", result[0])
-        arrival_time  = datetime.datetime.fromtimestamp(floor(result[0]) + (DayOfService * 1e-9)).strftime("%m/%d/%Y, %H:%M:%S")
+            for day in days:
+                features[day] = days[day]
+            features["rain"] = rain
+            features["temp"] = temp
+            features["rhum"] = rhum
+            features["msl"] = msl
+            features["hour" + "_" + departure.split(":")[1]] = 1
+            model = load("../DATA_ANALYTICS/MODELS/january.joblib")
+            extracted_features = list(features.values())
+            print(extracted_features)
+            result = model.predict([extracted_features])
+            total_time += math.e ** result[0]
+            print("segment time:", math.e ** result[0])
+    print("total time:", total_time)
+    arrival_time = str(timedelta(seconds=total_time))
     return JsonResponse({'result': arrival_time}, safe=False)
 
 
 def get_route(departure, origin, destination, day, bus_route):
     day = day.lower()
+    bus_route = bus_route.lower()
     days = list(calendar[calendar[day] == 1]["service_id"].values)
     day_trips = set(trips[trips["service_id"].isin(days)]["trip_id"].values)
     route_trips = set(
@@ -120,14 +150,14 @@ def get_route(departure, origin, destination, day, bus_route):
             "trip_id"].values)
     start_trips = stops[stops["stop_name"] == origin]["stop_id"].values[0]
     end_trips = stops[stops["stop_name"] == destination]["stop_id"].values[0]
-    start_trips = set(stop_times[stop_times["stop_id"] == start_trips]["trip_id"].values)
-    end_trips = set(stop_times[stop_times["stop_id"] == end_trips]["trip_id"].values)
-    r = start_trips.intersection(end_trips)
+    start = set(stop_times[stop_times["stop_id"] == start_trips]["trip_id"].values)
+    end = set(stop_times[stop_times["stop_id"] == end_trips]["trip_id"].values)
+
+    r = start.intersection(end)
     r = r.intersection(route_trips)
     r = r.intersection(day_trips)
     I = None
     O = None
-
     for trip in r:
         if re.search(".I$", trip):
             I = trip
@@ -139,13 +169,18 @@ def get_route(departure, origin, destination, day, bus_route):
             break
     print(O)
     print(I)
+    correct_direction = []
     if O != None and (
-            (stop_times[(stop_times["trip_id"] == O) & (stop_times["stop_id"] == start_trips)]["stop_sequence"].values[0]) < (
-    stop_times[(stop_times["trip_id"] == O) & (stop_times["stop_id"] == end_trips)]["stop_sequence"].values[0])):
+            (stop_times[(stop_times["trip_id"] == O) & (stop_times["stop_id"] == start_trips)]["stop_sequence"].values[
+                0]) < (
+                    stop_times[(stop_times["trip_id"] == O) & (stop_times["stop_id"] == end_trips)][
+                        "stop_sequence"].values[0])):
         correct_direction = [trip for trip in r if re.search(".O$", trip)]
     elif I != None and (
-            (stop_times[(stop_times["trip_id"] == I) & (stop_times["stop_id"] == start_trips)]["stop_sequence"].values[0]) < (
-    stop_times[(stop_times["trip_id"] == I) & (stop_times["stop_id"] == end_trips)]["stop_sequence"].values[0])):
+            (stop_times[(stop_times["trip_id"] == I) & (stop_times["stop_id"] == start_trips)]["stop_sequence"].values[
+                0]) < (
+                    stop_times[(stop_times["trip_id"] == I) & (stop_times["stop_id"] == end_trips)][
+                        "stop_sequence"].values[0])):
         correct_direction = [trip for trip in r if re.search(".I$", trip)]
     final = stop_times[(stop_times["trip_id"].isin(correct_direction)) & (stop_times["stop_id"] == start_trips)][
         ["trip_id", "arrival_time"]]
@@ -159,5 +194,8 @@ def get_route(departure, origin, destination, day, bus_route):
     final = test.merge(stops, how='left', on='stop_id')
     flist = list(final["stop_name"].values)
     flist = [stop.split(" stop ")[1] for stop in flist]
-    return flist
-
+    final_routes = []
+    for i in range(len(flist) - 1):
+        final_routes.append(flist[i] + "_" + flist[i+1])
+    final_routes
+    return final_routes
