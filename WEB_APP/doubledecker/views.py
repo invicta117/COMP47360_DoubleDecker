@@ -126,10 +126,11 @@ def model(request):
             features["temp"] = temp
             features["rhum"] = rhum
             features["msl"] = msl
-            features["hour" + "_" + departure.split(":")[1]] = 1
+            hour = departure.split(":")[0]
+            features["hour" + "_" + hour[1:] if hour.startswith("0") else "hour" + "_" + hour] = 1
             model = load("../DATA_ANALYTICS/MODELS/january.joblib")
             extracted_features = list(features.values())
-            print(extracted_features)
+            print(features)
             result = model.predict([extracted_features])
             total_time += math.e ** result[0]
             print("segment time:", math.e ** result[0])

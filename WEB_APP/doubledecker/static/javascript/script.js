@@ -186,7 +186,8 @@ function get_predict(directions_response){
     var dlng = first_bus["transit"]["arrival_stop"]["location"]["lng"]
 
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var date = $('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"];
+    var date = new Date($('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"]);
+    console.log(date)
     var datetime = date.setHours(0, 0, 0, 0)
     var day = days[date.getDay()]
     $.ajax({
