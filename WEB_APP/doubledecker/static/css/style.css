@@ -127,7 +127,7 @@ small {
 .navbar{
     width: 300px;
     height: 100%;
-    background-color: rgb(219, 252, 252, 0.4);
+    background-color: rgba(219, 252, 252, 0.4);
     position: fixed;
     top: 0;
     right: -300px;
@@ -344,4 +344,9 @@ input[type=text] {
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 15px;
+}
+
+#expectedtime {
+    padding: 10px;
+    font-weight: bold;
 }
