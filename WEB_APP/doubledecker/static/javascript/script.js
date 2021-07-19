@@ -208,7 +208,7 @@ function get_predict(directions_response){
     var day = days[date.getDay()]
     $.ajax({
         type: 'POST',
-        url: 'http://127.0.0.1:8000/model/',
+        url: './model/',
         data: {
             dayofservice: datetime,
             line: line,
