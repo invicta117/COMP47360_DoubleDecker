@@ -1,6 +1,6 @@
 import datetime
 from sqlalchemy.orm import sessionmaker
-from models.WeatherModel import Weather
+from modelLevel.WeatherModel import Weather
 
 class weather_dao:
     # init method get engine from variable.
