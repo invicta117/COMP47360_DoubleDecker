@@ -22,7 +22,7 @@ function ShowCurrentWeather(){
             return response.json();
         })
         .then((data) => {
-            weather.temperature.value = Math.floor(data['temperature'] - 273);
+            weather.temperature.value = Math.floor(data['temperature']);
             weather.description = data['description'];
             weather.iconId = data['weather_icon'];
             weather.city = 'Dublin City';
