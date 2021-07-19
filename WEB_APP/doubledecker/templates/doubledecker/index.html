@@ -90,95 +90,102 @@
               <a class="nav-link" href="#">Plan</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/explore">Explore</a>
+              <a class="nav-link" href="/explore/">Explore</a>
             </li>
           </ul>
         </nav>
       </div>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-4">
-            <!-- Current Weather Feature -->
-            <div class="container">
-              <div class="app-title">
-                <p>Weather</p>
-              </div>
-              <div class="notification"></div>
-              <div class="weather-container">
-                <div class="weather-icon">
-                  <img src="{% static '/icons/unknown.png' %}" alt="" />
+      <div id="container">
+        <div class="glass">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-4">
+                <!-- Current Weather Feature -->
+                <div class="container">
+                  <div class="app-title">
+                    <p>Weather</p>
+                  </div>
+                  <div class="notification"></div>
+                  <div class="weather-container">
+                    <div class="weather-icon">
+                      <img src="{% static '/icons/unknown.png' %}" alt="" />
+                    </div>
+                    <div class="temperature-value">
+                      <p>- °<span>C</span></p>
+                    </div>
+                    <div class="temperature-description">
+                      <p>-</p>
+                    </div>
+                    <div class="location"></div>
+                  </div>
                 </div>
-                <div class="temperature-value">
-                  <p>- °<span>C</span></p>
-                </div>
-                <div class="temperature-description">
-                  <p>-</p>
-                </div>
-                <div class="location"></div>
-              </div>
-            </div>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Origin</span>
-              </div>
-              <input
-                id="from"
-                class="form-control"
-                type="text"
-                placeholder=""
-              />
-              <div class="input-group-prepend">
-                <span class="input-group-text">Destination</span>
-              </div>
-              <input id="to" class="controls" type="text" placeholder="" />
-            </div>
+                <!--input group for origin and destination-->
+                <form>
+                  <input
+                    class="text pill"
+                    type="text"
+                    id="from"
+                    name="from"
+                    placeholder="Enter Origin Address..."
+                  />
+                  <input
+                    class="text pill"
+                    type="text"
+                    id="to"
+                    name="to"
+                    placeholder="Enter Destination Address..."
+                  />
+                </form>
 
-            <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
-            <div
-              class="input-group date"
-              id="datetimepicker1"
-              data-target-input="nearest"
-            >
-              <input
-                type="text"
-                class="form-control datetimepicker-input"
-                data-target="#datetimepicker1"
-              />
-              <div
-                class="input-group-append"
-                data-target="#datetimepicker1"
-                data-toggle="datetimepicker"
-              >
-                <div class="input-group-text">
-                  <i class="fa fa-calendar"></i>
+                <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
+
+                <div
+                  class="input-group date"
+                  id="datetimepicker1"
+                  data-target-input="nearest"
+                >
+                  <input
+                    type="text"
+                    class="form-control datetimepicker-input"
+                    data-target="#datetimepicker1"
+                  />
+                  <div
+                    class="input-group-append"
+                    data-target="#datetimepicker1"
+                    data-toggle="datetimepicker"
+                  >
+                    <div class="input-group-text">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                  </div>
                 </div>
+
+                <div class="inputContiner">
+                  <span class="input-group-btn">
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      onclick="findRoute()"
+                    >
+                      Search
+                    </button>
+                  </span>
+                  <span class="input-group-btn">
+                    <button
+                      class="btn btn-secondary"
+                      onclick="getLocation()"
+                      type="button"
+                    >
+                      Current Location
+                    </button>
+                  </span>
+                </div>
+                <div id="sidebar"></div>
+              </div>
+              <div class="col-md-8 ml-md-auto">
+                <div id="map"></div>
               </div>
             </div>
-
-            <div class="inputConatiner">
-              <span class="input-group-btn">
-                <button
-                  class="btn btn-primary"
-                  type="button"
-                  onclick="findRoute()"
-                >
-                  Search
-                </button>
-              </span>
-              <span class="input-group-btn">
-                <button
-                  class="btn btn-secondary"
-                  onclick="getLocation()"
-                  type="button"
-                >
-                  Add Current Location To Origin
-                </button>
-              </span>
-            </div>
-            <div id="sidebar"></div>
-          </div>
-          <div class="col-md-8 ml-md-auto">
-            <div id="map"></div>
           </div>
         </div>
       </div>
