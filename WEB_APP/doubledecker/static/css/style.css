@@ -1,21 +1,347 @@
-html, body{
-    padding: 0;
-    margin: 0;
-}
+
 #map {
+  width: 100%;
+  height: 580px;
+  padding-top: 20px;
+}
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+    background-color: #FFDEE9;
+    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+      
+    font: normal 15px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    align-items:center;
+}
+
+p {
+    line-height: 20px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-family: 'Crete Round', serif;
+    font-weight: bold;
+    color: #444;
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-weight: 300;
+    color: #444;
+    font-size: 55px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+}
+h3 {
+    font-size: 30px;
+    color: #444;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+}
+h4 {
+    font-size: 24px;
+    color: #F08080;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+h5 {
+    font-size: 15px;
+    color: #444;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+a {
+    text-decoration: none;
+    color: #4A5759;
+}
+a:hover {
+    color: #4A5759;
+}
+strong {
+    font-weight: bold;
+}
+small {
+    font-size: 13px;
+    color: #777;
+    font-style: italic;
+}
+.row.justify-content-center{
+    padding: 5px;
+}
+
+.container-fluid{
+    padding-top:150px;
+}
+#abs1 {
+    z-index: 5;
+    position: absolute;
+  }
+.input-group{
+    padding: 10px;
+}
+
+.container-nav{
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+}
+
+.hamburger-menu{
+    width: 35px;
+    height: 30px;
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.line{
+    width: 100%;
+    height: 3px;
+    background-color: #F08080;
+    transition: 0.8s;
+}
+
+.change .line-1 {
+    transform: rotateZ(-405deg) translate(-8px, 6px);
+}
+
+.change .line-2{
+    opacity: 0;
+}
+
+.change .line-3 {
+    transform: rotateZ(405deg) translate(-8px, -6px);
+}
+
+
+.navbar{
+    width: 300px;
+    height: 100%;
+    background-color: rgb(219, 252, 252, 0.4);
+    position: fixed;
+    top: 0;
+    right: -300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20% 0 0 60%;
+    transition: right .8s cubic-bezier(1, 0, 0, 1);
+}
+
+.change{
+    right: 0;
+}
+
+.nav-list{
+    text-align: center;
+}
+
+.nav-item{
+    list-style: none;
+    margin: 25px;
+}
+
+.nav-link{
+    text-decoration: none;
+    font-size: 22px;
+    color: #4A5759;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    padding: 3px 0;
+}
+
+.nav-link::before,
+.nav-link::after{
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: #F08080;
+    position: absolute;
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.5s;
+}
+
+.nav-link::after{
+    bottom: 0;
+    transform-origin: right;
+}
+
+.nav-link::before{
+    top: 0;
+    transform-origin: left;
+}
+
+.nav-link:hover::before,
+.nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+
+.location {
+    text-align: center;
+    padding: 0;
+    margin: 0 auto;
+    font-size: 2.1em;
+}
+
+/* input for origin and destination  */
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 6px 0;
+    box-sizing: border-box;
+  }
+
+
+
+#container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 95%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.glass {
+	position: absolute;
+	box-sizing: border-box;
+	width: 90%;
+	height: 90%;
+	background: linear-gradient(
+		107.18deg,
+		rgba(255, 255, 255, 0.6) 0%,
+		rgba(255, 255, 255, 0.3) 100%
+	);
+    
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border-radius: 30px;
+	border: 1px solid rgba(255, 255, 255, 0.7);
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+}
+
+[class*="text"] {
+    box-sizing: border-box;
+    color: #222222;
+    display: inline-block;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    padding: .66em 1em;
+    text-decoration: none;
+    transition: 0.15s;
+}
+
+.pill {
+    border-radius: 500px;
+}
+
+/*CSS code for the weather */
+
+*{
+    font-family: "Rimouski";
     margin: 0;
     padding: 0;
-height: 80vh;
-/* The height is 400 pixels */
-width: 100vw;
-/* The width is the width of the web page */
+} 
+
+.app-title{
+    width: 300px;
+    height: 50px;
+    border-radius: 10px 10px 0 0;
 }
-#content{
-    width: 100vw;
-    height: 20vh;
-    background: rgb(235,235,235);
+
+.app-title p{
+    text-align: center;
+    padding: 15px;
+    margin: 0 auto;
+    font-size: 1.2em;
+    color: #F08080;
 }
-.container{
-    padding: 10px;
-    height: 10vh;
+
+.notification{
+    background-color: #f8d7da;
+    display: none;
+}
+
+.notification{
+    color: #721c24;
+    font-size: 1.2em;
+    margin: 0;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.weather-container {
+    width: 300px;
+    height: 260px;
+}
+
+.weather-icon{
+    width: 300px;
+    height: 128px;
+}
+
+.weather-icon img{
+    display: block;
+    margin: 0 auto;
+}
+
+.temperature-value{
+    width: 300px;
+    height:60px;
+}
+
+.temperature-value{
+    padding: 0;
+    margin: 0;
+    color: #293251;
+    font-size: 4em;
+    text-align: center;
+    cursor: pointer;
+}
+
+.temperature-value span{
+    color: #293251;
+    font-size: 0.5em;
+}
+
+.temperature-description{
+    padding: 8px;
+    margin: 0;
+    color: #293251;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+
+.location{
+    margin: 0;
+    padding: 0;
+    color: #293251;
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.inputConatiner{
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 15px;
 }
