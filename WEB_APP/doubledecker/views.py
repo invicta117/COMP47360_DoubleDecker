@@ -32,6 +32,7 @@ def explore_view(request):
     return render(request, 'doubledecker/explore.html')
 
 
+
 # from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html
 def model(request):
     if request.POST.get('action') == 'post':
@@ -233,3 +234,7 @@ def get_route(departure, olat, olng, dlat, dlng, day, bus_route):
     tripid = best_trip_for_time(r, departure, o_id)
     station_route = station_to_station(tripid, o_id, d_id)
     return station_route
+
+# def explore_vue(request):
+#     return render(request, 'doubledecker/explore_vue.html')
+
