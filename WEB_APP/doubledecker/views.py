@@ -22,6 +22,15 @@ trips = pd.read_csv("../DATA_ANALYTICS/RAW_DATA/gtfs/trips.txt", delimiter=",")
 calendar = pd.read_csv("../DATA_ANALYTICS/RAW_DATA/gtfs/calendar.txt", delimiter=",")
 stop_times["arrival_time"] = pd.to_timedelta(stop_times["arrival_time"])
 
+# https://stackoverflow.com/questions/11218477/how-can-i-use-pickle-to-save-a-dict
+with open('../DATA_ANALYTICS/journeytimes.pickle', 'rb') as handle:
+    journeytimes = pickle.load(handle)
+# https://stackoverflow.com/questions/11218477/how-can-i-use-pickle-to-save-a-dict
+with open('../DATA_ANALYTICS/distances.pickle', 'rb') as handle:
+    distances = pickle.load(handle)
+
+loadedmodel = load("../DATA_ANALYTICS/MODELS/january.joblib")
+
 
 def main(request):  # origionated from  https://docs.djangoproject.com/en/3.2/intro/tutorial01/
     return render(request, 'doubledecker/index.html')
@@ -59,17 +68,12 @@ def model(request):
         days[day] = 1
 
         current = Weather.objects.order_by('current').first()
-        temp = (getattr(current, 'temperature') - 273) # convert to celcius
+        temp = (getattr(current, 'temperature'))
         rain = getattr(current, 'rain_1h')
         msl = getattr(current, 'pressure')
         rhum = getattr(current, 'humidity')
 
-        # https://stackoverflow.com/questions/11218477/how-can-i-use-pickle-to-save-a-dict
-        with open('../DATA_ANALYTICS/journeytimes.pickle', 'rb') as handle:
-            journeytimes = pickle.load(handle)
-        # https://stackoverflow.com/questions/11218477/how-can-i-use-pickle-to-save-a-dict
-        with open('../DATA_ANALYTICS/distances.pickle', 'rb') as handle:
-            distances = pickle.load(handle)
+
 
         routes = get_route(departure, olat, olng, dlat, dlng, day, LineId)
         # from www.mummypages.ie%2Fschool-calendar-and-holidays-20172018-republic-of-ireland&usg=AOvVaw0I7h3OF8HhiK1Om33irR_P
@@ -81,7 +85,6 @@ def model(request):
 
         total_time = 0
         for route in routes:
-            print(route)
             try:
                 timetabledjourneytime = math.log(journeytimes[route])
                 distance = math.log(distances[route])
@@ -129,13 +132,11 @@ def model(request):
             features["msl"] = msl
             hour = departure.split(":")[0]
             features["hour" + "_" + hour[1:] if hour.startswith("0") else "hour" + "_" + hour] = 1
-            model = load("../DATA_ANALYTICS/MODELS/january.joblib")
             extracted_features = list(features.values())
-            print(features)
-            result = model.predict([extracted_features])
+
+            result = loadedmodel.predict([extracted_features])
             total_time += math.e ** result[0]
-            print("segment time:", math.e ** result[0])
-    print("total time:", total_time)
+
     arrival_time = str(timedelta(seconds=total_time))
     return JsonResponse({'result': arrival_time}, safe=False)
 
