@@ -113,10 +113,10 @@ function initMap() {
 }
 initMap()
 
+
 function findRoute() {
     calculateAndDisplayRoute(directionsService, directionsRenderer);
 }
-
 
 // the following code is based on the google docs documentation from https://developers.google.com/maps/documentation/javascript/directions
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
@@ -141,6 +141,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
             if (status == 'OK') {
                 console.log(response)
                 directionsRenderer.setDirections(response);
+                get_predict(response)
             }
         });
     } else {
@@ -156,15 +157,77 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
                 modes: ["BUS"]
             }
         };
-        console.log(latlng)
         console.log(request)
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
                 console.log(response)
                 directionsRenderer.setDirections(response);
+                get_predict(response)
             }
         });
     }
+}
+
+// from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html
+$(document).on('submit', '#post-form',function (e) {
+    e.preventDefault();
+    findRoute()
+
+})
+
+function get_predict(directions_response){
+    var first_bus = null;
+    var steps = directions_response["routes"][0]["legs"][0]["steps"]
+    for(var step in steps){
+        var step_options = directions_response["routes"][0]["legs"][0]["steps"][step]
+        for (var step_option in step_options){
+            if (step_option == "transit"){
+                console.log(step_options[step_option])
+                if (step_options[step_option]["line"]["agencies"][0]["name"].includes("Dublin Bus")) {
+                    first_bus = step_options
+                }
+
+            }
+        }
+    }
+    if (first_bus == null){
+        document.getElementById("result").innerHTML = "<h2> No Dublin Bus on Route "+ "</h2>"
+        return
+    }
+    var line = first_bus["transit"]["line"]["short_name"]
+    var departure = first_bus["transit"]["departure_time"]["value"].getTime()
+    var olat = first_bus["transit"]["departure_stop"]["location"]["lat"]
+    var olng = first_bus["transit"]["departure_stop"]["location"]["lng"]
+    var dlat = first_bus["transit"]["arrival_stop"]["location"]["lat"]
+    var dlng = first_bus["transit"]["arrival_stop"]["location"]["lng"]
+
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var date = new Date($('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"]);
+    console.log(date)
+    var datetime = date.setHours(0, 0, 0, 0)
+    var day = days[date.getDay()]
+    $.ajax({
+        type: 'POST',
+        url: 'http://127.0.0.1:8000/model/',
+        data: {
+            dayofservice: datetime,
+            line: line,
+            olat: olat,
+            olng: olng,
+            dlat: dlat,
+            dlng: dlng,
+            departure: departure,
+            day: day,
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        success: function (json) {
+            document.getElementById("result").innerHTML = "<h2> Expected journey time: " +json['result'] + "</h2>"
+        },
+        error: function (xhr, errmsg, err) {
+            console.log("error")
+        }
+    });
 }
 
 // the following is based on the code presented in https://www.youtube.com/watch?v=BkGtNBrOhKU also available at https://github.com/sammy007-debug/Google-map-distance-api
