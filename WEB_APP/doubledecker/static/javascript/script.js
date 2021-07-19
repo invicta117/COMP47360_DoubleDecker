@@ -222,7 +222,7 @@ function get_predict(directions_response){
             action: 'post'
         },
         success: function (json) {
-            document.getElementById("result").innerHTML = "<h2> Expected journey time: " +json['result'] + "</h2>"
+            document.getElementById("result").innerHTML = "<p id='expectedtime'> Expected journey time: " +json['result'] + "</p>"
         },
         error: function (xhr, errmsg, err) {
             console.log("error")

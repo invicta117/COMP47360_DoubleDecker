@@ -174,33 +174,23 @@
                     </button>
                   </span>
                 </div>
-                <div id="sidebar"></div>
+                <div id="result"></div>
+                  <div id="sidebar"></div>
               </div>
               <div class="col-md-8 ml-md-auto">
                 <div id="map"></div>
               </div>
             </div>
+
           </div>
         </div>
 
-
-        <div class="inputConatiner">
-
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" onclick="getLocation()" type="button">
-              Add Current Location To Origin
-            </button>
-          </span>
-        </div>
 
                       <!-- from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html-->
           <form action="" id="post-form">
                 {% csrf_token %}
           <span class="input-group-btn">
-          </span>
-                <button type="submit" value="Submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Submit</button>
-            </form>
-          <div id="result"></div>
+
         <div id="sidebar"></div>
 
 
@@ -213,12 +203,6 @@
 
       </div>
     </div>
-
-
-  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&libraries=places">
-  </script>
-  <script src="{% static 'javascript/CurrentWeather.js' %}"></script>
 
 
 <script>
