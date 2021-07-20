@@ -140,8 +140,11 @@ def model(request):
         result = loadedmodel.predict(df)
         #print(result)
         total_time += sum([math.e ** r for r in result])
-
-    arrival_time = str(timedelta(seconds=total_time))
+    time = str(timedelta(seconds=total_time))
+    hours = int(time.split(":")[0])
+    mins = int(time.split(":")[1])
+    sec = float(time.split(":")[2])
+    arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds".format(hours, mins, sec)
     return JsonResponse({'result': arrival_time}, safe=False)
 
 
