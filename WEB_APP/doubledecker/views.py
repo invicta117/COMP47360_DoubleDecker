@@ -52,17 +52,17 @@ def model(request):
         olng = float(request.POST.get('olng'))
         dlat = float(request.POST.get('dlat'))
         dlng =  float(request.POST.get('dlng'))
-        print(olat, olng)
-        print(dlat, dlng)
+        #print(olat, olng)
+        #print(dlat, dlng)
 
 
         departure = int(request.POST.get('departure'))
         departure = datetime.fromtimestamp(departure/ 1e3).strftime("%H:%M:%S")
 
-        print(DayOfService)
-        print(day)
-        print(LineId)
-        print(departure)
+        #print(DayOfService)
+        #print(day)
+        #print(LineId)
+        #print(departure)
 
         days = {"Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday": 0, "Sunday": 0}
         days[day] = 1
@@ -84,6 +84,15 @@ def model(request):
             holiday = 1
 
         total_time = 0
+        df = pd.DataFrame(columns=['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+                                   'timetabledtimes',
+                                   'distance',
+                                   'rain', 'temp', 'rhum', 'msl',
+                                   'holiday',
+                                   'hour_0', 'hour_1', 'hour_5', 'hour_6', 'hour_7', 'hour_8', 'hour_9', 'hour_10',
+                                   'hour_11', 'hour_12', 'hour_13', 'hour_14',
+                                   'hour_15', 'hour_16', 'hour_17', 'hour_18', 'hour_19', 'hour_20', 'hour_21',
+                                   'hour_22', 'hour_23'])
         for route in routes:
             try:
                 timetabledjourneytime = math.log(journeytimes[route])
@@ -91,8 +100,7 @@ def model(request):
             except IndexError as e:
                 return JsonResponse({'result': "NO PREDICTION AVAILABLE"}, safe=False)
 
-            features = {'Monday': 0, 'Tuesday': 0, 'Wednesday': 0,
-             'Thursday': 0, 'Friday': 0, 'Saturday': 0, 'Sunday': 0,
+            features = {'Monday': 0, 'Tuesday': 0, 'Wednesday': 0,'Thursday': 0, 'Friday': 0, 'Saturday': 0, 'Sunday': 0,
             # timetabledtimes
             'timetabledtimes': timetabledjourneytime,
             # distances
@@ -101,12 +109,7 @@ def model(request):
             # holiday
             'holiday': holiday,
             # hour
-            "hour_0": 0,
-            "hour_1": 0,
-            "hour_5": 0,
-            "hour_6": 0,
-            "hour_7": 0,
-            "hour_8": 0,
+            "hour_0": 0,"hour_1": 0,"hour_5": 0,"hour_6": 0,"hour_7": 0,"hour_8": 0,
             "hour_9": 0,
             "hour_10": 0,
             "hour_11": 0,
@@ -132,10 +135,11 @@ def model(request):
             features["msl"] = msl
             hour = departure.split(":")[0]
             features["hour" + "_" + hour[1:] if hour.startswith("0") else "hour" + "_" + hour] = 1
-            extracted_features = list(features.values())
+            df = df.append(features, ignore_index=True)
 
-            result = loadedmodel.predict([extracted_features])
-            total_time += math.e ** result[0]
+        result = loadedmodel.predict(df)
+        #print(result)
+        total_time += sum([math.e ** r for r in result])
 
     arrival_time = str(timedelta(seconds=total_time))
     return JsonResponse({'result': arrival_time}, safe=False)
@@ -170,7 +174,7 @@ def get_route(departure, olat, olng, dlat, dlng, day, bus_route):
             distances.append(distance)
         test["distances"] = distances
         test = test.sort_values(by="distances")
-        print(test[:1]["stop_name"].values[0])
+        #print(test[:1]["stop_name"].values[0])
         return test[:1]["stop_name"].values[0], test[:1]["stop_id"].values[0]
 
     def trips_with_origin_destination_day_route(trips, o_id, d_id):
