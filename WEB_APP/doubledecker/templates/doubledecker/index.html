@@ -77,6 +77,23 @@
   </head>
 
   <body>
+    <header>
+      <img src="{% static '/images/logo3.png' %}" alt="logo" />
+      {% comment %}
+      <h1>DOUBLE DECKER</h1>
+      {% endcomment %}
+      <div class="wrapper">
+        <nav>
+          <div id="hide">
+            <ul>
+              <li><a class="a2" href="#">Plan</a></li>
+              <li><a class="a2" href="#">Explore</a></li>
+              <li><a class="a2" href="#">Tour</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
     <div class="container-nav">
       <div id="abs1">
         <nav class="navbar">
@@ -95,30 +112,28 @@
           </ul>
         </nav>
       </div>
-      <div id="container">
-        <div class="glass">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-4">
-                <!-- Current Weather Feature -->
-                <div class="container">
-                  <div class="app-title">
-                    <p>Weather</p>
+      {% comment %} {% endcomment %}
+      <div class="row">
+        <div class="col-md-4">
+          <div class="glass">
+            <!-- Current Weather Feature -->
+            <div class="container">
+
+                <div class="notification"></div>
+                <div class="weather-container">
+                  <div class="weather-icon">
+                    <img src="{% static '/icons/unknown.png' %}" alt="" />
                   </div>
-                  <div class="notification"></div>
-                  <div class="weather-container">
-                    <div class="weather-icon">
-                      <img src="{% static '/icons/unknown.png' %}" alt="" />
-                    </div>
-                    <div class="temperature-value">
-                      <p>- °<span>C</span></p>
-                    </div>
-                    <div class="temperature-description">
-                      <p>-</p>
-                    </div>
-                    <div class="location"></div>
+                  <div class="temperature-value">
+                    <p>- °<span>C</span></p>
                   </div>
+                  <div class="temperature-description">
+                    <p>-</p>
+                  </div>
+                  <div class="location"></div>
                 </div>
+
+
                 <!--input group for origin and destination-->
                 <form>
                   <input
@@ -182,13 +197,15 @@
                 </div>
                 <div id="sidebar"></div>
               </div>
-              <div class="col-md-8 ml-md-auto">
-                <div id="map"></div>
-              </div>
             </div>
           </div>
+          <div class="col-md-8 ml-md-auto">
+            <div id="map"></div>
+          </div>
         </div>
+        {% comment %}
       </div>
+      {% endcomment %}
     </div>
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->

@@ -8,6 +8,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link href="https://allfont.net/allfont.css?fonts=franklin-gothic-book" rel="stylesheet" type="text/css" />
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -26,32 +27,49 @@
 </head>
 
 <body>
-  <div class="container-nav">
-  <div id="abs1">
-    <nav class="navbar">
-      <div class="hamburger-menu">
-        <div class="line line-1"></div>
-        <div class="line line-2"></div>
-        <div class="line line-3"></div>
-      </div>
-      <ul class="nav-list">
-        <li class="nav-item">
-          <a class="nav-link" href="/">Plan</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Explore</a>
-        </li>
-      </ul>
-    </nav>
+
+  <header>
+    <img src="{% static '/images/logo3.png' %}" alt="logo" />
+    {% comment %} <h1>DOUBLE DECKER</h1> {% endcomment %}
+    <div class="wrapper">
+
+      <nav>
+        <ul>
+          <li><a class="a2" href="#">Plan</a></li>
+          <li><a class="a2" href="#">Explore</a></li>
+          <li><a class="a2" href="#">Tour</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
+  <div class="container-nav">
+    <div id="abs1">
+      <nav class="navbar">
+        <div class="hamburger-menu">
+          <div class="line line-1"></div>
+          <div class="line line-2"></div>
+          <div class="line line-3"></div>
+        </div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Plan</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Explore</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
     <div class="container-fluid">
+
       <div class="row justify-content-center">
         <div class="col-6">
           <div id="map"></div>
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-6">
+        <div class="col-4">
           <div class="input-group">
             <input id="searchTxt" type="text" class="form-control" placeholder="Search for route..." />
             <span class="input-group-btn">
@@ -60,14 +78,26 @@
               </button>
             </span>
             <span class="input-group-btn">
-              <button class="btn btn-secondary" onclick="getLocation()" type="button">
-                User Location
+              <button class="btn btn-secondary" onclick="clearItem()" type="button">
+                clear all
               </button>
             </span>
           </div>
+          {% comment %} <ul id="lines_list"></ul>
+          <button type="button" id="delete" onclick="clearItem()"> clear all</button> {% endcomment %}
+          {% comment %} <button type="button" id="clear" onclick="clearAll()"> clear all</button> {% endcomment %}
         </div>
       </div>
-
+      {% comment %} <footer>
+        <div class="wrapper">
+          <div id="footer-info"></div>
+          <div id="footer-links">
+            <ul></ul>
+            <ul></ul>
+            <ul></ul>
+          </div>
+        </div>
+      </footer> {% endcomment %}
 
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -85,6 +115,7 @@
       <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&callback=initMap&libraries=&v=weekly"
         async></script>
+
 </body>
 
 </html>
