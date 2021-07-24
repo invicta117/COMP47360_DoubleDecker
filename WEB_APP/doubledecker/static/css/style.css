@@ -129,6 +129,14 @@ header nav ul li a {
     margin-right: 20px;
 }
 
+
+
+@media (max-width: 1320px) {
+    #hide {
+      display: none;
+    }
+  }
+
 /* SOME CHANGES TO BOOTSTRAP CLASSES */
 
 .row.justify-content-center{
@@ -268,23 +276,11 @@ input[type=text] {
 
 
 
-#container {
-	position: absolute;
-	top:30px;
-	left: 0;
-	width: 95%;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
 .glass {
     position: relative;
 	box-sizing: border-box;
     width: auto;
     height: 620px;
-    padding: 40px;
 	background: linear-gradient(
 		107.18deg,
 		rgba(255, 255, 255, 0.6) 0%,
@@ -384,16 +380,17 @@ input[type=text] {
 }
 
 .container{
-    padding-left: 60px;
+    position: absolute;
+	align-items: center;
+	justify-content: center;
 }
 .weather-container {
-    justify-content: center;
-    width: 300px;
-    height: 260px;
+    padding-top: 30px;
+    height: 330px;
+    
 }
 
 .weather-icon{
-    width: 300px;
     height: 128px;
 }
 
@@ -403,7 +400,6 @@ input[type=text] {
 }
 
 .temperature-value{
-    width: 300px;
     height:60px;
 }
 
