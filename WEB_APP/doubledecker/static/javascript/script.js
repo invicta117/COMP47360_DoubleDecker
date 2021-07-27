@@ -418,6 +418,8 @@ $(document).on('submit', '#post-form',function (e) {
 })
 
 function get_predict(directions_response){
+        $('#response').hide()
+    $('.loading').show()
     var first_bus = null;
     var steps = directions_response["routes"][0]["legs"][0]["steps"]
     for(var step in steps){
@@ -464,6 +466,8 @@ function get_predict(directions_response){
             action: 'post'
         },
         success: function (json) {
+            $('.loading').hide()
+            $('#response').show()
             document.getElementById("result").innerHTML = "<p id='expectedtime'> Expected journey time: " +json['result'] + "</p>"
         },
         error: function (xhr, errmsg, err) {

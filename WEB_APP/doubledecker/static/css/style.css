@@ -150,7 +150,7 @@ header nav ul li a {
     position: absolute;
   }
 .input-group{
-    padding: 10px;
+    padding: 0 5px;
 }
 
 /* HIDDEN NAVBAR CSS */
@@ -266,14 +266,7 @@ header nav ul li a {
     font-size: 2.1em;
 }
 
-/* input for origin and destination  */
 
-input[type=text] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 6px 0;
-    box-sizing: border-box;
-  }
 
 /* glass effect */
 .glass {
@@ -289,9 +282,7 @@ input[type=text] {
 	border-radius: 30px;
 	border: 1px solid rgba(255, 255, 255, 0.7);
 	background-clip: padding-box;
-    overflow: scroll;
-    overflow:hidden;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 /* round the maps the same way */
@@ -361,14 +352,13 @@ input[type=text] {
 } 
 
 .app-title{
-    width: 300px;
-    height: 50px;
+    height: 20px;
     border-radius: 10px 10px 0 0;
 }
 
 .app-title p{
     text-align: center;
-    padding: 15px;
+    padding: 10px 0 0 0;
     margin: 0 auto;
     font-size: 1.2em;
     color: #F08080;
@@ -393,8 +383,7 @@ input[type=text] {
 	justify-content: center;
 }
 .weather-container {
-    padding-top: 30px;
-    height: 330px;
+    padding: 10px 0;
     
 }
 
@@ -442,13 +431,49 @@ input[type=text] {
     font-size: 0.8em;
 }
 
-.inputConatiner{
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 15px;
+
+.inputContainer{
+    padding: 0 0 10px;
+    display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 
 #expectedtime {
     padding: 10px;
     font-weight: bold;
+}
+
+.loading{
+    padding: 20px;
+    display: none;
+}
+
+#result{
+    text-align: center;
+}
+
+#response{
+    display: none;
+    margin: auto;
+    max-width: fit-content;
+    text-align: center;
+}
+
+summary{
+    background: white;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #d4d8d4;
+    color: grey;
+    margin: 20px;
+}
+
+
+@media only screen and (max-width: 768px) { /* for the md bootstrap change*/
+  .glass {
+    overflow-y: visible;
+      height: auto;
+  }
 }
