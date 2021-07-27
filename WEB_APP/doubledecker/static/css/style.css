@@ -282,17 +282,14 @@ input[type=text] {
 	box-sizing: border-box;
     width: auto;
     height: 620px;
+
 	background: linear-gradient(
 		107.18deg,
 		rgba(255, 255, 255, 0.6) 0%,
 		rgba(255, 255, 255, 0.3) 100%
 	);
-    
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
 	border-radius: 30px;
 	border: 1px solid rgba(255, 255, 255, 0.7);
-	-webkit-background-clip: padding-box;
 	background-clip: padding-box;
     overflow: scroll;
     overflow:hidden;
@@ -303,17 +300,7 @@ input[type=text] {
 	box-sizing: border-box;
     width: auto;
     height: auto;
-	background: linear-gradient(
-		107.18deg,
-		rgba(255, 255, 255, 0.6) 0%,
-		rgba(255, 255, 255, 0.3) 100%
-	);
-    
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
 	border-radius: 30px;
-	border: 1px solid rgba(255, 255, 255, 0.7);
-	-webkit-background-clip: padding-box;
 	background-clip: padding-box;
     overflow: scroll;
     overflow:hidden;
