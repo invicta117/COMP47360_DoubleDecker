@@ -27,12 +27,13 @@ def explore(day, bus_route):
         return route_trips
 
     def station_to_station_explore(tripid):
-        seq = stop_times[stop_times["trip_id"] == tripid][["stop_id", "stop_sequence"]].sort_values(by="stop_sequence")
+        seq = stop_times[stop_times["trip_id"] == tripid][["stop_id", "stop_sequence", "departure_time"]].sort_values(
+            by="stop_sequence")
         final = seq.merge(stops, how='left', on='stop_id')
-        return final[["stop_lat", "stop_lon"]]
+        return final[["stop_lat", "stop_lon", "departure_time"]].iloc[[0, -1]]
 
     r = trips_day(day).intersection(trips_route(bus_route))  # get intersection of trips for that route and day
     trip = r.pop()
-    result =  station_to_station_explore(trip).to_json(orient="records")
+    result = station_to_station_explore(trip).to_json(orient="records")
     parsed = json.loads(result)
     return parsed

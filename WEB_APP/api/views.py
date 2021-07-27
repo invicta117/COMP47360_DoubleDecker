@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -97,7 +99,8 @@ def ShowRouteLine(request, s):
 def routeStation(request):
     try:
         station = request.query_params["station"]
-        routes = explore("tuesday", station)
+        day = datetime.datetime.today().strftime('%A') # https://stackoverflow.com/questions/9847213/how-do-i-get-the-day-of-week-given-a-date
+        routes = explore(day, station)
     except IndexError:
         return Response("Error")
     except KeyError as e:
