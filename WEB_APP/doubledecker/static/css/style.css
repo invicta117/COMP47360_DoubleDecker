@@ -1,16 +1,17 @@
 
 #map {
-  width: auto;
-  height: 620px;
-  padding-top: 20px;
+    width: auto;
+    height: 620px;
+    padding-top: 20px;
 }
+
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
     background-image: linear-gradient(55deg, #3f51b1 0%, #5a55ae 13%, #7b5fac 25%, #8f6aae 38%, #a86aa4 50%, #cc6b8e 62%, #f18271 75%, #f3a469 87%, #f7c978 100%);
-      
+
     font: normal 15px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
-    align-items:center;
+    align-items: center;
     /* Set rules to fill background */
     max-width: 100%;
     overflow-x: hidden;
@@ -29,7 +30,7 @@ p {
 }
 
 h1 {
-    font-family: "Eras ITC", "Eras bold ITC",  sans-serif ;
+    font-family: "Eras ITC", "Eras bold ITC", sans-serif;
     font-weight: bold;
     color: rgb(255, 255, 255);
     font-size: 28px;
@@ -46,6 +47,7 @@ h2 {
     text-align: center;
     margin-bottom: 20px;
 }
+
 h3 {
     font-size: 30px;
     color: #444;
@@ -54,6 +56,7 @@ h3 {
     text-align: center;
     margin-bottom: 20px;
 }
+
 h4 {
     font-size: 24px;
     color: #F08080;
@@ -61,28 +64,34 @@ h4 {
     text-transform: uppercase;
     margin-bottom: 20px;
 }
+
 h5 {
     font-size: 15px;
     color: #444;
     font-weight: bold;
     text-transform: uppercase;
 }
+
 a {
     text-decoration: none;
     color: #4A5759;
 }
+
 a:hover {
     color: #4A5759;
 }
+
 a.a2 {
     font-family: 'Franklin Gothic Book', arial;
     color: #fdfdfd;
     padding-left: 180px;
     text-decoration: none;
 }
+
 a.a2:hover {
     color: #4152b1;
 }
+
 header img {
     float: left;
     margin-top: 30px;
@@ -92,36 +101,44 @@ header img {
 strong {
     font-weight: bold;
 }
+
 small {
     font-size: 13px;
     color: #777;
     font-style: italic;
 }
+
 .wrapper {
     margin: 0 auto;
     padding: 0 10px;
     width: 940px;
 }
+
 /* HEADER CSS */
 
 header {
     height: 120px;
 }
+
 header h1 {
     float: left;
     margin-top: 32px;
 }
+
 header h1 .color {
     color: #02b8dd;
 }
+
 header nav {
     float: centre;
 }
+
 header nav ul li {
     float: centre;
     display: inline-block;
     margin-top: 65px;
 }
+
 header nav ul li a {
     color: rgb(255, 255, 255);
     text-transform: uppercase;
@@ -131,16 +148,15 @@ header nav ul li a {
 }
 
 
-
 @media (max-width: 1320px) {
     #hide {
-      display: none;
+        display: none;
     }
-  }
+}
 
 /* SOME CHANGES TO BOOTSTRAP CLASSES */
 
-.row.justify-content-center{
+.row.justify-content-center {
     padding-top: 15px;
 }
 
@@ -148,20 +164,21 @@ header nav ul li a {
 #abs1 {
     z-index: 5;
     position: absolute;
-  }
-.input-group{
+}
+
+.input-group {
     padding: 0 5px;
 }
 
 /* HIDDEN NAVBAR CSS */
 
-.container-nav{
+.container-nav {
     width: 100%;
     height: 180px;
     background-size: cover;
 }
 
-.hamburger-menu{
+.hamburger-menu {
     width: 35px;
     height: 30px;
     position: fixed;
@@ -173,7 +190,7 @@ header nav ul li a {
     justify-content: space-around;
 }
 
-.line{
+.line {
     width: 100%;
     height: 3px;
     background-color: #4152b1;
@@ -184,7 +201,7 @@ header nav ul li a {
     transform: rotateZ(-405deg) translate(-8px, 6px);
 }
 
-.change .line-2{
+.change .line-2 {
     opacity: 0;
 }
 
@@ -193,7 +210,7 @@ header nav ul li a {
 }
 
 
-.navbar{
+.navbar {
     width: 300px;
     height: 100%;
     background-color: rgba(219, 252, 252, 0.4);
@@ -207,20 +224,20 @@ header nav ul li a {
     transition: right .8s cubic-bezier(1, 0, 0, 1);
 }
 
-.change{
+.change {
     right: 0;
 }
 
-.nav-list{
+.nav-list {
     text-align: center;
 }
 
-.nav-item{
+.nav-item {
     list-style: none;
     margin: 25px;
 }
 
-.nav-link{
+.nav-link {
     text-decoration: none;
     font-size: 22px;
     color: #4A5759;
@@ -232,7 +249,7 @@ header nav ul li a {
 }
 
 .nav-link::before,
-.nav-link::after{
+.nav-link::after {
     content: "";
     width: 100%;
     height: 2px;
@@ -243,12 +260,12 @@ header nav ul li a {
     transition: transform 0.5s;
 }
 
-.nav-link::after{
+.nav-link::after {
     bottom: 0;
     transform-origin: right;
 }
 
-.nav-link::before{
+.nav-link::before {
     top: 0;
     transform-origin: left;
 }
@@ -267,21 +284,20 @@ header nav ul li a {
 }
 
 
-
 /* glass effect */
 .glass {
     position: relative;
-	box-sizing: border-box;
+    box-sizing: border-box;
     width: auto;
     height: 620px;
-	background: linear-gradient(
-		107.18deg,
-		rgba(255, 255, 255, 0.6) 0%,
-		rgba(255, 255, 255, 0.3) 100%
-	);
-	border-radius: 30px;
-	border: 1px solid rgba(255, 255, 255, 0.7);
-	background-clip: padding-box;
+    background: linear-gradient(
+            107.18deg,
+            rgba(255, 255, 255, 0.6) 0%,
+            rgba(255, 255, 255, 0.3) 100%
+    );
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    background-clip: padding-box;
     overflow-y: auto;
 }
 
@@ -289,11 +305,11 @@ header nav ul li a {
 
 .glass2 {
     position: relative;
-	box-sizing: border-box;
+    box-sizing: border-box;
     width: auto;
     height: auto;
-	border-radius: 30px;
-	background-clip: padding-box;
+    border-radius: 30px;
+    background-clip: padding-box;
     overflow: auto;
 }
 
@@ -302,15 +318,15 @@ header nav ul li a {
 ::-webkit-scrollbar {
     width: 12px;
 }
- 
+
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
 }
- 
+
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 [class*="text"] {
@@ -332,7 +348,7 @@ header nav ul li a {
 
 /* the coloumns */
 
-.col-md-4{
+.col-md-4 {
     padding-top: 40px;
     padding-left: 30px;
 }
@@ -345,18 +361,18 @@ header nav ul li a {
 
 /*CSS code for the weather */
 
-*{
+* {
     font-family: "Rimouski";
     margin: 0;
     padding: 0;
-} 
+}
 
-.app-title{
+.app-title {
     height: 20px;
     border-radius: 10px 10px 0 0;
 }
 
-.app-title p{
+.app-title p {
     text-align: center;
     padding: 10px 0 0 0;
     margin: 0 auto;
@@ -364,12 +380,12 @@ header nav ul li a {
     color: #F08080;
 }
 
-.notification{
+.notification {
     background-color: #f8d7da;
     display: none;
 }
 
-.notification{
+.notification {
     color: #721c24;
     font-size: 1.2em;
     margin: 0;
@@ -377,30 +393,31 @@ header nav ul li a {
     padding: 10px 0;
 }
 
-.container{
+.container {
     position: absolute;
-	align-items: center;
-	justify-content: center;
-}
-.weather-container {
-    padding: 10px 0;
-    
+    align-items: center;
+    justify-content: center;
 }
 
-.weather-icon{
+.weather-container {
+    padding: 10px 0;
+
+}
+
+.weather-icon {
     height: 128px;
 }
 
-.weather-icon img{
+.weather-icon img {
     display: block;
     margin: 0 auto;
 }
 
-.temperature-value{
-    height:60px;
+.temperature-value {
+    height: 60px;
 }
 
-.temperature-value{
+.temperature-value {
     padding: 0;
     margin: 0;
     color: #293251;
@@ -409,12 +426,12 @@ header nav ul li a {
     cursor: pointer;
 }
 
-.temperature-value span{
+.temperature-value span {
     color: #293251;
     font-size: 0.5em;
 }
 
-.temperature-description{
+.temperature-description {
     padding: 8px;
     margin: 0;
     color: #293251;
@@ -423,7 +440,7 @@ header nav ul li a {
 }
 
 
-.location{
+.location {
     margin: 0;
     padding: 0;
     color: #293251;
@@ -432,11 +449,11 @@ header nav ul li a {
 }
 
 
-.inputContainer{
+.inputContainer {
     padding: 0 0 10px;
     display: flex;
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -445,23 +462,23 @@ header nav ul li a {
     font-weight: bold;
 }
 
-.loading{
+.loading {
     padding: 20px;
     display: none;
 }
 
-#result{
+#result {
     text-align: center;
 }
 
-#response{
+#response {
     display: none;
     margin: auto;
     max-width: fit-content;
     text-align: center;
 }
 
-summary{
+summary {
     background: white;
     padding: 8px;
     border-radius: 5px;
@@ -471,9 +488,10 @@ summary{
 }
 
 
-@media only screen and (max-width: 768px) { /* for the md bootstrap change*/
-  .glass {
-    overflow-y: visible;
-      height: auto;
-  }
+@media only screen and (max-width: 768px) {
+    /* for the md bootstrap change*/
+    .glass {
+        overflow-y: visible;
+        height: auto;
+    }
 }

@@ -18,7 +18,9 @@ function getLocation() {
         x.innerHTML = 'your browser not support get the location';
     }
 }
+
 var latlng
+
 // get user location and print marker
 function showUserLocation(position) {
     lat = position.coords.latitude;
@@ -77,8 +79,6 @@ function showError() {
 }
 
 
-
-
 // the following is based on the code from https://developers.google.com/maps/documentation/javascript/examples/directions-simple#maps_directions_simple-javascript
 const directionsService = new google.maps.DirectionsService();
 const directionsRenderer = new google.maps.DirectionsRenderer();
@@ -99,252 +99,251 @@ function initMap() {
             lat: 53.3498,
             lng: -6.2603
         },
-        styles:[
+        styles: [
             {
-              "elementType": "geometry",
-              "stylers": [
-                {
-                  "color": "#ebe3cd"
-                }
-              ]
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#ebe3cd"
+                    }
+                ]
             },
             {
-              "elementType": "labels.text.fill",
-              "stylers": [
-                {
-                  "color": "#523735"
-                }
-              ]
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#523735"
+                    }
+                ]
             },
             {
-              "elementType": "labels.text.stroke",
-              "stylers": [
-                {
-                  "color": "#f5f1e6"
-                }
-              ]
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "color": "#f5f1e6"
+                    }
+                ]
             },
             {
-              "featureType": "administrative",
-              "elementType": "geometry.stroke",
-              "stylers": [
-                {
-                  "color": "#c9b2a6"
-                }
-              ]
+                "featureType": "administrative",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#c9b2a6"
+                    }
+                ]
             },
             {
-              "featureType": "administrative.land_parcel",
-              "elementType": "geometry.stroke",
-              "stylers": [
-                {
-                  "color": "#dcd2be"
-                }
-              ]
+                "featureType": "administrative.land_parcel",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#dcd2be"
+                    }
+                ]
             },
             {
-              "featureType": "administrative.land_parcel",
-              "elementType": "labels.text.fill",
-              "stylers": [
-                {
-                  "color": "#ae9e90"
-                }
-              ]
+                "featureType": "administrative.land_parcel",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#ae9e90"
+                    }
+                ]
             },
             {
-              "featureType": "landscape.natural",
-              "elementType": "geometry",
-              "stylers": [
-                {
-                  "color": "#dfd2ae"
-                }
-              ]
+                "featureType": "landscape.natural",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#dfd2ae"
+                    }
+                ]
             },
             {
-              "featureType": "poi",
-              "elementType": "geometry",
-              "stylers": [
-                {
-                  "color": "#dfd2ae"
-                }
-              ]
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#dfd2ae"
+                    }
+                ]
             },
             {
-              "featureType": "poi",
-              "elementType": "labels.text.fill",
-              "stylers": [
-                {
-                  "color": "#93817c"
-                }
-              ]
+                "featureType": "poi",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#93817c"
+                    }
+                ]
             },
             {
-              "featureType": "poi.park",
-              "elementType": "geometry.fill",
-              "stylers": [
-                {
-                  "color": "#a5b076"
-                }
-              ]
+                "featureType": "poi.park",
+                "elementType": "geometry.fill",
+                "stylers": [
+                    {
+                        "color": "#a5b076"
+                    }
+                ]
             },
             {
-              "featureType": "poi.park",
-              "elementType": "labels.icon",
-              "stylers": [
-                {
-                  "weight": 2
-                }
-              ]
+                "featureType": "poi.park",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "weight": 2
+                    }
+                ]
             },
             {
-              "featureType": "poi.park",
-              "elementType": "labels.text",
-              "stylers": [
-                {
-                  "weight": 3.5
-                }
-              ]
+                "featureType": "poi.park",
+                "elementType": "labels.text",
+                "stylers": [
+                    {
+                        "weight": 3.5
+                    }
+                ]
             },
             {
-              "featureType": "poi.park",
-              "elementType": "labels.text.fill",
-              "stylers": [
-                {
-                  "color": "#447530"
-                }
-              ]
+                "featureType": "poi.park",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#447530"
+                    }
+                ]
             },
             {
-              "featureType": "road",
-              "elementType": "geometry",
-              "stylers": [
-                {
-                  "color": "#f5f1e6"
-                }
-              ]
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#f5f1e6"
+                    }
+                ]
             },
             {
-              "featureType": "road",
-              "elementType": "labels.text",
-              "stylers": [
-                {
-                  "visibility": "off"
-                }
-              ]
+                "featureType": "road",
+                "elementType": "labels.text",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
             },
             {
-              "featureType": "road.arterial",
-              "elementType": "geometry",
-              "stylers": [
-                {
-                  "color": "#fdfcf8"
-                }
-              ]
+                "featureType": "road.arterial",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#fdfcf8"
+                    }
+                ]
             },
             {
-              "featureType": "road.arterial",
-              "elementType": "labels.icon",
-              "stylers": [
-                {
-                  "visibility": "off"
-                }
-              ]
+                "featureType": "road.arterial",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
             },
             {
-              "featureType": "road.highway",
-              "elementType": "geometry",
-              "stylers": [
-                {
-                  "color": "#f8c967"
-                }
-              ]
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#f8c967"
+                    }
+                ]
             },
             {
-              "featureType": "road.highway.controlled_access",
-              "elementType": "geometry",
-              "stylers": [
-                {
-                  "color": "#e98d58"
-                }
-              ]
+                "featureType": "road.highway.controlled_access",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#e98d58"
+                    }
+                ]
             },
             {
-              "featureType": "road.highway.controlled_access",
-              "elementType": "geometry.stroke",
-              "stylers": [
-                {
-                  "color": "#db8555"
-                }
-              ]
+                "featureType": "road.highway.controlled_access",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#db8555"
+                    }
+                ]
             },
             {
-              "featureType": "road.local",
-              "elementType": "labels.text.fill",
-              "stylers": [
-                {
-                  "color": "#806b63"
-                }
-              ]
+                "featureType": "road.local",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#806b63"
+                    }
+                ]
             },
             {
-              "featureType": "transit.line",
-              "elementType": "geometry",
-              "stylers": [
-                {
-                  "color": "#dfd2ae"
-                }
-              ]
+                "featureType": "transit.line",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#dfd2ae"
+                    }
+                ]
             },
             {
-              "featureType": "transit.line",
-              "elementType": "labels.text.fill",
-              "stylers": [
-                {
-                  "color": "#8f7d77"
-                }
-              ]
+                "featureType": "transit.line",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#8f7d77"
+                    }
+                ]
             },
             {
-              "featureType": "transit.line",
-              "elementType": "labels.text.stroke",
-              "stylers": [
-                {
-                  "color": "#ebe3cd"
-                }
-              ]
+                "featureType": "transit.line",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "color": "#ebe3cd"
+                    }
+                ]
             },
             {
-              "featureType": "transit.station",
-              "elementType": "geometry",
-              "stylers": [
-                {
-                  "color": "#dfd2ae"
-                }
-              ]
+                "featureType": "transit.station",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#dfd2ae"
+                    }
+                ]
             },
             {
-              "featureType": "water",
-              "elementType": "geometry.fill",
-              "stylers": [
-                {
-                  "color": "#b9d3c2"
-                }
-              ]
+                "featureType": "water",
+                "elementType": "geometry.fill",
+                "stylers": [
+                    {
+                        "color": "#b9d3c2"
+                    }
+                ]
             },
             {
-              "featureType": "water",
-              "elementType": "labels.text.fill",
-              "stylers": [
-                {
-                  "color": "#92998d"
-                }
-              ]
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#92998d"
+                    }
+                ]
             }
-          ]
+        ]
     });
     directionsRenderer.setMap(map);
     directionsRenderer.setPanel(document.getElementById("sidebar"));
-
 
 
     //const onChangeHandler = function () {
@@ -353,6 +352,7 @@ function initMap() {
     //document.getElementById("to").addEventListener("change", onChangeHandler);
     //document.getElementById("from").addEventListener("change", onChangeHandler);
 }
+
 initMap()
 
 
@@ -411,21 +411,21 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
 }
 
 // from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html
-$(document).on('submit', '#post-form',function (e) {
+$(document).on('submit', '#post-form', function (e) {
     e.preventDefault();
     findRoute()
 
 })
 
-function get_predict(directions_response){
-        $('#response').hide()
+function get_predict(directions_response) {
+    $('#response').hide()
     $('.loading').show()
     var first_bus = null;
     var steps = directions_response["routes"][0]["legs"][0]["steps"]
-    for(var step in steps){
+    for (var step in steps) {
         var step_options = directions_response["routes"][0]["legs"][0]["steps"][step]
-        for (var step_option in step_options){
-            if (step_option == "transit"){
+        for (var step_option in step_options) {
+            if (step_option == "transit") {
                 console.log(step_options[step_option])
                 if (step_options[step_option]["line"]["agencies"][0]["name"].includes("Dublin Bus")) {
                     first_bus = step_options
@@ -434,8 +434,8 @@ function get_predict(directions_response){
             }
         }
     }
-    if (first_bus == null){
-        document.getElementById("result").innerHTML = "<h2> No Dublin Bus on Route "+ "</h2>"
+    if (first_bus == null) {
+        document.getElementById("result").innerHTML = "<h2> No Dublin Bus on Route " + "</h2>"
         return
     }
     var line = first_bus["transit"]["line"]["short_name"]
@@ -468,7 +468,7 @@ function get_predict(directions_response){
         success: function (json) {
             $('.loading').hide()
             $('#response').show()
-            document.getElementById("result").innerHTML = "<p id='expectedtime'> Expected journey time: " +json['result'] + "</p>"
+            document.getElementById("result").innerHTML = "<p id='expectedtime'> Expected journey time: " + json['result'] + "</p>"
         },
         error: function (xhr, errmsg, err) {
             console.log("error")
