@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-$rfi%hggjqz581+-bat7vg=e1c&6*hdt=++^+k%p@v8%h2)=jq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['137.43.49.35']
 
 
 # Application definition
@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gtfs',
         'USER': 'student',
-        'PASSWORD': "123",
+        'PASSWORD': os.environ["DBPASS"],
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -126,10 +126,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    '/Users/hassa/Projects/COMP47360_DoubleDecker/WEB_APP/doubledecker/static/',
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

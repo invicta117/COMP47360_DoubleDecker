@@ -16,7 +16,7 @@ local_path = os.path.abspath(os.curdir)
 
 URI = "localhost"
 PORT = "3306"
-PASSWORD = "123"
+PASSWORD = os.environ["DBPASS"]
 DB = "gtfs"
 
 USER = "student"  # note: USER will get user name of this computer.
