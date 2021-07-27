@@ -95,7 +95,8 @@ class Calendar(models.Model):
 
 
 class CalendarDates(models.Model):
-    service = models.OneToOneField(Calendar, models.DO_NOTHING, primary_key=True)
+    service = models.OneToOneField(
+        Calendar, models.DO_NOTHING, primary_key=True)
     date = models.CharField(max_length=10)
     exception_type = models.IntegerField(blank=True, null=True)
 
@@ -111,7 +112,8 @@ class DjangoAdminLog(models.Model):
     object_repr = models.CharField(max_length=200)
     action_flag = models.PositiveSmallIntegerField()
     change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+    content_type = models.ForeignKey(
+        'DjangoContentType', models.DO_NOTHING, blank=True, null=True)
     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
 
     class Meta:
@@ -206,7 +208,8 @@ class Stops(models.Model):
 
 class Trips(models.Model):
     route = models.ForeignKey(Routes, models.DO_NOTHING, blank=True, null=True)
-    service = models.ForeignKey(Calendar, models.DO_NOTHING, blank=True, null=True)
+    service = models.ForeignKey(
+        Calendar, models.DO_NOTHING, blank=True, null=True)
     trip_id = models.CharField(primary_key=True, max_length=60)
     shape = models.ForeignKey(Shapes, models.DO_NOTHING, blank=True, null=True)
     trip_headsign = models.CharField(max_length=200, blank=True, null=True)
@@ -256,3 +259,16 @@ class RouteStops(models.Model):
         managed = False
         db_table = 'route_stops'
         unique_together = (('stop_name', 'route_short_name'),)
+
+
+class SeqRoutes(models.Model):
+    route_id = models.CharField(max_length=60, primary_key=True)
+    route_short_name = models.CharField(max_length=60, blank=True)
+    shape_pt_lat = models.FloatField(blank=True, null=True)
+    shape_pt_lon = models.FloatField(blank=True, null=True)
+    shape_pt_sequence = models.SmallIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'seq_routes'
+        unique_together = (('route_id', 'route_short_name'),)
