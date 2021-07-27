@@ -1,7 +1,7 @@
 
 #map {
   width: auto;
-  height: 580px;
+  height: 620px;
   padding-top: 20px;
 }
 /* Optional: Makes the sample page fill the window. */
@@ -78,9 +78,10 @@ a.a2 {
     font-family: 'Franklin Gothic Book', arial;
     color: #fdfdfd;
     padding-left: 180px;
+    text-decoration: none;
 }
 a.a2:hover {
-    color: #F08080;
+    color: #4152b1;
 }
 header img {
     float: left;
@@ -140,7 +141,7 @@ header nav ul li a {
 /* SOME CHANGES TO BOOTSTRAP CLASSES */
 
 .row.justify-content-center{
-    padding: 5px;
+    padding-top: 15px;
 }
 
 
@@ -175,7 +176,7 @@ header nav ul li a {
 .line{
     width: 100%;
     height: 3px;
-    background-color: #F08080;
+    background-color: #4152b1;
     transition: 0.8s;
 }
 
@@ -235,7 +236,7 @@ header nav ul li a {
     content: "";
     width: 100%;
     height: 2px;
-    background-color: #F08080;
+    background-color: #4152b1;
     position: absolute;
     left: 0;
     transform: scaleX(0);
@@ -298,6 +299,27 @@ input[type=text] {
     overflow: auto;
 }
 
+.glass2 {
+    position: relative;
+	box-sizing: border-box;
+    width: auto;
+    height: auto;
+	background: linear-gradient(
+		107.18deg,
+		rgba(255, 255, 255, 0.6) 0%,
+		rgba(255, 255, 255, 0.3) 100%
+	);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border-radius: 30px;
+	border: 1px solid rgba(255, 255, 255, 0.7);
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box;
+    overflow: scroll;
+    overflow:hidden;
+    overflow: auto;
+}
+
 /* scroll bar */
 
 ::-webkit-scrollbar {
@@ -339,9 +361,9 @@ input[type=text] {
 }
 
 .col-md-8 {
-    padding-top: 55px;
-    padding-right: 50px;
-    padding-left: 50px;
+    padding-top: 40px;
+    padding-right: 30px;
+    padding-left: 35px;
 }
 
 /*CSS code for the weather */

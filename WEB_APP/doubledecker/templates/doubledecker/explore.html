@@ -32,13 +32,14 @@
     <img src="{% static '/images/logo3.png' %}" alt="logo" />
     {% comment %} <h1>DOUBLE DECKER</h1> {% endcomment %}
     <div class="wrapper">
-
       <nav>
+                <div id="hide">
         <ul>
-          <li><a class="a2" href="#">Plan</a></li>
+          <li><a class="a2" href="/">Plan</a></li>
           <li><a class="a2" href="#">Explore</a></li>
           <li><a class="a2" href="#">Tour</a></li>
         </ul>
+        </div>
       </nav>
     </div>
   </header>
@@ -57,6 +58,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Explore</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/explore/">Tour</a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -65,7 +69,10 @@
 
       <div class="row justify-content-center">
         <div class="col-6">
-          <div id="map"></div>
+          <div class="glass2">
+            <div id="map"></div>
+          </div>
+
         </div>
       </div>
       <div class="row justify-content-center">
@@ -83,21 +90,10 @@
               </button>
             </span>
           </div>
-          {% comment %} <ul id="lines_list"></ul>
-          <button type="button" id="delete" onclick="clearItem()"> clear all</button> {% endcomment %}
-          {% comment %} <button type="button" id="clear" onclick="clearAll()"> clear all</button> {% endcomment %}
+
         </div>
       </div>
-      {% comment %} <footer>
-        <div class="wrapper">
-          <div id="footer-info"></div>
-          <div id="footer-links">
-            <ul></ul>
-            <ul></ul>
-            <ul></ul>
-          </div>
-        </div>
-      </footer> {% endcomment %}
+
 
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
