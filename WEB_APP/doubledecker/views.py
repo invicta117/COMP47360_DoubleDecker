@@ -29,8 +29,18 @@ with open('../DATA_ANALYTICS/journeytimes.pickle', 'rb') as handle:
 with open('../DATA_ANALYTICS/distances.pickle', 'rb') as handle:
     distances = pickle.load(handle)
 
-loadedmodel = load("../DATA_ANALYTICS/MODELS/january.joblib")
-
+janmodel = load("../DATA_ANALYTICS/MODELS/jangbr.joblib")
+febmodel = load("../DATA_ANALYTICS/MODELS/febgbr.joblib")
+marchmodel = load("../DATA_ANALYTICS/MODELS/marchgbr.joblib")
+aprilmodel = load("../DATA_ANALYTICS/MODELS/aprilgbr.joblib")
+maymodel = load("../DATA_ANALYTICS/MODELS/maygbr.joblib")
+junemodel = load("../DATA_ANALYTICS/MODELS/junegbr.joblib")
+julymodel = load("../DATA_ANALYTICS/MODELS/julygbr.joblib")
+augmodel = load("../DATA_ANALYTICS/MODELS/auggbr.joblib")
+sepmodel = load("../DATA_ANALYTICS/MODELS/sepgbr.joblib")
+octmodel = load("../DATA_ANALYTICS/MODELS/octgbr.joblib")
+novmodel = load("../DATA_ANALYTICS/MODELS/novgbr.joblib")
+decmodel = load("../DATA_ANALYTICS/MODELS/decgbr.joblib")
 
 def main(request):  # origionated from  https://docs.djangoproject.com/en/3.2/intro/tutorial01/
     return render(request, 'doubledecker/index.html')
@@ -47,24 +57,46 @@ def tourism_views(request):
 # from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html
 def model(request):
     if request.POST.get('action') == 'post':
-        DayOfService = int(request.POST.get('dayofservice')) *1e6
+        DayOfService = int(request.POST.get('dayofservice')) / 1e3
         day = request.POST.get('day')
         LineId = request.POST.get('line')
         olat = float(request.POST.get('olat'))
         olng = float(request.POST.get('olng'))
         dlat = float(request.POST.get('dlat'))
         dlng =  float(request.POST.get('dlng'))
-        #print(olat, olng)
-        #print(dlat, dlng)
+
+        print(DayOfService)
+        month = datetime.fromtimestamp(DayOfService).month
+        print("month",month)
+        if month == 1:
+            loadedmodel = janmodel
+        elif month == 2:
+            loadedmodel = febmodel
+        elif month == 3:
+            loadedmodel = marchmodel
+        elif month == 4:
+            loadedmodel = aprilmodel
+        elif month == 5:
+            loadedmodel = maymodel
+        elif month == 6:
+            loadedmodel = junemodel
+        elif month == 7:
+            loadedmodel = julymodel
+        elif month == 8:
+            loadedmodel = augmodel
+        elif month == 9:
+            loadedmodel = sepmodel
+        elif month == 10:
+            loadedmodel = octmodel
+        elif month == 11:
+            loadedmodel = novmodel
+        else:
+            loadedmodel = decmodel
+
 
 
         departure = int(request.POST.get('departure'))
         departure = datetime.fromtimestamp(departure/ 1e3).strftime("%H:%M:%S")
-
-        #print(DayOfService)
-        #print(day)
-        #print(LineId)
-        #print(departure)
 
         days = {"Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday": 0, "Sunday": 0}
         days[day] = 1
@@ -140,7 +172,7 @@ def model(request):
             df = df.append(features, ignore_index=True)
 
         result = loadedmodel.predict(df)
-        #print(result)
+
         total_time += sum([math.e ** r for r in result])
     time = str(timedelta(seconds=total_time))
     hours = int(time.split(":")[0])
@@ -179,7 +211,7 @@ def get_route(departure, olat, olng, dlat, dlng, day, bus_route):
             distances.append(distance)
         test["distances"] = distances
         test = test.sort_values(by="distances")
-        #print(test[:1]["stop_name"].values[0])
+
         return test[:1]["stop_name"].values[0], test[:1]["stop_id"].values[0]
 
     def trips_with_origin_destination_day_route(trips, o_id, d_id):
@@ -218,7 +250,6 @@ def get_route(departure, olat, olng, dlat, dlng, day, bus_route):
             ["trip_id", "arrival_time"]]
         final["arrival_time"] = abs(final["arrival_time"] - pd.to_timedelta(departure))
         final = final.sort_values(by="arrival_time")
-        # print(final)
         tripid = final.iloc[0]["trip_id"]
         return tripid
 

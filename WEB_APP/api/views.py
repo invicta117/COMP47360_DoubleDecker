@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from .serializers import RoutesSerializer, WeatherSerializer, RoutesStopSerializer, RouteLineSerializer
 from .models import SeqRoutes, Routes, Weather, RouteStops
 # Create your views here.
-
+from .routeStations import explore
 import pandas as pd
 import os
 
@@ -88,7 +88,22 @@ def ShowAllRouteLine(request):
 
 @api_view(['GET'])
 def ShowRouteLine(request, s):
-
     routeline = SeqRoutes.objects.filter(route_short_name=s)
     serializer = RouteLineSerializer(routeline, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def routeStation(request):
+    try:
+        station = request.query_params["station"]
+        routes = explore("tuesday", station)
+    except IndexError:
+        return Response("Error")
+    except KeyError as e:
+        return Response("Error")
+    return Response(routes)
+
+
+
+
