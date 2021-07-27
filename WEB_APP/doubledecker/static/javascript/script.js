@@ -5,7 +5,7 @@ var infoWindow = null;
 
 // the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html
 $(function () {
-$("#datetimepicker1").datetimepicker();
+    $("#datetimepicker1").datetimepicker();
 });
 
 // define a variable that get a button
@@ -25,17 +25,23 @@ function showUserLocation(position) {
     lon = position.coords.longitude;
     pos = new google.maps.LatLng(lat, lon);
     var myOptions = {
-        center: pos, zoom: 12,
+        center: pos,
+        zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         mapTypeControl: false,
-        navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL}
+        navigationControlOptions: {
+            style: google.maps.NavigationControlStyle.SMALL
+        }
     };
     //map = new google.maps.Map(document.getElementById("map"), myOptions);
     //map.set(document.getElementById("map"),myOptions);
     // set the marker
     //var marker = new google.maps.Marker({position: pos, map: map, title: "You are here!"});
     // from https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
-    latlng = {lat: lat, lng: lon};
+    latlng = {
+        lat: lat,
+        lng: lon
+    };
     //geocoder
     //.geocode({ location: latlng })
     //.then((response) => {
@@ -74,31 +80,285 @@ function showError() {
 
 
 // the following is based on the code from https://developers.google.com/maps/documentation/javascript/examples/directions-simple#maps_directions_simple-javascript
-  const directionsService = new google.maps.DirectionsService();
-  const directionsRenderer = new google.maps.DirectionsRenderer();
-  const geocoder = new google.maps.Geocoder();
+const directionsService = new google.maps.DirectionsService();
+const directionsRenderer = new google.maps.DirectionsRenderer();
+const geocoder = new google.maps.Geocoder();
+
 function initMap() {
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 11,
-    center: { lat: 53.3498, lng: -6.2603 },
-  });
-  directionsRenderer.setMap(map);
-  directionsRenderer.setPanel(document.getElementById("sidebar"));
+    const menuI = document.querySelector(".hamburger-menu");
+
+    const navbar = document.querySelector(".navbar");
+
+    menuI.addEventListener("click", () => {
+        navbar.classList.toggle("change");
+    });
+    const directionsService = new google.maps.DirectionsService();
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 11,
+        center: {
+            lat: 53.3498,
+            lng: -6.2603
+        },
+        styles:[
+            {
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#ebe3cd"
+                }
+              ]
+            },
+            {
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#523735"
+                }
+              ]
+            },
+            {
+              "elementType": "labels.text.stroke",
+              "stylers": [
+                {
+                  "color": "#f5f1e6"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative",
+              "elementType": "geometry.stroke",
+              "stylers": [
+                {
+                  "color": "#c9b2a6"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.land_parcel",
+              "elementType": "geometry.stroke",
+              "stylers": [
+                {
+                  "color": "#dcd2be"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.land_parcel",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#ae9e90"
+                }
+              ]
+            },
+            {
+              "featureType": "landscape.natural",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#dfd2ae"
+                }
+              ]
+            },
+            {
+              "featureType": "poi",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#dfd2ae"
+                }
+              ]
+            },
+            {
+              "featureType": "poi",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#93817c"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.park",
+              "elementType": "geometry.fill",
+              "stylers": [
+                {
+                  "color": "#a5b076"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.park",
+              "elementType": "labels.icon",
+              "stylers": [
+                {
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "featureType": "poi.park",
+              "elementType": "labels.text",
+              "stylers": [
+                {
+                  "weight": 3.5
+                }
+              ]
+            },
+            {
+              "featureType": "poi.park",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#447530"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#f5f1e6"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "labels.text",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road.arterial",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#fdfcf8"
+                }
+              ]
+            },
+            {
+              "featureType": "road.arterial",
+              "elementType": "labels.icon",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#f8c967"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway.controlled_access",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#e98d58"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway.controlled_access",
+              "elementType": "geometry.stroke",
+              "stylers": [
+                {
+                  "color": "#db8555"
+                }
+              ]
+            },
+            {
+              "featureType": "road.local",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#806b63"
+                }
+              ]
+            },
+            {
+              "featureType": "transit.line",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#dfd2ae"
+                }
+              ]
+            },
+            {
+              "featureType": "transit.line",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#8f7d77"
+                }
+              ]
+            },
+            {
+              "featureType": "transit.line",
+              "elementType": "labels.text.stroke",
+              "stylers": [
+                {
+                  "color": "#ebe3cd"
+                }
+              ]
+            },
+            {
+              "featureType": "transit.station",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#dfd2ae"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "geometry.fill",
+              "stylers": [
+                {
+                  "color": "#b9d3c2"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#92998d"
+                }
+              ]
+            }
+          ]
+    });
+    directionsRenderer.setMap(map);
+    directionsRenderer.setPanel(document.getElementById("sidebar"));
 
 
 
-  //const onChangeHandler = function () {
+    //const onChangeHandler = function () {
     // calculateAndDisplayRoute(directionsService, directionsRenderer);
-  //};
-  //document.getElementById("to").addEventListener("change", onChangeHandler);
-  //document.getElementById("from").addEventListener("change", onChangeHandler);
+    //};
+    //document.getElementById("to").addEventListener("change", onChangeHandler);
+    //document.getElementById("from").addEventListener("change", onChangeHandler);
 }
 initMap()
 
-function findRoute(){
+
+function findRoute() {
     calculateAndDisplayRoute(directionsService, directionsRenderer);
 }
-
 
 // the following code is based on the google docs documentation from https://developers.google.com/maps/documentation/javascript/directions
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
@@ -123,10 +383,10 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
             if (status == 'OK') {
                 console.log(response)
                 directionsRenderer.setDirections(response);
+                get_predict(response)
             }
         });
-    }
-    else {
+    } else {
         // the following is based on the following google documentation https://developers.google.cn/maps/documentation/javascript/examples/directions-simple?hl=zh-cn
         var request = {
             origin: document.getElementById("from").value,
@@ -139,21 +399,85 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
                 modes: ["BUS"]
             }
         };
-        console.log(latlng)
         console.log(request)
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
                 console.log(response)
                 directionsRenderer.setDirections(response);
+                get_predict(response)
             }
         });
     }
 }
 
+// from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html
+$(document).on('submit', '#post-form',function (e) {
+    e.preventDefault();
+    findRoute()
+
+})
+
+function get_predict(directions_response){
+    var first_bus = null;
+    var steps = directions_response["routes"][0]["legs"][0]["steps"]
+    for(var step in steps){
+        var step_options = directions_response["routes"][0]["legs"][0]["steps"][step]
+        for (var step_option in step_options){
+            if (step_option == "transit"){
+                console.log(step_options[step_option])
+                if (step_options[step_option]["line"]["agencies"][0]["name"].includes("Dublin Bus")) {
+                    first_bus = step_options
+                }
+
+            }
+        }
+    }
+    if (first_bus == null){
+        document.getElementById("result").innerHTML = "<h2> No Dublin Bus on Route "+ "</h2>"
+        return
+    }
+    var line = first_bus["transit"]["line"]["short_name"]
+    var departure = first_bus["transit"]["departure_time"]["value"].getTime()
+    var olat = first_bus["transit"]["departure_stop"]["location"]["lat"]
+    var olng = first_bus["transit"]["departure_stop"]["location"]["lng"]
+    var dlat = first_bus["transit"]["arrival_stop"]["location"]["lat"]
+    var dlng = first_bus["transit"]["arrival_stop"]["location"]["lng"]
+
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var date = new Date($('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"]);
+    console.log(date)
+    var datetime = date.setHours(0, 0, 0, 0)
+    var day = days[date.getDay()]
+    $.ajax({
+        type: 'POST',
+        url: './model/',
+        data: {
+            dayofservice: datetime,
+            line: line,
+            olat: olat,
+            olng: olng,
+            dlat: dlat,
+            dlng: dlng,
+            departure: departure,
+            day: day,
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        success: function (json) {
+            document.getElementById("result").innerHTML = "<p id='expectedtime'> Expected journey time: " +json['result'] + "</p>"
+        },
+        error: function (xhr, errmsg, err) {
+            console.log("error")
+        }
+    });
+}
+
 // the following is based on the code presented in https://www.youtube.com/watch?v=BkGtNBrOhKU also available at https://github.com/sammy007-debug/Google-map-distance-api
 //create autocomplete objects for all inputs
 var options = {
-    componentRestrictions: { country: "IE"}
+    componentRestrictions: {
+        country: "IE"
+    }
 }
 
 var input1 = document.getElementById("from");

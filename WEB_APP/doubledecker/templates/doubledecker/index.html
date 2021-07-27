@@ -2,12 +2,19 @@
 <!--This code origionated from https://developers.google.com/maps/documentation/javascript/adding-a-google-map -->
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>D.Decker</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0" />
 
-<head>
-  <title>D.Decker</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width initial-scale=1.0" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -16,9 +23,7 @@
   <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-  </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
     integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
   </script>
@@ -26,126 +31,194 @@
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
   </script>
 
-  <!-- Font Awesome -->
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
 
-  <!-- Moment.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"
-    integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
 
-  <!-- Tempus Dominus Bootstrap 4 -->
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"
-    integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"
-    integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
 
-  <!--[if lt IE 9]>
+    <!-- Moment.js -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"
+      integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Tempus Dominus Bootstrap 4 -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"
+      integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs="
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"
+      integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4="
+      crossorigin="anonymous"
+    ></script>
+
+    <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-  <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
-  <script defer src="{% static 'javascript/script.js' %}"></script>
-</head>
+    <script defer src="{% static 'javascript/script.js' %}"></script>
+  </head>
 
-<body>
-  <div class="row">
-    <div class="col-12">
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Double Decker</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+  <body>
+    <header>
+      <img src="{% static '/images/logo3.png' %}" alt="logo" />
+      {% comment %}
+      <h1>DOUBLE DECKER</h1>
+      {% endcomment %}
+      <div class="wrapper">
+        <nav>
+          <div id="hide">
+            <ul>
+              <li><a class="a2" href="#">Plan</a></li>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Plan</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="explore/">Explore</a>
-              </li>
+              <li><a class="a2" href="/explore/">Explore</a></li>
+              <li><a class="a2" href="#">Tour</a></li>
             </ul>
           </div>
-        </div>
-      </nav>
-    </div>
-  </div>
-  <div class="conatiner-fluid">
-    <div class="row">
-      <div class="col-md-4">
-        <!-- Current Weather Feature -->
-        <div class="container">
-          <div class="app-title">
-            <p>Weather</p>
-          </div>
-          <div class="notification"></div>
-          <div class="weather-container">
-            <div class="weather-icon">
-              <img src="{% static '/icons/unknown.png' %}" alt="" />
-            </div>
-            <div class="temperature-value">
-              <p>- °<span>C</span></p>
-            </div>
-            <div class="temperature-description">
-              <p>-</p>
-            </div>
-            <div class="location"></div>
-          </div>
-        </div>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Origin</span>
-          </div>
-          <input id="from" class="form-control" type="text" placeholder="">
-          <div class="input-group-prepend">
-            <span class="input-group-text">Destination</span>
-          </div>
-          <input id="to" class="controls" type="text" placeholder="" />
-        </div>
-
-        <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
-        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-          <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
-          <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-            <div class="input-group-text">
-              <i class="fa fa-calendar"></i>
-            </div>
-          </div>
-        </div>
-
-        <div class="inputConatiner">
-          <span class="input-group-btn">
-            <button class="btn btn-primary" type="button" onclick="findRoute()">
-              Search
-            </button>
-          </span>
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" onclick="getLocation()" type="button">
-              Add Current Location To Origin
-            </button>
-          </span>
-        </div>
-        <div id="sidebar"></div>
+        </nav>
       </div>
-      <div class="col-md-8 ml-md-auto">
-        <div id="map"></div>
+    </header>
+    <div class="container-nav">
+      <div id="abs1">
+        <nav class="navbar">
+          <div class="hamburger-menu">
+            <div class="line line-1"></div>
+            <div class="line line-2"></div>
+            <div class="line line-3"></div>
+          </div>
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Plan</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/explore/">Explore</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/explore/">Tour</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="glass">
+            <!-- Current Weather Feature -->
+            <div class="container">
+
+                <div class="notification"></div>
+                <div class="weather-container">
+                  <div class="weather-icon">
+                    <img src="{% static '/icons/unknown.png' %}" alt="" />
+                  </div>
+                  <div class="temperature-value">
+                    <p>- °<span>C</span></p>
+                  </div>
+                  <div class="temperature-description">
+                    <p>-</p>
+                  </div>
+                  <div class="location"></div>
+                </div>
+
+
+                <!--input group for origin and destination-->
+                <form>
+                  <input
+                    class="text pill"
+                    type="text"
+                    id="from"
+                    name="from"
+                    placeholder="Enter Origin Address..."
+                  />
+                  <input
+                    class="text pill"
+                    type="text"
+                    id="to"
+                    name="to"
+                    placeholder="Enter Destination Address..."
+                  />
+                </form>
+
+                <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
+
+                <div
+                  class="input-group date"
+                  id="datetimepicker1"
+                  data-target-input="nearest"
+                >
+                  <input
+                    type="text"
+                    class="form-control datetimepicker-input"
+                    data-target="#datetimepicker1"
+                  />
+                  <div
+                    class="input-group-append"
+                    data-target="#datetimepicker1"
+                    data-toggle="datetimepicker"
+                  >
+                    <div class="input-group-text">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="inputContiner">
+                  <span class="input-group-btn">
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      onclick="findRoute()"
+                    >
+                      Search
+                    </button>
+                  </span>
+                  <span class="input-group-btn">
+                    <button
+                      class="btn btn-secondary"
+                      onclick="getLocation()"
+                      type="button"
+                    >
+                      Current Location
+                    </button>
+                  </span>
+                </div>
+                <div id="result"></div>
+                  <div id="sidebar"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8 ml-md-auto">
+          <div class="glass2">
+            <div id="map"></div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  </div>
 
-  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
 
-  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&libraries=places">
-  </script>
-  <script src="{% static 'javascript/CurrentWeather.js' %}"></script>
+<script>
+
+</script>
+
 </body>
 
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&libraries=places"></script>
+    <script src="{% static 'javascript/CurrentWeather.js' %}"></script>
+  </body>
 </html>
