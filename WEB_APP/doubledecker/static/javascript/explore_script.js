@@ -4,7 +4,7 @@ var map;
 const listPos = [];
 const route_name = [];
 var directionsDisplays,
-    directionsService;
+  directionsService;
 
 
 function initMap() {
@@ -28,288 +28,213 @@ function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
     center: Dublin,
-    styles:[
-      {
+    styles: [{
         "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#ebe3cd"
-          }
-        ]
+        "stylers": [{
+          "color": "#ebe3cd"
+        }]
       },
       {
         "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#523735"
-          }
-        ]
+        "stylers": [{
+          "color": "#523735"
+        }]
       },
       {
         "elementType": "labels.text.stroke",
-        "stylers": [
-          {
-            "color": "#f5f1e6"
-          }
-        ]
+        "stylers": [{
+          "color": "#f5f1e6"
+        }]
       },
       {
         "featureType": "administrative",
         "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#c9b2a6"
-          }
-        ]
+        "stylers": [{
+          "color": "#c9b2a6"
+        }]
       },
       {
         "featureType": "administrative.land_parcel",
         "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#dcd2be"
-          }
-        ]
+        "stylers": [{
+          "color": "#dcd2be"
+        }]
       },
       {
         "featureType": "administrative.land_parcel",
         "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#ae9e90"
-          }
-        ]
+        "stylers": [{
+          "color": "#ae9e90"
+        }]
       },
       {
         "featureType": "landscape.natural",
         "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
+        "stylers": [{
+          "color": "#dfd2ae"
+        }]
       },
       {
         "featureType": "poi",
         "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
+        "stylers": [{
+          "color": "#dfd2ae"
+        }]
       },
       {
         "featureType": "poi",
         "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#93817c"
-          }
-        ]
+        "stylers": [{
+          "color": "#93817c"
+        }]
       },
       {
         "featureType": "poi.park",
         "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#a5b076"
-          }
-        ]
+        "stylers": [{
+          "color": "#a5b076"
+        }]
       },
       {
         "featureType": "poi.park",
         "elementType": "labels.icon",
-        "stylers": [
-          {
-            "weight": 2
-          }
-        ]
+        "stylers": [{
+          "weight": 2
+        }]
       },
       {
         "featureType": "poi.park",
         "elementType": "labels.text",
-        "stylers": [
-          {
-            "weight": 3.5
-          }
-        ]
+        "stylers": [{
+          "weight": 3.5
+        }]
       },
       {
         "featureType": "poi.park",
         "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#447530"
-          }
-        ]
+        "stylers": [{
+          "color": "#447530"
+        }]
       },
       {
         "featureType": "road",
         "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#f5f1e6"
-          }
-        ]
+        "stylers": [{
+          "color": "#f5f1e6"
+        }]
       },
       {
         "featureType": "road",
         "elementType": "labels.text",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
+        "stylers": [{
+          "visibility": "off"
+        }]
       },
       {
         "featureType": "road.arterial",
         "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#fdfcf8"
-          }
-        ]
+        "stylers": [{
+          "color": "#fdfcf8"
+        }]
       },
       {
         "featureType": "road.arterial",
         "elementType": "labels.icon",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
+        "stylers": [{
+          "visibility": "off"
+        }]
       },
       {
         "featureType": "road.highway",
         "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#f8c967"
-          }
-        ]
+        "stylers": [{
+          "color": "#f8c967"
+        }]
       },
       {
         "featureType": "road.highway.controlled_access",
         "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#e98d58"
-          }
-        ]
+        "stylers": [{
+          "color": "#e98d58"
+        }]
       },
       {
         "featureType": "road.highway.controlled_access",
         "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#db8555"
-          }
-        ]
+        "stylers": [{
+          "color": "#db8555"
+        }]
       },
       {
         "featureType": "road.local",
         "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#806b63"
-          }
-        ]
+        "stylers": [{
+          "color": "#806b63"
+        }]
       },
       {
         "featureType": "transit.line",
         "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
+        "stylers": [{
+          "color": "#dfd2ae"
+        }]
       },
       {
         "featureType": "transit.line",
         "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#8f7d77"
-          }
-        ]
+        "stylers": [{
+          "color": "#8f7d77"
+        }]
       },
       {
         "featureType": "transit.line",
         "elementType": "labels.text.stroke",
-        "stylers": [
-          {
-            "color": "#ebe3cd"
-          }
-        ]
+        "stylers": [{
+          "color": "#ebe3cd"
+        }]
       },
       {
         "featureType": "transit.station",
         "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
+        "stylers": [{
+          "color": "#dfd2ae"
+        }]
       },
       {
         "featureType": "water",
         "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#b9d3c2"
-          }
-        ]
+        "stylers": [{
+          "color": "#b9d3c2"
+        }]
       },
       {
         "featureType": "water",
         "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#92998d"
-          }
-        ]
+        "stylers": [{
+          "color": "#92998d"
+        }]
       }
     ]
   });
+  document.getElementById("myBtn").addEventListener("click", function () {
+    const route_short_name = document.getElementById("searchTxt").value;
 
-  fetch("/api/route-line")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-
-      // console.log(data)
-      // if this function is clicked then the route is added to the map
-      document.getElementById("myBtn").addEventListener("click", function () {
+    fetch("/api/stations/?station=" + route_short_name )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
 
         listPos.pop();
-        let routeID = []
-        const line = document.getElementById("searchTxt").value;
-        // if(line ==""){
-        //   window.alert("You must enter a route name in this field.");
-        // }
-        // else {
-        //   const lineList = document.getElementById('lines_list');
-        //   lineList.innerHTML += "<li>" + line + "</li>";
-        // }
-        data.forEach(route => {
-          if (route.route_short_name == line) {
-            routeID.push(route.shape_pt_sequence,
-              route.route_short_name,
-              route.route_id,
-              route.shape_pt_lat,
-              route.shape_pt_lon)
-          }
-
-        })
-        const stop1 = routeID.slice(0, 5);
-        const stoplast = routeID.slice(-5);
+        stop1 = data[0];
+        stoplast = data[data.length-1];
+        console.log(stop1,stoplast)
         listPos.push({
-          key: [line],
-          value: [stop1[3], stop1[4], stoplast[3], stoplast[4]],
+          key: [route_short_name],
+          value: [stop1.stop_lat, stop1.stop_lon, stoplast.stop_lat, stoplast.stop_lon],
         })
 
-        console.log("list of positions:" ,listPos)
+        console.log("list of positions:", listPos)
         // console.log(listPos[0].value[0])
         // this here is the function which works out the distance of the way points
         for (var i = 0; i < listPos.length; i++) {
@@ -335,26 +260,27 @@ function initMap() {
           );
         }
         directionsDisplays.push(directionsDisplay);
-        console.log("I am directions array",directionsDisplays)
+        console.log("I am directions array", directionsDisplays)
 
       });
 
-    })
+  })
 
 }
-console.log("this is outside:",listPos)
+console.log("this is outside:", listPos)
+
 function clearItem() {
   // Clean previous routes
-  for(var i = 0; i < directionsDisplays.length; i++) {
+  for (var i = 0; i < directionsDisplays.length; i++) {
     console.log(directionsDisplays)
-  directionsDisplays[i].setMap(null);
+    directionsDisplays[i].setMap(null);
   }
   directionsDisplays.pop();
   listPos.pop();
   // console.log(`I am directions array after ${directionsDisplays}`);
 }
 
-function clearAll(){
+function clearAll() {
   location.reload();
 }
 
@@ -372,7 +298,7 @@ function calculateAndDisplayRoute(
     },
     function (response, status) {
       if (status === "OK") {
-        console.log("I am response: ",response);
+        console.log("I am response: ", response);
         directionsDisplay.setDirections(response);
         bounds.union(response.routes[0].bounds);
         map.fitBounds(bounds);
