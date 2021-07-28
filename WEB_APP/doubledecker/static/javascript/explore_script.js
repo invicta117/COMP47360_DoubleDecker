@@ -5,7 +5,8 @@ const listPos = [];
 const route_name = [];
 var directionsDisplays,
   directionsService;
-
+const depTime = new Date()
+var hour="";
 
 function initMap() {
 
@@ -240,6 +241,12 @@ function initMap() {
             "color": "#b9d3c2"
           }
         ]
+      },{
+        "featureType": "landscape",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
       },
       {
         "featureType": "water",
@@ -260,11 +267,26 @@ function initMap() {
         return response.json();
       })
       .then((data) => {
-
+        //this helps clear previous route when clearAll is called.
         listPos.pop();
+
+        hour = data[0].departure_time
+
+
+        //setting the time for each bus to get the most correct route.
+        if (data[0].stop_lat == undefined){
+          hour = new Date();
+        }else{
+          console.log(typeof(hour))
+          depTime.setHours(hour.substring(0,2))
+          depTime.setMinutes(hour.substring(3,5));
+          console.log(depTime)
+        }
+
+
+
         stop1 = data[0];
-        stoplast = data[data.length-1];
-        console.log(stop1,stoplast)
+        stoplast = data[1];
         listPos.push({
           key: [route_short_name],
           value: [stop1.stop_lat, stop1.stop_lon, stoplast.stop_lat, stoplast.stop_lon],
@@ -297,8 +319,6 @@ function initMap() {
           );
         }
         directionsDisplays.push(directionsDisplay);
-        console.log("I am directions array", directionsDisplays)
-
       });
 
   })
@@ -317,10 +337,6 @@ function clearItem() {
   // console.log(`I am directions array after ${directionsDisplays}`);
 }
 
-function clearAll() {
-  location.reload();
-}
-
 function calculateAndDisplayRoute(
   directionsService,
   directionsDisplay,
@@ -328,13 +344,18 @@ function calculateAndDisplayRoute(
   endPoint,
   bounds
 ) {
+
+  console.log("this is dep time:", depTime);
+  
   directionsService.route({
       origin: startPoint,
       destination: endPoint,
       travelMode: 'TRANSIT',
       transitOptions: {
+        departureTime: new Date(Date.parse(depTime)),
         modes: ['BUS'],
         routingPreference: 'FEWER_TRANSFERS'
+        
       },
     },
     function (response, status) {
@@ -344,7 +365,7 @@ function calculateAndDisplayRoute(
         bounds.union(response.routes[0].bounds);
         map.fitBounds(bounds);
       } else {
-        window.alert("There is no route in this name working at this time " + status);
+        window.alert("This route is not in service. " + status);
       }
     }
   );
