@@ -77,18 +77,18 @@ a {
 }
 
 a:hover {
-    color: #4A5759;
+    color: #CC2936;
 }
 
 a.a2 {
     font-family: "Eras ITC", "Eras bold ITC", sans-serif;
-    color: #011627;
+    color: #ff9f1c;
     padding-left: 180px;
     text-decoration: none;
 }
 
 a.a2:hover {
-    color: #ff9f1c;
+    color: #CC2936;
 }
 
 header img {
@@ -116,16 +116,8 @@ small {
 /* HEADER CSS */
 
 header {
+    background-color: #3a5458;
     height: 120px;
-}
-
-header h1 {
-    float: left;
-    margin-top: 32px;
-}
-
-header h1 .color {
-    color: #02b8dd;
 }
 
 header nav {
@@ -144,7 +136,28 @@ header nav ul li a {
     display: block;
     margin-right: 20px;
 }
+/* footrer */
 
+footer {
+    padding-top: 30px;
+}
+#footer-info {
+    width: 380px;
+    float: left;
+    margin-top: 10px;
+}
+#footer-links {
+    width: 520px;
+    float: right;
+}
+#footer-links ul {
+    width: 150px;
+    float: left;
+    margin-left: 20px;
+}
+#footer-links ul li {
+    margin: 10px 0;
+}
 
 @media (max-width: 1320px) {
     #hide {
@@ -155,7 +168,7 @@ header nav ul li a {
 /* SOME CHANGES TO BOOTSTRAP CLASSES */
 
 .row.justify-content-center {
-    padding-top: 15px;
+    padding-top: 25px;
 }
 
 
@@ -191,7 +204,7 @@ header nav ul li a {
 .line {
     width: 100%;
     height: 4px;
-    background-color: #011627;
+    background-color: #ff9f1c;
     transition: 0.8s;
 }
 
@@ -506,24 +519,24 @@ summary {
 .btn-secondary {
     border-radius: 500px;
     color: #fff;
-    background-color: #FF9F1C;
-    border-color: #FF9F1C;
+    background-color: #ff9f1c;
+    border-color: #ff9f1c;
 }
 .btn-secondary:hover {
-    background-color: #5EB1BF;
-    border-color: #5EB1BF;
+    background-color: #CC2936;
+    border-color: #CC2936;
 }
 
 .btn-primary {
     border-radius: 500px;
     color: #fff;
-    background-color: #CC2936;
-    border-color: #CC2936;
+    background-color: #ff9f1c;
+    border-color: #ff9f1c;
 
 }
 
 .btn-primary:hover {
-    background-color: #5EB1BF;
-    border-color: #5EB1BF;
+    background-color: #CC2936;
+    border-color: #CC2936;
     
 }
