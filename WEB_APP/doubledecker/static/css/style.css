@@ -8,9 +8,8 @@
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
-    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-
-    font: normal 15px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    background-image: linear-gradient(120deg, #b9d3c2 0%, #F7F9F9 100%);
+    font-family: "Eras ITC", "Eras bold ITC", sans-serif;
     align-items: center;
     /* Set rules to fill background */
     max-width: 100%;
@@ -82,8 +81,8 @@ a:hover {
 }
 
 a.a2 {
-    font-family: 'Franklin Gothic Book', arial;
-    color: #ffffff;
+    font-family: "Eras ITC", "Eras bold ITC", sans-serif;
+    color: #CC2936;
     padding-left: 180px;
     text-decoration: none;
 }
@@ -140,7 +139,6 @@ header nav ul li {
 }
 
 header nav ul li a {
-    color: #a9ecea;
     text-transform: uppercase;
     font-weight: bold;
     display: block;
@@ -192,8 +190,8 @@ header nav ul li a {
 
 .line {
     width: 100%;
-    height: 3px;
-    background-color: #4152b1;
+    height: 4px;
+    background-color: #CC2936;
     transition: 0.8s;
 }
 
@@ -213,14 +211,13 @@ header nav ul li a {
 .navbar {
     width: 300px;
     height: 100%;
-    background-color: rgba(219, 252, 252, 0.4);
+    background-color: #b9d3c2;
     position: fixed;
     top: 0;
     right: -300px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 20% 0 0 60%;
     transition: right .8s cubic-bezier(1, 0, 0, 1);
 }
 
@@ -230,6 +227,7 @@ header nav ul li a {
 
 .nav-list {
     text-align: center;
+    
 }
 
 .nav-item {
@@ -241,7 +239,7 @@ header nav ul li a {
     text-decoration: none;
     font-size: 22px;
     color: #4A5759;
-    font-weight: 300;
+    font-weight: bold;
     letter-spacing: 1px;
     text-transform: uppercase;
     position: relative;
@@ -253,7 +251,7 @@ header nav ul li a {
     content: "";
     width: 100%;
     height: 2px;
-    background-color: #4152b1;
+    background-color: #cc2936;
     position: absolute;
     left: 0;
     transform: scaleX(0);
@@ -287,6 +285,9 @@ header nav ul li a {
 /* glass effect */
 .glass {
     position: relative;
+    padding-top: 80px;
+    padding-left: 80px;
+    padding-right: 80px;
     box-sizing: border-box;
     width: auto;
     height: 620px;
@@ -377,11 +378,11 @@ header nav ul li a {
     padding: 10px 0 0 0;
     margin: 0 auto;
     font-size: 1.2em;
-    color: #F08080;
+    color: #CC2936;
 }
 
 .notification {
-    background-color: #f8d7da;
+    background-color: #CC2936;
     display: none;
 }
 
@@ -494,4 +495,24 @@ summary {
         overflow-y: visible;
         height: auto;
     }
+}
+
+/* form css */
+.form-control {
+    border-radius: 500px;
+    background-color:none;
+}
+
+.btn-secondary {
+    border-radius: 500px;
+    color: #fff;
+    background-color: #CC2936;
+    border-color: #CC2936;
+}
+
+.btn-primary {
+    border-radius: 500px;
+    color: #fff;
+    background-color: #780116;
+    border-color: #780116;
 }
