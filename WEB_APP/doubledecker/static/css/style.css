@@ -8,7 +8,7 @@
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
-    background-image: linear-gradient(120deg, #b9d3c2 0%, #F7F9F9 100%);
+    background-color: #e6eef0;
     font-family: "Eras ITC", "Eras bold ITC", sans-serif;
     align-items: center;
     /* Set rules to fill background */
@@ -82,13 +82,13 @@ a:hover {
 
 a.a2 {
     font-family: "Eras ITC", "Eras bold ITC", sans-serif;
-    color: #CC2936;
+    color: #011627;
     padding-left: 180px;
     text-decoration: none;
 }
 
 a.a2:hover {
-    color: #4152b1;
+    color: #ff9f1c;
 }
 
 header img {
@@ -191,7 +191,7 @@ header nav ul li a {
 .line {
     width: 100%;
     height: 4px;
-    background-color: #CC2936;
+    background-color: #011627;
     transition: 0.8s;
 }
 
@@ -211,7 +211,7 @@ header nav ul li a {
 .navbar {
     width: 300px;
     height: 100%;
-    background-color: #b9d3c2;
+    background-color: #e6eef0;
     position: fixed;
     top: 0;
     right: -300px;
@@ -251,7 +251,7 @@ header nav ul li a {
     content: "";
     width: 100%;
     height: 2px;
-    background-color: #cc2936;
+    background-color: #FF9F1C;
     position: absolute;
     left: 0;
     transform: scaleX(0);
@@ -506,13 +506,24 @@ summary {
 .btn-secondary {
     border-radius: 500px;
     color: #fff;
-    background-color: #CC2936;
-    border-color: #CC2936;
+    background-color: #FF9F1C;
+    border-color: #FF9F1C;
+}
+.btn-secondary:hover {
+    background-color: #5EB1BF;
+    border-color: #5EB1BF;
 }
 
 .btn-primary {
     border-radius: 500px;
     color: #fff;
-    background-color: #780116;
-    border-color: #780116;
+    background-color: #CC2936;
+    border-color: #CC2936;
+
+}
+
+.btn-primary:hover {
+    background-color: #5EB1BF;
+    border-color: #5EB1BF;
+    
 }
