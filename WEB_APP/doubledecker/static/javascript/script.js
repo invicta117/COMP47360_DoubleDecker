@@ -435,7 +435,9 @@ function get_predict(directions_response) {
         }
     }
     if (first_bus == null) {
-        document.getElementById("result").innerHTML = "<h2> No Dublin Bus on Route " + "</h2>"
+        $('#response').show()
+        $('.loading').hide()
+        document.getElementById("result").innerHTML = "<p> No Dublin Bus on Route " + "</p>"
         return
     }
     var line = first_bus["transit"]["line"]["short_name"]

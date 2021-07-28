@@ -42,6 +42,7 @@ octmodel = load("../DATA_ANALYTICS/MODELS/octgbr.joblib")
 novmodel = load("../DATA_ANALYTICS/MODELS/novgbr.joblib")
 decmodel = load("../DATA_ANALYTICS/MODELS/decgbr.joblib")
 
+
 def main(request):  # origionated from  https://docs.djangoproject.com/en/3.2/intro/tutorial01/
     return render(request, 'doubledecker/index.html')
 
@@ -49,6 +50,7 @@ def main(request):  # origionated from  https://docs.djangoproject.com/en/3.2/in
 # origionated from  https://docs.djangoproject.com/en/3.2/intro/tutorial01/
 def explore_view(request):
     return render(request, 'doubledecker/explore.html')
+
 
 def tourism_views(request):
     return render(request, 'doubledecker/tourism.html')
@@ -63,11 +65,11 @@ def model(request):
         olat = float(request.POST.get('olat'))
         olng = float(request.POST.get('olng'))
         dlat = float(request.POST.get('dlat'))
-        dlng =  float(request.POST.get('dlng'))
+        dlng = float(request.POST.get('dlng'))
 
         print(DayOfService)
         month = datetime.fromtimestamp(DayOfService).month
-        print("month",month)
+        print("month", month)
         if month == 1:
             loadedmodel = janmodel
         elif month == 2:
@@ -93,10 +95,8 @@ def model(request):
         else:
             loadedmodel = decmodel
 
-
-
         departure = int(request.POST.get('departure'))
-        departure = datetime.fromtimestamp(departure/ 1e3).strftime("%H:%M:%S")
+        departure = datetime.fromtimestamp(departure / 1e3).strftime("%H:%M:%S")
 
         days = {"Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday": 0, "Sunday": 0}
         days[day] = 1
@@ -107,14 +107,18 @@ def model(request):
         msl = getattr(current, 'pressure')
         rhum = getattr(current, 'humidity')
 
-
-
         routes = get_route(departure, olat, olng, dlat, dlng, day, LineId)
-        # from www.mummypages.ie%2Fschool-calendar-and-holidays-20172018-republic-of-ireland&usg=AOvVaw0I7h3OF8HhiK1Om33irR_P
+
         # assume june july and august all schools off and we are using monthly data so do not need to give model that detail for those months as will be constant col
-        holidays = ['2018-01-01','2018-01-02','2018-01-03','2018-01-04','2018-01-05','2018-02-12','2018-02-13','2018-02-14','2018-02-15','2018-02-16','2018-03-23','2018-03-23','2018-03-26','2018-03-27','2018-03-28','2018-03-29','2018-03-30','2018-04-02','2018-04-03','2018-04-04','2018-04-05','2018-04-06','2018-05-01','2018-10-29','2018-10-30','2018-10-31','2018-11-01','2018-11-02','2018-12-24','2018-12-25','2018-12-26','2018-12-27','2018-12-28','2018-12-31']
+        holidays = ["2020-01-06", "2021-02-17", "2021-02-18", "2021-02-19", "2021-02-20", "2021-02-21", "2021-04-03",
+                    "2021-04-04", "2021-04-05", "2021-04-06", "2021-04-07", "2021-04-08", "2021-04-09", "2021-04-10",
+                    "2021-04-11", "2021-04-12", "2021-04-13", "2021-04-14", "2021-04-15", "2021-04-16", "2021-04-17",
+                    "2021-04-18", "2021-04-19", "2020-06-07", "2021-09-25", "2021-09-26", "2021-09-27", "2021-09-28",
+                    "2021-09-29", "2021-10-31", "2021-11-07", "2021-11-08", "2021-11-09", "2021-11-10", "2021-11-11",
+                    "2021-11-12", "2021-11-13", "2021-11-14", "2021-12-22", "2021-12-23", "2021-12-24", "2021-12-25",
+                    "2021-12-26", "2021-12-27", "2021-12-28", "2021-12-29", "2021-12-30", "2021-12-31"]
         holiday = 0
-        if datetime.fromtimestamp(1.62639e+18/ 1e9).strftime("%Y-%m-%d") in holidays:
+        if datetime.fromtimestamp(1.62639e+18 / 1e9).strftime("%Y-%m-%d") in holidays:
             holiday = 1
 
         total_time = 0
@@ -134,32 +138,33 @@ def model(request):
             except IndexError as e:
                 return JsonResponse({'result': "NO PREDICTION AVAILABLE"}, safe=False)
 
-            features = {'Monday': 0, 'Tuesday': 0, 'Wednesday': 0,'Thursday': 0, 'Friday': 0, 'Saturday': 0, 'Sunday': 0,
-            # timetabledtimes
-            'timetabledtimes': timetabledjourneytime,
-            # distances
-            'distance': distance,
-            'rain': 0, 'temp': 0, 'rhum': 0, 'msl': 0,
-            # holiday
-            'holiday': holiday,
-            # hour
-            "hour_0": 0,"hour_1": 0,"hour_5": 0,"hour_6": 0,"hour_7": 0,"hour_8": 0,
-            "hour_9": 0,
-            "hour_10": 0,
-            "hour_11": 0,
-            "hour_12": 0,
-            "hour_13": 0,
-            "hour_14": 0,
-            "hour_15": 0,
-            "hour_16": 0,
-            "hour_17": 0,
-            "hour_18": 0,
-            "hour_19": 0,
-            "hour_20": 0,
-            "hour_21": 0,
-            "hour_22": 0,
-            "hour_23": 0,
-            }
+            features = {'Monday': 0, 'Tuesday': 0, 'Wednesday': 0, 'Thursday': 0, 'Friday': 0, 'Saturday': 0,
+                        'Sunday': 0,
+                        # timetabledtimes
+                        'timetabledtimes': timetabledjourneytime,
+                        # distances
+                        'distance': distance,
+                        'rain': 0, 'temp': 0, 'rhum': 0, 'msl': 0,
+                        # holiday
+                        'holiday': holiday,
+                        # hour
+                        "hour_0": 0, "hour_1": 0, "hour_5": 0, "hour_6": 0, "hour_7": 0, "hour_8": 0,
+                        "hour_9": 0,
+                        "hour_10": 0,
+                        "hour_11": 0,
+                        "hour_12": 0,
+                        "hour_13": 0,
+                        "hour_14": 0,
+                        "hour_15": 0,
+                        "hour_16": 0,
+                        "hour_17": 0,
+                        "hour_18": 0,
+                        "hour_19": 0,
+                        "hour_20": 0,
+                        "hour_21": 0,
+                        "hour_22": 0,
+                        "hour_23": 0,
+                        }
 
             for day in days:
                 features[day] = days[day]
@@ -278,4 +283,3 @@ def get_route(departure, olat, olng, dlat, dlng, day, bus_route):
 
 # def explore_vue(request):
 #     return render(request, 'doubledecker/explore_vue.html')
-

@@ -137,8 +137,8 @@
                 <form action="" id="post-form">
 
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Origin" aria-label="Recipient's username"
-                               aria-describedby="basic-addon2" id="from" name="from">
+                        <input type="text" class="form-control" placeholder="Origin"
+                               aria-describedby="basic-addon2" id="from" name="from" required>
                         <div class="input-group-append">
                             <button class="btn btn-secondary" type="button" onclick="getLocation()">My Location</button>
                         </div>
@@ -146,12 +146,12 @@
 
                     <div
                             class="input-group mb-3">
-                        <input
-                                class="form-control"
-                                type="text"
-                                id="to"
-                                name="to"
-                                placeholder="Destination"
+                        <input class="form-control"
+                               type="text"
+                               id="to"
+                               name="to"
+                               placeholder="Destination"
+                               required
                         />
                     </div>
 
@@ -182,13 +182,11 @@
                     <div class="inputContainer">
 
                         <span class="input-group-btn">
-                    <button
+                    <input
                             class="btn btn-primary"
-                            type="button"
+                            type="submit"
                             onclick="findRoute()"
                     >
-                      Search
-                    </button>
                   </span>
                     </div>
                     <!-- from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html-->
