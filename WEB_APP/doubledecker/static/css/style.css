@@ -93,7 +93,7 @@ a.a2:hover {
 
 header img {
     float: left;
-    margin-top: 30px;
+    margin-top: 15px;
     margin-left: 15px;
 }
 
@@ -116,25 +116,30 @@ small {
 /* HEADER CSS */
 
 header {
-    background-color: #3a5458;
-    height: 120px;
+    background-color: #537a80;
+    height: 100px;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    z-index: 4;
 }
 
 header nav {
     float: centre;
+
 }
 
 header nav ul li {
     float: centre;
     display: inline-block;
-    margin-top: 65px;
+    margin-top: 55px;
 }
 
 header nav ul li a {
     text-transform: uppercase;
     font-weight: bold;
     display: block;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 /* footrer */
 
@@ -180,7 +185,9 @@ footer {
 .input-group {
     padding: 0 5px;
 }
-
+.container-fluid{
+    margin-top: 120px;
+}
 /* HIDDEN NAVBAR CSS */
 /* code inspired by the following youtube channel https://www.youtube.com/watch?v=BN6fH1nRDxA */
 .container-nav {
@@ -193,7 +200,7 @@ footer {
     width: 35px;
     height: 30px;
     position: fixed;
-    top: 50px;
+    top: 45px;
     right: 50px;
     cursor: pointer;
     display: flex;
