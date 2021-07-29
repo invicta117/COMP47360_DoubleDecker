@@ -178,6 +178,11 @@ header nav ul li a {
     background-size: cover;
 }
 
+.lineid{
+    font-weight: bold;
+
+}
+
 .hamburger-menu {
     width: 35px;
     height: 30px;
@@ -213,7 +218,7 @@ header nav ul li a {
 .navbar {
     width: 300px;
     height: 100%;
-    background-color: rgba(219, 252, 252, 0.4);
+    background-color: rgba(252, 252, 252, 0.9);
     position: fixed;
     top: 0;
     right: -300px;
@@ -292,8 +297,8 @@ header nav ul li a {
     height: 620px;
     background: linear-gradient(
             107.18deg,
-            rgba(255, 255, 255, 0.6) 0%,
-            rgba(255, 255, 255, 0.3) 100%
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(255, 255, 255, 0.6) 100%
     );
     border-radius: 30px;
     border: 1px solid rgba(255, 255, 255, 0.7);
@@ -457,6 +462,7 @@ header nav ul li a {
 }
 
 
+
 #expectedtime {
     padding: 10px;
     font-weight: bold;
@@ -485,6 +491,11 @@ summary {
     border: 1px solid #d4d8d4;
     color: grey;
     margin: 20px;
+}
+
+#error{
+    display: none;
+    text-align: center;
 }
 
 

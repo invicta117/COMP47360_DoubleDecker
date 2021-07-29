@@ -14,6 +14,7 @@ from math import ceil, floor
 import pickle
 import pandas as pd
 import re
+import json
 
 stop_times = pd.read_csv("../DATA_ANALYTICS/RAW_DATA/gtfs/stop_times.txt", delimiter=",")
 stops = pd.read_csv("../DATA_ANALYTICS/RAW_DATA/gtfs/stops.txt", delimiter=",")
@@ -43,6 +44,16 @@ novmodel = load("../DATA_ANALYTICS/MODELS/novgbr.joblib")
 decmodel = load("../DATA_ANALYTICS/MODELS/decgbr.joblib")
 
 
+class RouteNotAvailable(Exception):
+    """Raised when there was no route available from the origin stop to the destination stop"""  # gtfs appraently not complete
+    pass
+
+
+class PartialRouteNotAvailable(Exception):
+    """Raised when there was no route available from one stop to another on the journey"""  # gtfs appraently not complete
+    pass
+
+
 def main(request):  # origionated from  https://docs.djangoproject.com/en/3.2/intro/tutorial01/
     return render(request, 'doubledecker/index.html')
 
@@ -58,18 +69,8 @@ def tourism_views(request):
 
 # from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html
 def model(request):
-    if request.POST.get('action') == 'post':
-        DayOfService = int(request.POST.get('dayofservice')) / 1e3
-        day = request.POST.get('day')
-        LineId = request.POST.get('line')
-        olat = float(request.POST.get('olat'))
-        olng = float(request.POST.get('olng'))
-        dlat = float(request.POST.get('dlat'))
-        dlng = float(request.POST.get('dlng'))
-
-        print(DayOfService)
+    def route_journey_time(DayOfService, day, LineId, olat, olng, dlat, dlng, departure):
         month = datetime.fromtimestamp(DayOfService).month
-        print("month", month)
         if month == 1:
             loadedmodel = janmodel
         elif month == 2:
@@ -95,20 +96,17 @@ def model(request):
         else:
             loadedmodel = decmodel
 
-        departure = int(request.POST.get('departure'))
-        departure = datetime.fromtimestamp(departure / 1e3).strftime("%H:%M:%S")
-
         days = {"Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday": 0, "Sunday": 0}
         days[day] = 1
-
         current = Weather.objects.order_by('current').first()
         temp = (getattr(current, 'temperature'))
         rain = getattr(current, 'rain_1h')
         msl = getattr(current, 'pressure')
         rhum = getattr(current, 'humidity')
-
-        routes = get_route(departure, olat, olng, dlat, dlng, day, LineId)
-
+        try:
+            routes = get_route(departure, olat, olng, dlat, dlng, day, LineId)
+        except IndexError as e:
+            raise RouteNotAvailable
         # assume june july and august all schools off and we are using monthly data so do not need to give model that detail for those months as will be constant col
         holidays = ["2020-01-06", "2021-02-17", "2021-02-18", "2021-02-19", "2021-02-20", "2021-02-21", "2021-04-03",
                     "2021-04-04", "2021-04-05", "2021-04-06", "2021-04-07", "2021-04-08", "2021-04-09", "2021-04-10",
@@ -131,12 +129,13 @@ def model(request):
                                    'hour_11', 'hour_12', 'hour_13', 'hour_14',
                                    'hour_15', 'hour_16', 'hour_17', 'hour_18', 'hour_19', 'hour_20', 'hour_21',
                                    'hour_22', 'hour_23'])
+
         for route in routes:
             try:
                 timetabledjourneytime = math.log(journeytimes[route])
                 distance = math.log(distances[route])
             except IndexError as e:
-                return JsonResponse({'result': "NO PREDICTION AVAILABLE"}, safe=False)
+                raise PartialRouteNotAvailable
 
             features = {'Monday': 0, 'Tuesday': 0, 'Wednesday': 0, 'Thursday': 0, 'Friday': 0, 'Saturday': 0,
                         'Sunday': 0,
@@ -177,14 +176,49 @@ def model(request):
             df = df.append(features, ignore_index=True)
 
         result = loadedmodel.predict(df)
-
         total_time += sum([math.e ** r for r in result])
-    time = str(timedelta(seconds=total_time))
-    hours = int(time.split(":")[0])
-    mins = int(time.split(":")[1])
-    sec = float(time.split(":")[2])
-    arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds".format(hours, mins, sec)
-    return JsonResponse({'result': arrival_time}, safe=False)
+        time = timedelta(seconds=total_time)
+        return time
+
+    if request.POST.get('action') == 'post':
+
+        journeys = request.POST.get('journeys')
+        parsed_j = json.loads(journeys)
+        response = ""
+        total_journey_time = timedelta(seconds=0)
+        for i in range(len(parsed_j)):
+            DayOfService = int(parsed_j[str(i)]['dayofservice']) / 1e3
+            day = parsed_j[str(i)]['day']
+            LineId = parsed_j[str(i)]['line']
+            olat = float(parsed_j[str(i)]['olat'])
+            olng = float(parsed_j[str(i)]['olng'])
+            dlat = float(parsed_j[str(i)]['dlat'])
+            dlng = float(parsed_j[str(i)]['dlng'])
+            departure = int(parsed_j[str(i)]['departure'])
+            departure = datetime.fromtimestamp(departure / 1e3).strftime("%H:%M:%S")
+            try:
+                journey_time = (route_journey_time(DayOfService, day, LineId, olat, olng, dlat, dlng, departure))
+                total_journey_time = total_journey_time + journey_time
+                journey_time = str(journey_time)
+                hours = int(journey_time.split(":")[0])
+                mins = int(journey_time.split(":")[1])
+                sec = float(journey_time.split(":")[2])
+                arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds".format(hours, mins, sec)
+                response += "<p><span class='lineid'>{} Bus</span> : {}</p>".format(LineId, arrival_time)
+            except RouteNotAvailable:
+                response += "<p><span class='lineid'>{} Bus</span> : {}</p>".format(LineId,
+                                                                                    "Prediction not available for this journey")
+            except PartialRouteNotAvailable:
+                response += "<p><span class='lineid'>{} Bus</span> : {}</p>".format(LineId,
+                                                                                    "Prediction not available for parts of this journey")
+        if len(parsed_j) > 1:
+            journey_time = str(total_journey_time)
+            hours = int(journey_time.split(":")[0])
+            mins = int(journey_time.split(":")[1])
+            sec = float(journey_time.split(":")[2])
+            arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds".format(hours, mins, sec)
+            response += "<p><span class='lineid'>{}</span> : {}</p>".format("Total Time", arrival_time)
+        return JsonResponse({'result': response}, safe=False)
 
 
 def get_route(departure, olat, olng, dlat, dlng, day, bus_route):
