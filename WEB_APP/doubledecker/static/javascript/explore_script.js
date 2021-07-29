@@ -4,8 +4,9 @@ var map;
 const listPos = [];
 const route_name = [];
 var directionsDisplays,
-    directionsService;
-
+  directionsService;
+const depTime = new Date()
+var hour="";
 
 function initMap() {
 
@@ -28,7 +29,7 @@ function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
     center: Dublin,
-    styles:[
+    styles: [
       {
         "elementType": "geometry",
         "stylers": [
@@ -118,24 +119,6 @@ function initMap() {
       },
       {
         "featureType": "poi.park",
-        "elementType": "labels.icon",
-        "stylers": [
-          {
-            "weight": 2
-          }
-        ]
-      },
-      {
-        "featureType": "poi.park",
-        "elementType": "labels.text",
-        "stylers": [
-          {
-            "weight": 3.5
-          }
-        ]
-      },
-      {
-        "featureType": "poi.park",
         "elementType": "labels.text.fill",
         "stylers": [
           {
@@ -153,15 +136,6 @@ function initMap() {
         ]
       },
       {
-        "featureType": "road",
-        "elementType": "labels.text",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
         "featureType": "road.arterial",
         "elementType": "geometry",
         "stylers": [
@@ -171,20 +145,20 @@ function initMap() {
         ]
       },
       {
-        "featureType": "road.arterial",
-        "elementType": "labels.icon",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
         "featureType": "road.highway",
         "elementType": "geometry",
         "stylers": [
           {
             "color": "#f8c967"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#e9bc62"
           }
         ]
       },
@@ -252,12 +226,26 @@ function initMap() {
         ]
       },
       {
+        "featureType": "transit.station.bus",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
         "featureType": "water",
         "elementType": "geometry.fill",
         "stylers": [
           {
             "color": "#b9d3c2"
           }
+        ]
+      },{
+        "featureType": "landscape",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
         ]
       },
       {
@@ -271,45 +259,40 @@ function initMap() {
       }
     ]
   });
+  document.getElementById("myBtn").addEventListener("click", function () {
+    const route_short_name = document.getElementById("searchTxt").value;
 
-  fetch("/api/route-line")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-
-      // console.log(data)
-      // if this function is clicked then the route is added to the map
-      document.getElementById("myBtn").addEventListener("click", function () {
-
+    fetch("/api/stations/?station=" + route_short_name )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        //this helps clear previous route when clearAll is called.
         listPos.pop();
-        let routeID = []
-        const line = document.getElementById("searchTxt").value;
-        // if(line ==""){
-        //   window.alert("You must enter a route name in this field.");
-        // }
-        // else {
-        //   const lineList = document.getElementById('lines_list');
-        //   lineList.innerHTML += "<li>" + line + "</li>";
-        // }
-        data.forEach(route => {
-          if (route.route_short_name == line) {
-            routeID.push(route.shape_pt_sequence,
-              route.route_short_name,
-              route.route_id,
-              route.shape_pt_lat,
-              route.shape_pt_lon)
-          }
 
-        })
-        const stop1 = routeID.slice(0, 5);
-        const stoplast = routeID.slice(-5);
+        hour = data[0].departure_time
+
+
+        //setting the time for each bus to get the most correct route.
+        if (data[0].stop_lat == undefined){
+          hour = new Date();
+        }else{
+          console.log(typeof(hour))
+          depTime.setHours(hour.substring(0,2))
+          depTime.setMinutes(hour.substring(3,5));
+          console.log(depTime)
+        }
+
+
+
+        stop1 = data[0];
+        stoplast = data[1];
         listPos.push({
-          key: [line],
-          value: [stop1[3], stop1[4], stoplast[3], stoplast[4]],
+          key: [route_short_name],
+          value: [stop1.stop_lat, stop1.stop_lon, stoplast.stop_lat, stoplast.stop_lon],
         })
 
-        console.log("list of positions:" ,listPos)
+        console.log("list of positions:", listPos)
         // console.log(listPos[0].value[0])
         // this here is the function which works out the distance of the way points
         for (var i = 0; i < listPos.length; i++) {
@@ -325,6 +308,7 @@ function initMap() {
 
           directionsDisplay = new google.maps.DirectionsRenderer({
             map: map,
+            suppressMarkers: true
           });
           calculateAndDisplayRoute(
             directionsService,
@@ -335,27 +319,22 @@ function initMap() {
           );
         }
         directionsDisplays.push(directionsDisplay);
-        console.log("I am directions array",directionsDisplays)
-
       });
 
-    })
+  })
 
 }
-console.log("this is outside:",listPos)
+console.log("this is outside:", listPos)
+
 function clearItem() {
   // Clean previous routes
-  for(var i = 0; i < directionsDisplays.length; i++) {
+  for (var i = 0; i < directionsDisplays.length; i++) {
     console.log(directionsDisplays)
-  directionsDisplays[i].setMap(null);
+    directionsDisplays[i].setMap(null);
   }
   directionsDisplays.pop();
   listPos.pop();
   // console.log(`I am directions array after ${directionsDisplays}`);
-}
-
-function clearAll(){
-  location.reload();
 }
 
 function calculateAndDisplayRoute(
@@ -365,19 +344,28 @@ function calculateAndDisplayRoute(
   endPoint,
   bounds
 ) {
+
+  console.log("this is dep time:", depTime);
+  
   directionsService.route({
       origin: startPoint,
       destination: endPoint,
-      travelMode: "TRANSIT",
+      travelMode: 'TRANSIT',
+      transitOptions: {
+        departureTime: new Date(Date.parse(depTime)),
+        modes: ['BUS'],
+        routingPreference: 'FEWER_TRANSFERS'
+        
+      },
     },
     function (response, status) {
       if (status === "OK") {
-        console.log("I am response: ",response);
+        console.log("I am response: ", response);
         directionsDisplay.setDirections(response);
         bounds.union(response.routes[0].bounds);
         map.fitBounds(bounds);
       } else {
-        window.alert("Impossible d afficher la route " + status);
+        window.alert("This route is not in service. " + status);
       }
     }
   );
