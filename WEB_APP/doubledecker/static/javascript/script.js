@@ -383,9 +383,14 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         console.log(request)
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
-                console.log(response)
+                // console.log(response)
                 directionsRenderer.setDirections(response);
                 get_predict(response)
+            } else {
+                $('#error').html("<h4>Error</h4><p>No directions available for this journey<p>")
+                $('#error').show()
+                $('#response').hide()
+                $('.loading').hide()
             }
         });
     } else {
@@ -404,9 +409,14 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         console.log(request)
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
-                console.log(response)
+                //console.log(response)
                 directionsRenderer.setDirections(response);
                 get_predict(response)
+            } else {
+                $('#error').html("<h4>Error</h4><p>No directions available for this journey<p>")
+                $('#error').show()
+                $('#response').hide()
+                $('.loading').hide()
             }
         });
     }
@@ -420,57 +430,76 @@ $(document).on('submit', '#post-form', function (e) {
 })
 
 function get_predict(directions_response) {
+    $('#error').hide()
     $('#response').hide()
     $('.loading').show()
     var first_bus = null;
+    var all_route_data = new Object();
     var steps = directions_response["routes"][0]["legs"][0]["steps"]
-    for (var step in steps) {
-        var step_options = directions_response["routes"][0]["legs"][0]["steps"][step]
-        for (var step_option in step_options) {
-            if (step_option == "transit") {
-                console.log(step_options[step_option])
-                if (step_options[step_option]["line"]["agencies"][0]["name"].includes("Dublin Bus")) {
-                    first_bus = step_options
-                }
+    var i = 0;
+    for (var leg in directions_response["routes"][0]["legs"]) {
+        steps = directions_response["routes"][0]["legs"][leg]["steps"]
+        for (var step in steps) {
+            var step_options = directions_response["routes"][0]["legs"][0]["steps"][step]
+            for (var step_option in step_options) {
+                if (step_option == "transit") {
+                    if (step_options[step_option]["line"]["agencies"][0]["name"] == "Dublin Bus") {
+                        console.log(step_options[step_option])
+                        first_bus = step_options
+                        all_route_data[i] = leg_data(first_bus)
+                        i++;
+                    }
 
+                }
             }
         }
     }
     if (first_bus == null) {
-        document.getElementById("result").innerHTML = "<h2> No Dublin Bus on Route " + "</h2>"
+        $('#response').show()
+        $('.loading').hide()
+        document.getElementById("result").innerHTML = "<p> No Dublin Bus on Route " + "</p>"
         return
     }
-    var line = first_bus["transit"]["line"]["short_name"]
-    var departure = first_bus["transit"]["departure_time"]["value"].getTime()
-    var olat = first_bus["transit"]["departure_stop"]["location"]["lat"]
-    var olng = first_bus["transit"]["departure_stop"]["location"]["lng"]
-    var dlat = first_bus["transit"]["arrival_stop"]["location"]["lat"]
-    var dlng = first_bus["transit"]["arrival_stop"]["location"]["lng"]
 
-    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var date = new Date($('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"]);
-    console.log(date)
-    var datetime = date.setHours(0, 0, 0, 0)
-    var day = days[date.getDay()]
+    function leg_data(first_bus) {
+        var line = first_bus["transit"]["line"]["short_name"]
+        var departure = first_bus["transit"]["departure_time"]["value"].getTime()
+        var olat = first_bus["transit"]["departure_stop"]["location"]["lat"]
+        var olng = first_bus["transit"]["departure_stop"]["location"]["lng"]
+        var dlat = first_bus["transit"]["arrival_stop"]["location"]["lat"]
+        var dlng = first_bus["transit"]["arrival_stop"]["location"]["lng"]
+
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var date = new Date($('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"]);
+        //console.log(date)
+        var datetime = date.setHours(0, 0, 0, 0)
+        var day = days[date.getDay()]
+
+        return {
+            dayofservice: datetime,
+            line: line,
+            olat: olat(),
+            olng: olng(),
+            dlat: dlat(),
+            dlng: dlng(),
+            departure: departure,
+            day: day,
+        };
+    }
+    console.log(all_route_data)
+    console.log(JSON.stringify(all_route_data))
     $.ajax({
         type: 'POST',
         url: './model/',
         data: {
-            dayofservice: datetime,
-            line: line,
-            olat: olat,
-            olng: olng,
-            dlat: dlat,
-            dlng: dlng,
-            departure: departure,
-            day: day,
+            journeys: JSON.stringify(all_route_data),
             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
             action: 'post'
         },
         success: function (json) {
             $('.loading').hide()
             $('#response').show()
-            document.getElementById("result").innerHTML = "<p id='expectedtime'> Expected journey time: " + json['result'] + "</p>"
+            document.getElementById("result").innerHTML = json['result']
         },
         error: function (xhr, errmsg, err) {
             console.log("error")

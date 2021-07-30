@@ -31,6 +31,14 @@ function initMap() {
 
 
 function showRoute() {
+    const cen = {
+        lat: 53.3498,
+        lng: -6.2603
+    };
+    map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 12,
+        center: cen,
+    });
     if (start_point.length == 0) {
         window.alert("Please Click User Location First" + status);
     }else {

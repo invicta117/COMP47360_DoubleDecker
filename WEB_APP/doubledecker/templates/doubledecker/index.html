@@ -56,6 +56,7 @@
 </head>
 
 <body>
+
     <header>
         <img src="{% static '/images/logo6.png' %}" alt="logo" />
         {% comment %}
@@ -67,7 +68,7 @@
                     <ul>
                         <li><a class="a2" href="#">Plan</a></li>
                         <li><a class="a2" href="/explore/">Explore</a></li>
-                        <li><a class="a2" href="#">Tour</a></li>
+                        <li><a class="a2" href="/tourism/">Tour</a></li>
                     </ul>
                 </div>
             </nav>
@@ -91,6 +92,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/explore/">Tour</a>
                     </li>
+
                 </ul>
             </nav>
         </div>
@@ -131,10 +133,29 @@
                             </div>
                         </div>
 
-                        <div class="input-group mb-3">
-                            <input class="form-control" type="text" id="to" name="to" placeholder="Destination" />
+
+                </div>
+                <!--input group for origin and destination-->
+                <form action="" id="post-form">
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Origin"
+                               aria-describedby="basic-addon2" id="from" name="from" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button" onclick="getLocation()">My Location</button>
                         </div>
 
+
+                    <div
+                            class="input-group mb-3">
+                        <input class="form-control"
+                               type="text"
+                               id="to"
+                               name="to"
+                               placeholder="Destination"
+                               required
+                        />
+                    </div>
 
                         <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
 
@@ -147,7 +168,18 @@
                             </div>
                         </div>
 
-                        <div class="inputContainer">
+
+                    <div class="inputContainer">
+
+                        <span class="input-group-btn">
+                    <input
+                            class="btn btn-primary"
+                            type="submit"
+                            onsubmit="findRoute()"
+                    >
+                  </span>
+                    </div>
+                    <!-- from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html-->
 
                             <span class="input-group-btn">
                                 <button class="btn btn-primary" type="button" onclick="findRoute()">
@@ -169,9 +201,11 @@
                         </div>
                     </div>
 
-                    <div id="response">
-                        <h4>Expected Journey Time:</h4>
-                        <div id="result"></div>
+                </div>
+                <div id="error"></div>
+                <div id="response">
+                    <h4>Expected Journey Time:</h4>
+                    <div id="result"></div>
 
                         <details>
                             <summary>Directions</summary>
