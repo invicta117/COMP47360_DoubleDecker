@@ -1,155 +1,90 @@
-// This code origionated from https://developers.google.com/maps/documentation/javascript/adding-a-google-map
+// This code origionated from https://developers.google.com/maps/documentation/javascript/examples/directions-waypoints#maps_directions_waypoints-javascript
 // Initialize and add the map
-var map;
-var start_point = [];
 
-console.log(start_point)
-
+var colors = ["#0000ff", "#00ff00", "#ff0000", "#000000"]
+var directionsdivs = ["directions1", "directions2", "directions3"]
+var hiddencontainers = ['#hiddencontainer1', '#hiddencontainer2', '#hiddencontainer3', '#hiddencontainer4']
+var routeids = ["#route1", "#route2", "#route3", "#route4"]
 
 function initMap() {
-    // nav bar work
-    const menuI = document.querySelector(".hamburger-menu");
+    var directionsService = new google.maps.DirectionsService();
 
-    const navbar = document.querySelector(".navbar");
-
-    menuI.addEventListener("click", () => {
-        navbar.classList.toggle("change");
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 6,
+        center: {lat: 41.85, lng: -87.65},
     });
 
-    // The location of Dublin
-    const Dublin = {
-        lat: 53.3498,
-        lng: -6.2603
-    };
-    // The map, centered at Uluru
-    map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 12,
-        center: Dublin,
+    var submit = document.getElementById("submit")
+    submit.addEventListener("click", () => {
+        var o = document.getElementById("start").value
+        $(".hiddencontainer").hide()
+        var previous = o;
+        var destinations = document.getElementsByClassName("waypoints")
+        console.log(destinations)
+        for (var i = 0; i < destinations.length; i++) {
+            var d = destinations[i].value
+            var directionsDisplay = new google.maps.DirectionsRenderer({
+                map: map,
+                polylineOptions: {strokeColor: colors[i]},
+                suppressMarkers: true
+            });
+            directionsDisplay.setPanel(document.getElementById(directionsdivs[i]));
+            $(routeids[i]).html(previous + " -to- " + d)
+            calculateAndDisplayRoute(directionsService, directionsDisplay, previous, d);
+            previous = d;
+            $(hiddencontainers[i]).show()
+        }
+        console.log(d + " -to- " + o)
+        var directionsDisplay = new google.maps.DirectionsRenderer({
+            map: map,
+            polylineOptions: {strokeColor: colors[3]},
+            suppressMarkers: true
+        });
+        directionsDisplay.setPanel(document.getElementById("directions4"));
+        calculateAndDisplayRoute(directionsService, directionsDisplay, d, o);
+        $("#route4").html(d + " - to- " + o)
+        $('#hiddencontainer4').show()
     });
-
 }
 
+function calculateAndDisplayRoute(directionsService, directionsRenderer, origin, destination) {
+    const waypts = [];
+    const checkboxArray = document.getElementsByClassName("waypoints");
 
-function showRoute() {
-    const cen = {
-        lat: 53.3498,
-        lng: -6.2603
-    };
-    map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 12,
-        center: cen,
-    });
-    if (start_point.length == 0) {
-        window.alert("Please Click User Location First" + status);
-    }else {
-        const directionDisplay = new google.maps.DirectionsRenderer({
-            map: this.map
-        })
-        // get the user select
-        const Dname = selectD();
-        console.log(Dname)
-        let dest = '';
-        if (Dname == 'Phoenix Park') {
-            dest = 'phoenix park dublin 8'
-        }else if (Dname == 'Trinity College') {
-            dest = 'Trinity College Dublin, College Green, Dublin 2'
-        }else if (Dname == 'Grafton Street') {
-            dest = 'Grafton Street'
-        }else if (Dname == 'St.stephens') {
-            dest = 'St Stephen\'s Green'
-        }else if (Dname == 'Howth') {
-            dest = 'Howth'
-        }else if (Dname == 'National Museum') {
-            dest = 'National Museum of Ireland - Archaeology'
-        }
-        else if (Dname == 'Guinness Storehouse') {
-            dest ='Guinness Storehouse, Dublin 8'
-        }else if (Dname == 'National Gallery of Ireland') {
-            dest = 'National Gallery of Ireland'
-        }else if (Dname == 'Merrion Square') {
-            dest = 'Merrion Square'
-        }else if (Dname == 'GPO Museum') {
-            dest = 'GPO Museum'
-        }
-        console.log(dest)
-        const start = new google.maps.LatLng(start_point[0], start_point[1])
-        const directionsService = new google.maps.DirectionsService();
-        const request = {
-            origin: start,
-            destination: dest,
+    directionsService
+        .route({
+            origin: origin,
+            destination: destination,
+            //waypoints: waypts,
             travelMode: 'TRANSIT',
             transitOptions: {
                 modes: ["BUS"]
             }
-        }
-        directionsService.route(request, function (response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                directionDisplay.setDirections(response);
-            }
-        });
+        })
+        .then((response) => {
+            console.log(response)
+            directionsRenderer.setDirections(response);
+        })
+        .catch((e) => window.alert("Directions request failed due to " + status));
+}
+
+function addStop() {
+
+    var max_stops = 3;
+    var number_stops = document.getElementsByClassName("waypoints").length
+    if (number_stops < max_stops) {
+        console.log("adding stop")
+        $('#waypoint-stops').append('<div><select class="waypoints">\n' +
+            '                            <option value="Phoenix Park, Dublin 8, Ireland">Phoenix Park</option>\n' +
+            '                            <option value="Trinity College, College Green, Dublin 2, Ireland">Trinity College</option>\n' +
+            '                        </select><p class="remove"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">\n' +
+            '  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
+            '  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>\n' +
+            '</svg></p></div>');
     }
 }
 
-/**
- * return  destination user select
- */
-function selectD() {
-    var selectObj = document.getElementById("select2");
-    var index = selectObj.selectedIndex;
-    var des = selectObj.options[index].value;
-    console.log(des);
-    return des;
-}
-
-
-// define a variable that get a button
-var x = document.getElementById('userLocation')
-
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showUserLocation, showError)
-    } else {
-        x.innerHTML = 'your browser not support get the location';
-    }
-}
-
-// get user location and print marker
-function showUserLocation(position) {
-    lat = position.coords.latitude;
-    lon = position.coords.longitude;
-    start_point.push(lat);
-    start_point.push(lon);
-
-    pos = new google.maps.LatLng(lat, lon);
-    // set the marker
-    var marker = new google.maps.Marker({
-        position: pos,
-        map: map,
-        title: "You are here!"
-    });
-    const infoWindow = new google.maps.InfoWindow({
-        content: "You are here!"
-    })
-    marker.addListener("click", () => {
-        infoWindow.open(map, marker);
-    })
-}
-
-
-// handle error
-function showError() {
-    switch (error.code) {
-        case error.PERMISSION_DENIED:
-            x.innerHTML = "The user rejected the request for a geographic location."
-            break;
-        case error.POSITION_UNAVAILABLE:
-            x.innerHTML = "Location information is not available."
-            break;
-        case error.TIMEOUT:
-            x.innerHTML = "Request user location timeout。"
-            break;
-        case error.UNKNOWN_ERROR:
-            x.innerHTML = "UNKNOWN_ERROR"
-            break;
-    }
-}
+// the following is from https://stackoverflow.com/questions/31455020/jquery-parent-remove-is-not-working
+$(document).on('click', '.remove', function () {
+    $(this).parent().remove();
+});
