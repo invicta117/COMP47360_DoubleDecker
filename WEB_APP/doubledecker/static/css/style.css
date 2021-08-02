@@ -402,6 +402,19 @@ header nav ul li a {
     padding: 10px 0;
 }
 
+.search{
+    width: 100%;
+}
+
+#search{
+    display: block;
+    width: 100%;
+}
+
+.waypoints{
+    margin: 10px 0;
+}
+
 .container {
     position: absolute;
     align-items: center;
@@ -473,6 +486,7 @@ header nav ul li a {
 
 .hiddencontainer{
     display: none;
+    width: 100%;
 }
 
 .remove:hover{
@@ -514,16 +528,32 @@ summary {
     border-right: 5px solid #0000ff;
 }
 
+#tourism1{
+    color: #0000ff;
+}
+
 .tourism2{
     border-right: 5px solid #00ff00;
+}
+
+#tourism2{
+    color: #00ff00;
 }
 
 .tourism3{
     border-right: 5px solid #ff0000;
 }
 
+#tourism3{
+    color: #ff0000;
+}
+
 .tourism4{
     border-right: 5px solid #000000;
+}
+
+#tourism4{
+    color: #000000;
 }
 
 #error{

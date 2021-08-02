@@ -15,6 +15,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <link href="https://fonts.googleapis.com/css?family=Dosis:300,400,700" rel="stylesheet"/>
 
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -55,82 +58,135 @@
         <div class="row justify-content-center">
             <div class="col-6">
                 <div class="input-group">
-                    <h4>Starting Point</h4>
-                    <select id="start">
-                        <option value="General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland">
-                            City Center
-                        </option>
-                        <option value="CURRENT LOCATION">My Location</option>
-                    </select>
 
-                    <h4>Trip</h4>
-                    <div id="waypoint-stops">
-                        <select class="waypoints">
-                            <option value="Phoenix Park, Dublin 8, Ireland">Phoenix Park</option>
-                            <option value="Trinity College, College Green, Dublin 2, Ireland">Trinity College</option>
+                    <details id="search" open>
+                        <summary class="search">Search
+                            <i class="bi bi-search"></i>
+                        </summary>
+                        <h4>Starting Point</h4>
+                        <select id="start">
+                            <option value="General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland">
+                                City Center
+                            </option>
+                            <option value="CURRENT LOCATION">My Location</option>
                         </select>
+
+                        <h4>Trip</h4>
+                        <div id="waypoint-stops">
+                            <select class="waypoints">
+                                <option value="Phoenix Park, Dublin 8, Ireland">Phoenix Park</option>
+                                <option value="National Museum of Ireland - Archaeology, Kildare Street, Dublin 2, Ireland">
+                                    National Museum of Ireland
+                                </option>
+                                <option value="Guinness Storehouse, Saint Catherine's, Dublin 8, Ireland">Guinness
+                                    Storehouse
+                                </option>
+                                <option value="Howth, Dublin, Ireland">Howth</option>
+                                <option value="Dun Laoghaire Harbour, Dún Laoghaire, Dublin, Ireland">Dun Laoghaire
+                                    Harbour
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="inputContainer">
+                            <button
+                                    class="btn btn-secondary"
+                                    type="button"
+                                    id="add-stop"
+                                    onclick="addStop()"
+                            >
+                                Add Stop
+                            </button>
+                        </div>
+
+                        <div class="inputContainer">
+                            <button
+                                    class="btn btn-primary"
+                                    type="button"
+                                    id="submit"
+                            >
+                                Search
+                            </button>
+                        </div>
+
+                    </details>
+
+
+                    <div class="hiddencontainer" id="hiddencontainer1">
+                        <h4>Route:</h4>
+                        <p id="route1"></p>
+
+                        <button
+                                class="btn btn-primary"
+                                type="button"
+                                onclick="showRoute(0)"
+                        >
+                            Show Route
+                        </button>
+
+                        <details>
+                            <summary class="tourism1">Directions</summary>
+                            <div id="directions1"></div>
+                        </details>
                     </div>
+
+                    <div class="hiddencontainer" id="hiddencontainer2">
+                        <h4>Route:</h4>
+                        <p id="route2"></p>
+                        <button
+                                class="btn btn-primary"
+                                type="button"
+                                onclick="showRoute(1)"
+                        >
+                            Show Route
+                        </button>
+
+                        <details>
+                            <summary class="tourism2">Directions</summary>
+                            <div id="directions2"></div>
+                        </details>
+                    </div>
+
+                    <div class="hiddencontainer" id="hiddencontainer3">
+                        <h4>Route:</h4>
+                        <p id="route3"></p>
+                        <button
+                                class="btn btn-primary"
+                                type="button"
+                                onclick="showRoute(2)"
+                        >
+                            Show Route
+                        </button>
+
+
+                        <details>
+                            <summary class="tourism3">Directions</summary>
+                            <div id="directions3"></div>
+                        </details>
+                    </div>
+
+                    <div class="hiddencontainer" id="hiddencontainer4">
+                        <h4>Route:</h4>
+                        <p id="route4"></p>
+                        <button
+                                class="btn btn-primary"
+                                type="button"
+                                onclick="showRoute(3)"
+                        >
+                            Show Route
+                        </button>
+
+                        <details>
+                            <summary class="tourism4">Directions</summary>
+                            <div id="directions4"></div>
+                        </details>
+                    </div>
+
+
                 </div>
-                <button
-                        class="btn btn-primary"
-                        type="button"
-                        id="add-stop"
-                        onclick="addStop()"
-                >
-                    Add Stop
-                </button>
-
-                <span class="input-group-btn">
-              <button
-                      class="btn btn-primary"
-                      type="button"
-                      id="submit"
-              >
-                      Search
-                    </button>
-              </span>
-
-                <div class="hiddencontainer" id="hiddencontainer1">
-                    <h4>Route:</h4>
-                    <p id="route1"></p>
-                    <details>
-                        <summary class="tourism1">Directions</summary>
-                        <div id="directions1"></div>
-                    </details>
-                </div>
-
-                <div class="hiddencontainer" id="hiddencontainer2">
-                    <h4>Route:</h4>
-                    <p id="route2"></p>
-                    <details>
-                        <summary class="tourism2">Directions</summary>
-                        <div id="directions2"></div>
-                    </details>
-                </div>
-
-                <div class="hiddencontainer" id="hiddencontainer3">
-                    <h4>Route:</h4>
-                    <p id="route3"></p>
-                    <details>
-                        <summary class="tourism3">Directions</summary>
-                        <div id="directions3"></div>
-                    </details>
-                </div>
-
-                <div class="hiddencontainer" id="hiddencontainer4">
-                    <h4>Route:</h4>
-                    <p id="route4"></p>
-                    <details>
-                        <summary class="tourism4">Directions</summary>
-                        <div id="directions4"></div>
-                    </details>
-                </div>
-
-
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <!-- Optional JavaScript -->
