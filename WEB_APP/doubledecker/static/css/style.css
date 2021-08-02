@@ -62,7 +62,10 @@ h4 {
     color: #F08080;
     font-weight: bold;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    text-align: center;
+    margin: 20px;
+    width: 100%;
+    display: block;
 }
 
 h5 {
@@ -168,6 +171,7 @@ header nav ul li a {
 
 .input-group {
     padding: 0 5px;
+    justify-content: center;
 }
 
 /* HIDDEN NAVBAR CSS */
@@ -462,6 +466,19 @@ header nav ul li a {
 }
 
 
+.remove{
+    display: inline;
+    padding: 0 10px;
+}
+
+.hiddencontainer{
+    display: none;
+}
+
+.remove:hover{
+    cursor: pointer;
+
+}
 
 #expectedtime {
     padding: 10px;
@@ -493,11 +510,26 @@ summary {
     margin: 20px;
 }
 
+.tourism1{
+    border-right: 5px solid #0000ff;
+}
+
+.tourism2{
+    border-right: 5px solid #00ff00;
+}
+
+.tourism3{
+    border-right: 5px solid #ff0000;
+}
+
+.tourism4{
+    border-right: 5px solid #000000;
+}
+
 #error{
     display: none;
     text-align: center;
 }
-
 
 @media only screen and (max-width: 768px) {
     /* for the md bootstrap change*/
