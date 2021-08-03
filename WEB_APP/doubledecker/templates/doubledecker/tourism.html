@@ -1,210 +1,100 @@
+{% extends './base.html' %}
 {% load static %}
-<!--This code origionated from https://developers.google.com/maps/documentation/javascript/adding-a-google-map -->
-<!DOCTYPE html>
-<html>
+{% block packages %}
 
-<head>
-    <title>D.Decker</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <script src="{% static 'javascript/tourism.js' %}"></script>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <link href="https://fonts.googleapis.com/css?family=Dosis:300,400,700" rel="stylesheet"/>
+{% endblock %}
 
-    <!-- Bootstrap icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+{% block content %}
+    <div class="row justify-content-center">
+        <details id="search" open>
+            <summary class="search">Search
+                <i class="bi bi-search"></i>
+            </summary>
+            <h4>Start</h4>
+            <select id="start">
+                <option value="General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland">
+                    City Center
+                </option>
+                <option value="CURRENT LOCATION">My Location</option>
+            </select>
 
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link rel="stylesheet" href="{% static 'css/reset.css' %}"/>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
-
-</head>
-
-<body>
-<h2>Plan Your Day Trip!!</h2>
-<div class="container-nav">
-    <div id="abs1">
-        <nav class="navbar">
-            <div class="hamburger-menu">
-                <div class="line line-1"></div>
-                <div class="line line-2"></div>
-                <div class="line line-3"></div>
+            <h4>Trip</h4>
+            <div id="waypoint-stops">
+                <select class="waypoints">
+                    <option value="attraction">Attraction</option>
+                    <option value="food">Food</option>
+                </select>
             </div>
-            <ul class="nav-list">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Plan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Explore</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Tourism</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-6">
-                <div id="map"></div>
+
+            <div class="inputContainer">
+                <button
+                        class="btn btn-secondary"
+                        type="button"
+                        id="add-stop"
+                        onclick="addStop()"
+                >
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+
+                <button
+                        class="btn btn-secondary"
+                        type="button"
+                        id="add-stop"
+                        onclick="removeStop()"
+                >
+                    <i class="bi bi-dash-lg"></i>
+                </button>
             </div>
+
+            <div class="inputContainer">
+                <button
+                        class="btn btn-primary"
+                        type="button"
+                        id="submit"
+                >
+                    GO!
+                </button>
+            </div>
+
+        </details>
+
+        <h5 id="complete-route"></h5>
+        <div class="hiddencontainer" id="hiddencontainer1">
+
+            <details onclick="showRoute(0)">
+                <summary class="tourism1" id="route1">Directions</summary>
+                <div id="directions1"></div>
+            </details>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-6">
-                <div class="input-group">
 
-                    <details id="search" open>
-                        <summary class="search">Search
-                            <i class="bi bi-search"></i>
-                        </summary>
-                        <h4>Starting Point</h4>
-                        <select id="start">
-                            <option value="General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland">
-                                City Center
-                            </option>
-                            <option value="CURRENT LOCATION">My Location</option>
-                        </select>
+        <div class="hiddencontainer" id="hiddencontainer2">
 
-                        <h4>Trip</h4>
-                        <div id="waypoint-stops">
-                            <select class="waypoints">
-                                <option value="Phoenix Park, Dublin 8, Ireland">Phoenix Park</option>
-                                <option value="National Museum of Ireland - Archaeology, Kildare Street, Dublin 2, Ireland">
-                                    National Museum of Ireland
-                                </option>
-                                <option value="Guinness Storehouse, Saint Catherine's, Dublin 8, Ireland">Guinness
-                                    Storehouse
-                                </option>
-                                <option value="Howth, Dublin, Ireland">Howth</option>
-                                <option value="Dun Laoghaire Harbour, Dún Laoghaire, Dublin, Ireland">Dun Laoghaire
-                                    Harbour
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="inputContainer">
-                            <button
-                                    class="btn btn-secondary"
-                                    type="button"
-                                    id="add-stop"
-                                    onclick="addStop()"
-                            >
-                                Add Stop
-                            </button>
-                        </div>
-
-                        <div class="inputContainer">
-                            <button
-                                    class="btn btn-primary"
-                                    type="button"
-                                    id="submit"
-                            >
-                                Search
-                            </button>
-                        </div>
-
-                    </details>
-
-
-                    <div class="hiddencontainer" id="hiddencontainer1">
-                        <p id="route1"></p>
-
-                        <button
-                                class="btn btn-primary"
-                                type="button"
-                                onclick="showRoute(0)"
-                        >
-                            Show Route
-                        </button>
-
-                        <details>
-                            <summary class="tourism1">Directions</summary>
-                            <div id="directions1"></div>
-                        </details>
-                    </div>
-
-                    <div class="hiddencontainer" id="hiddencontainer2">
-
-                        <p id="route2"></p>
-                        <button
-                                class="btn btn-primary"
-                                type="button"
-                                onclick="showRoute(1)"
-                        >
-                            Show Route
-                        </button>
-
-                        <details>
-                            <summary class="tourism2">Directions</summary>
-                            <div id="directions2"></div>
-                        </details>
-                    </div>
-
-                    <div class="hiddencontainer" id="hiddencontainer3">
-
-                        <p id="route3"></p>
-                        <button
-                                class="btn btn-primary"
-                                type="button"
-                                onclick="showRoute(2)"
-                        >
-                            Show Route
-                        </button>
-
-
-                        <details>
-                            <summary class="tourism3">Directions</summary>
-                            <div id="directions3"></div>
-                        </details>
-                    </div>
-
-                    <div class="hiddencontainer" id="hiddencontainer4">
-
-                        <p id="route4"></p>
-                        <button
-                                class="btn btn-primary"
-                                type="button"
-                                onclick="showRoute(3)"
-                        >
-                            Show Route
-                        </button>
-
-                        <details>
-                            <summary class="tourism4">Directions</summary>
-                            <div id="directions4"></div>
-                        </details>
-                    </div>
-
-
-                </div>
-            </div>
+            <details onclick="showRoute(1)">
+                <summary class="tourism2" id="route2">Directions</summary>
+                <div id="directions2"></div>
+            </details>
         </div>
+
+        <div class="hiddencontainer" id="hiddencontainer3">
+
+            <details onclick="showRoute(2)">
+                <summary class="tourism3" id="route3">Directions</summary>
+                <div id="directions3"></div>
+            </details>
+        </div>
+
+        <div class="hiddencontainer" id="hiddencontainer4">
+
+            <details onclick="showRoute(3)">
+                <summary class="tourism4" id="route4">Directions</summary>
+                <div id="directions4"></div>
+            </details>
+        </div>
+
     </div>
-</div>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-</script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-</script>
+{% endblock %}
 
-<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&callback=initMap&libraries=&v=weekly"
-        async type="text/javascript"></script>
-<script defer src="{% static 'javascript/tourism.js' %}"></script>
-</body>
 
-</html>

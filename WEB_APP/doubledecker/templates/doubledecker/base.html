@@ -33,6 +33,8 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
 
+    <!-- Bootstrap Icons cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"
@@ -52,7 +54,9 @@
     <link rel="stylesheet" href="{% static 'css/reset.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 
-    <script defer src="{% static 'javascript/script.js' %}"></script>
+    {% block packages %}
+
+    {% endblock %}
 </head>
 
 <body>
@@ -100,7 +104,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-lg-4">
             <div class="glass">
                 <!-- Current Weather Feature -->
                 <div class="weather-outer">
@@ -121,78 +125,16 @@
                         </div>
                         <div class="location"></div>
                     </div>
-
-                    <!--input group for origin and destination-->
-                    <form action="" id="post-form">
-
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Origin"
-                                   aria-label="Recipient's username" aria-describedby="basic-addon2" id="from"
-                                   name="from" required>
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" type="button" onclick="getLocation()">My
-                                    Location
-                                </button>
-                            </div>
-
-                        </div>
-                        <!--input group for origin and destination-->
-                        <form action="" id="post-form">
-                            <div class="input-group mb-3">
-                                <input class="form-control" type="text" id="to" name="to" placeholder="Destination"
-                                       required/>
-                            </div>
-                            <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
-
-                            <div class="input-group mb-3" id="datetimepicker1" data-target-input="nearest">
-
-                                <input type="text" class="form-control datetimepicker-input"
-                                       data-target="#datetimepicker1" placeholder="Departure Time"/>
-                                <div class="input-group-append" data-target="#datetimepicker1"
-                                     data-toggle="datetimepicker">
-
-                                    <button class="btn btn-secondary" type="button"><i
-                                            class="fa fa-calendar"></i></button>
-                                </div>
-
-                            </div>
-
-                            <div class="inputContainer">
-
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="submit" onclick="findRoute()">
-                                            GO !
-                                        </button>
-                                    </span>
-                            </div>
-                            <!-- from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html-->
-
-                            {% csrf_token %}
-                            <span class="input-group-btn"></span>
-                        </form>
-
-                        <div class="loading">
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
-                <div id="error"></div>
-                <div id="response">
-                    <h4>Expected Journey Time:</h4>
-                    <div id="result"></div>
 
-                    <details>
-                        <summary>Directions</summary>
-                        <p id="sidebar"></p>
-                    </details>
-                </div>
+
+                {% block content %}
+
+                {% endblock %}
             </div>
         </div>
-        <div class="col-md-8 ml-md-auto">
+
+        <div class="col-lg-8 ml-lg-auto">
             <div class="glass2">
                 <div id="map"></div>
             </div>
@@ -248,9 +190,62 @@
 
 
 <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&libraries=places">
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&callback=initMap&libraries=&v=weekly"
+        async></script>
+<script type="text/javascript">
+
+//Weather
+//SELECT ELEMENTS
+const locationEle = locationElement = document.querySelector(".location");
+const iconEle = document.querySelector(".weather-icon");
+const temperatureEle = document.querySelector(".temperature-value");
+const descriptionEle = document.querySelector(".temperature-description");
+
+
+
+//APP DATA
+const weather = {};
+weather.temperature = {
+   unit: "celsius"
+}
+
+//Get weather from API
+//window.onload = function getWeather(){
+function ShowCurrentWeather(){
+
+    fetch("/api/ShowCurrentWeather")
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            weather.temperature.value = Math.floor(data['temperature']);
+            weather.description = data['description'];
+            weather.iconId = data['weather_icon'];
+            weather.city = 'Dublin City';
+            weather.country = 'IE';
+            console.log(weather.iconId);
+        }).then(function () {
+        displayWeather();
+    })
+}
+
+
+//DISPLAY WEATHER TO UI
+function displayWeather() {
+    locationEle.innerHTML = "Dublin";
+    var picture = "{{ STATIC_URL }}/static/icons/" + weather.iconId +".png"
+    iconEle.innerHTML = `<img src="${picture}"/>`;
+    temperatureEle.innerHTML = `${weather.temperature.value}°<span>C</span>`;
+    descriptionEle.innerHTML = weather.description;
+}
+
+window.onload = function() {
+    ShowCurrentWeather();
+}
+
 </script>
-<script src="{% static 'javascript/CurrentWeather.js' %}"></script>
+
 </body>
 
 </html>

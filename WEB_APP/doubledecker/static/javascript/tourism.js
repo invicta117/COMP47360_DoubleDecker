@@ -9,6 +9,50 @@ var tourism = ["tourism1", "tourism2", "tourism3", "tourism4"]
 var directionsDisplays = [];
 var map;
 
+var places = {
+    "attraction":
+        {
+            0: {
+                "name": 'National Museum of Ireland',
+                "address": "National Museum of Ireland - Archaeology, Kildare Street, Dublin 2, Ireland",
+                "lat": 53.34024334788384,
+                "lng": -6.254841710382612,
+            },
+            1: {
+                "name": 'Guinness Storehouse',
+                "address": "Guinness Storehouse, Saint Catherine\'s, Dublin 8, Ireland",
+                "lat": 53.341785814004886,
+                "lng": -6.286732559527315,
+            },
+            2: {
+                "name": 'Howth',
+                "address": "Howth, Dublin, Ireland",
+                "lat": 53.379913165900405,
+                "lng": -6.057499107605555
+            }
+        },
+    "food": {
+        0: {
+            "name": 'Spitalfields',
+            "address": "Spitalfields, The Coombe, Merchants Quay, Dublin 8",
+            "lat": 53.3398813383553,
+            "lng": -6.275718359527415
+        },
+        1: {
+            "name": 'Wing\'s World Cuisine',
+            "address": "Wing's World Cuisine, Wolfe Tone Street, North City, Dublin",
+            "lat": 53.34903370674537,
+            "lng": -6.26773869021117
+        },
+        2: {
+            "name": 'PHX Bistro',
+            "address": "PHX Bistro, Ellis Quay, Smithfield, Dublin",
+            "lat": 53.347092589476155,
+            "lng": -6.281589528843021
+        },
+    }
+}
+
 function initMap() {
     var directionsService = new google.maps.DirectionsService();
     map = new google.maps.Map(document.getElementById("map"), {
@@ -18,29 +62,59 @@ function initMap() {
             lng: -6.2603
         }
     });
+
     for (var i = 0; i < 4; i++) {
         var directionsDisplay = new google.maps.DirectionsRenderer({
             map: map,
             polylineOptions: {strokeColor: colors[i]},
+            suppressMarkers: true,
         });
         directionsDisplay.setPanel(document.getElementById(directionsdivs[i]));
         directionsDisplays.push(directionsDisplay)
     }
     var submit = document.getElementById("submit")
     submit.addEventListener("click", () => {
+
         var o = document.getElementById("start").value
+        if (o == "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
+            new google.maps.Marker({
+                position: {lat: 53.34943864163513, lng: -6.260527882816787},
+                map: map,
+                label: {color: '#ffffff', text: 'A'}
+            });
+        }
+        var complete_route = ""
         var o_text = document.getElementById("start").selectedOptions[0].text
         $(".hiddencontainer").hide()
         var previous = o;
         var previous_text = o_text;
         var destinations = document.getElementsByClassName("waypoints")
-        var departure = Date.now()
-        console.log(destinations)
+        var random_destinations = [];
         for (var i = 0; i < destinations.length; i++) {
             var d = destinations[i].value
-            var d_text = destinations[i].selectedOptions[0].text
-            $(routeids[i]).html(previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + d_text)
+            console.log(d)
+            console.log(places[d])
+            var place = places[d][Math.floor(Math.random() * Object.keys(places[d]).length)] // random comes from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+            while (random_destinations.indexOf(place) != -1) {
+                place = places[d][Math.floor(Math.random() * Object.keys(places[d]).length)] // random comes from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+            }
+            random_destinations.push(place)
+        }
+        var departure = Date.now()
+        console.log(destinations)
+        for (var i = 0; i < random_destinations.length; i++) {
+            var d = random_destinations[i].address
+            var d_text = random_destinations[i].name
+            var route_text = previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + d_text
+            $(routeids[i]).html(route_text)
+            complete_route = complete_route + previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> '
             departure = calculateAndDisplayRoute(directionsService, directionsDisplays[i], previous, d, departure);
+            console.log(random_destinations[i].lat + " " + random_destinations[i].lng)
+            new google.maps.Marker({
+                position: {lat: random_destinations[i].lat, lng: random_destinations[i].lng},
+                map: map,
+                label: {color: '#ffffff', text: String.fromCharCode('B'.charCodeAt() + i)} // from char code from https://stackoverflow.com/questions/12504042/what-is-a-method-that-can-be-used-to-increment-letters/34483399
+            });
             previous = d;
             previous_text = d_text;
             $(hiddencontainers[i]).show()
@@ -48,8 +122,10 @@ function initMap() {
         console.log(d + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + o)
         calculateAndDisplayRoute(directionsService, directionsDisplays[3], d, o, departure);
         $("#route4").html(d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text)
+        complete_route = complete_route + d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text
         $('#hiddencontainer4').show()
-        showRoute(0)
+        //showRoute(0)
+        document.getElementById("complete-route").innerHTML = complete_route
         document.getElementById("search").open = false;
     });
 }
@@ -70,7 +146,10 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, origin,
             console.log(response)
             directionsRenderer.setDirections(response);
             // get the arrival time
-            return addHour(response["routes"][response["routes"].length - 1]["legs"][[response["routes"][response["routes"].length - 1]["legs"].length - 1]].arrival_time.value)
+            if (Object.keys(response["routes"][response["routes"].length - 1]["legs"][[response["routes"][response["routes"].length - 1]["legs"].length - 1]]).includes("arrival_time")) {
+                return addHour(response["routes"][response["routes"].length - 1]["legs"][[response["routes"][response["routes"].length - 1]["legs"].length - 1]].arrival_time.value)
+            }
+            return addHour(departure)
         })
         .catch((e) => window.alert("Directions request failed due to " + status));
     return addHour(departure)
@@ -82,21 +161,22 @@ function addHour(time) { // from https://stackoverflow.com/questions/1050720/add
 }
 
 function addStop() {
-
     var max_stops = 3;
     var number_stops = document.getElementsByClassName("waypoints").length
     if (number_stops < max_stops) {
         console.log("adding stop")
         $('#waypoint-stops').append('<div><select class="waypoints">\n' +
-            '<option value="Phoenix Park, Dublin 8, Ireland">Phoenix Park</option>\n' +
-            '<option value="National Museum of Ireland - Archaeology, Kildare Street, Dublin 2, Ireland">National Museum of Ireland</option>\n' +
-            '<option value="Guinness Storehouse, Saint Catherine\'s, Dublin 8, Ireland">Guinness Storehouse</option>\n' +
-            '<option value="Howth, Dublin, Ireland">Howth</option>\n' +
-            '<option value="Dun Laoghaire Harbour, Dún Laoghaire, Dublin, Ireland">Dun Laoghaire Harbour</option>\n' +
-            '</select><p class="remove"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">\n' +
-            '  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>\n' +
-            '  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>\n' +
-            '</svg></p></div>');
+            '<option value="attraction">Attraction</option>\n' +
+            '<option value="food">Food</option>\n' +
+            '</select></div>');
+    }
+}
+
+function removeStop() {
+    var min_stops = 1;
+    var number_stops = document.getElementsByClassName("waypoints").length
+    if (number_stops > min_stops) {
+        document.getElementsByClassName("waypoints")[number_stops - 1].remove();
     }
 }
 
@@ -109,9 +189,3 @@ function showRoute(i) {
         }
     }
 }
-
-
-// the following is from https://stackoverflow.com/questions/31455020/jquery-parent-remove-is-not-working
-$(document).on('click', '.remove', function () {
-    $(this).parent().remove();
-});

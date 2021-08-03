@@ -353,8 +353,6 @@ function initMap() {
     //document.getElementById("from").addEventListener("change", onChangeHandler);
 }
 
-initMap()
-
 
 function findRoute() {
     calculateAndDisplayRoute(directionsService, directionsRenderer);
