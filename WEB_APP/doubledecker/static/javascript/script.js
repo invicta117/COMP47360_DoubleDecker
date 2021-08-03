@@ -374,9 +374,11 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
             travelMode: 'TRANSIT',
             transitOptions: {
                 departureTime: new Date(datetime),
-                modes: ["BUS"]
+                modes: ['BUS'],
+                routingPreference: 'FEWER_TRANSFERS'
             }
         };
+        
         console.log(latlng)
         console.log(request)
         directionsService.route(request, function (response, status) {
