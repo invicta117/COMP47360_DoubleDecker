@@ -173,7 +173,7 @@ footer {
 /* SOME CHANGES TO BOOTSTRAP CLASSES */
 
 .row.justify-content-center {
-    padding-top: 25px;
+    padding-top: 15px;
 }
 
 
@@ -546,16 +546,27 @@ summary {
     border-color: #CC2936;
 }
 
-.btn-primary {
+#searchTxt{
+    border-top-right-radius: 500px;
+    border-bottom-right-radius: 500px;
+    margin-right: 20px;
+}
+
+#clear{
+    margin-left: 15px;
+}
+
+/* .btn-primary {
     border-radius: 500px;
     color: #fff;
     background-color: #ff9f1c;
     border-color: #ff9f1c;
-
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 .btn-primary:hover {
     background-color: #CC2936;
     border-color: #CC2936;
     
-}
+} */

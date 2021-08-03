@@ -352,7 +352,7 @@ function calculateAndDisplayRoute(
       destination: endPoint,
       travelMode: 'TRANSIT',
       transitOptions: {
-        departureTime: new Date(Date.parse(depTime)),
+        // departureTime: new Date(Date.parse(depTime)),
         modes: ['BUS'],
         routingPreference: 'FEWER_TRANSFERS'
         
