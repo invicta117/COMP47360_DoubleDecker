@@ -9,6 +9,7 @@ var tourism = ["tourism1", "tourism2", "tourism3", "tourism4"]
 var directionsDisplays = [];
 var markersDisplays = [];
 var map;
+var pos;
 
 var places = {
     "attraction":
@@ -56,8 +57,10 @@ var places = {
 
 function initMap() {
     var directionsService = new google.maps.DirectionsService();
+    var infoWindow = new google.maps.InfoWindow();
+
     map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 11,
+        zoom: 12,
         center: {
             lat: 53.3498,
             lng: -6.2603
@@ -79,61 +82,89 @@ function initMap() {
         directionsDisplays.push(directionsDisplay)
         markersDisplays.push(marker)
     }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                map.setCenter(pos);
+                markersDisplays[0].setPosition({lat: position.coords.latitude, lng: position.coords.longitude})
+                markersDisplays[0].setMap(map)
+            },
+            () => {
+                handleLocationError(true, infoWindow, map.getCenter());
+            }
+        );
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+
     var submit = document.getElementById("submit")
     submit.addEventListener("click", () => {
 
-        var o = document.getElementById("start").value
-        if (o == "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
-            markersDisplays[0].setPosition({lat: 53.34943864163513, lng: -6.260527882816787})
-            markersDisplays[0].setMap(map)
-        }
-        var complete_route = ""
-        var o_text = document.getElementById("start").selectedOptions[0].text
-        $(".hiddencontainer").hide()
-        var previous = o;
-        var previous_text = o_text;
-        var destinations = document.getElementsByClassName("waypoints")
-        var random_destinations = [];
-        for (var i = 0; i < destinations.length; i++) {
-            var d = destinations[i].value
-            console.log(d)
-            console.log(places[d])
-            var place = places[d][Math.floor(Math.random() * Object.keys(places[d]).length)] // random comes from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-            while (random_destinations.indexOf(place) != -1) {
-                place = places[d][Math.floor(Math.random() * Object.keys(places[d]).length)] // random comes from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+            var o = document.getElementById("start").value
+            if (o == "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
+                markersDisplays[0].setPosition({lat: 53.34943864163513, lng: -6.260527882816787})
+                markersDisplays[0].setMap(map)
+            } else {
+                o = new google.maps.LatLng(pos.lat, pos.lng)
             }
-            random_destinations.push(place)
+            var complete_route = ""
+            var o_text = document.getElementById("start").selectedOptions[0].text
+            $(".hiddencontainer").hide()
+            var previous = o;
+            console.log("this is the current position" + previous)
+            var previous_text = o_text;
+            var destinations = document.getElementsByClassName("waypoints")
+            var random_destinations = [];
+            for (var i = 0; i < destinations.length; i++) {
+                var d = destinations[i].value
+                console.log(places[d])
+                var place = places[d][Math.floor(Math.random() * Object.keys(places[d]).length)] // random comes from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+                while (random_destinations.indexOf(place) != -1) {
+                    place = places[d][Math.floor(Math.random() * Object.keys(places[d]).length)] // random comes from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+                }
+                random_destinations.push(place)
+            }
+
+            var departure = Date.now()
+            console.log(destinations)
+            for (var i = 0; i < random_destinations.length; i++) {
+                var d = random_destinations[i].address
+                console.log(d)
+                var d_text = random_destinations[i].name
+                var route_text = previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + d_text
+                $(routeids[i]).html(route_text)
+                complete_route = complete_route + previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> '
+                departure = calculateAndDisplayRoute(directionsService, directionsDisplays[i], previous, d, departure);
+                console.log(random_destinations[i].lat + " " + random_destinations[i].lng)
+                markersDisplays[i + 1].setPosition({lat: random_destinations[i].lat, lng: random_destinations[i].lng})
+                markersDisplays[i + 1].setMap(map)
+                previous = d;
+                previous_text = d_text;
+                $(hiddencontainers[i]).show()
+            }
+            console.log(d + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + o)
+            calculateAndDisplayRoute(directionsService, directionsDisplays[3], d, o, departure);
+            $("#route4").html(d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text)
+            complete_route = complete_route + d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text
+            $('#hiddencontainer4').show()
+            //showRoute(0)
+            document.getElementById("complete-route").innerHTML = complete_route
+            document.getElementById("search").open = false;
+            showAllRoutes()
         }
-        var departure = Date.now()
-        console.log(destinations)
-        for (var i = 0; i < random_destinations.length; i++) {
-            var d = random_destinations[i].address
-            var d_text = random_destinations[i].name
-            var route_text = previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + d_text
-            $(routeids[i]).html(route_text)
-            complete_route = complete_route + previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> '
-            departure = calculateAndDisplayRoute(directionsService, directionsDisplays[i], previous, d, departure);
-            console.log(random_destinations[i].lat + " " + random_destinations[i].lng)
-            markersDisplays[i + 1].setPosition({lat: random_destinations[i].lat, lng: random_destinations[i].lng})
-            markersDisplays[i + 1].setMap(map)
-            previous = d;
-            previous_text = d_text;
-            $(hiddencontainers[i]).show()
-        }
-        console.log(d + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + o)
-        calculateAndDisplayRoute(directionsService, directionsDisplays[3], d, o, departure);
-        $("#route4").html(d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text)
-        complete_route = complete_route + d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text
-        $('#hiddencontainer4').show()
-        //showRoute(0)
-        document.getElementById("complete-route").innerHTML = complete_route
-        document.getElementById("search").open = false;
-        showAllRoutes()
-    });
+    )
+    ;
 }
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer, origin, destination, departure) {
-
+    console.log("origin" + origin)
+    console.log("destination" + destination)
     directionsService
         .route({
             origin: origin,
@@ -183,7 +214,7 @@ function removeStop() {
 }
 
 function showAllRoutes() {
-    for (var d = 0; d < 4; d++) {
+    for (var i = 0; i < 4; i++) {
         directionsDisplays[i].setMap(map)
 
     }
@@ -210,3 +241,12 @@ function showRoute(i) {
     });
 }
 
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+        browserHasGeolocation
+            ? "Error: The Geolocation service failed."
+            : "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(map);
+}
