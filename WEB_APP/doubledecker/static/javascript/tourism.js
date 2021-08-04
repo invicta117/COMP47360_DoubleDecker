@@ -104,7 +104,7 @@ function initMap() {
     }
 
     var submit = document.getElementById("submit")
-    submit.addEventListener("click", () => {
+    submit.addEventListener("click", async () => {
 
             var o = document.getElementById("start").value
             if (o == "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
@@ -117,13 +117,13 @@ function initMap() {
             var o_text = document.getElementById("start").selectedOptions[0].text
             $(".hiddencontainer").hide()
             var previous = o;
-            console.log("this is the current position" + previous)
+            //console.log("this is the current position" + previous)
             var previous_text = o_text;
             var destinations = document.getElementsByClassName("waypoints")
             var random_destinations = [];
             for (var i = 0; i < destinations.length; i++) {
                 var d = destinations[i].value
-                console.log(places[d])
+                //console.log(places[d])
                 var place = places[d][Math.floor(Math.random() * Object.keys(places[d]).length)] // random comes from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
                 while (random_destinations.indexOf(place) != -1) {
                     place = places[d][Math.floor(Math.random() * Object.keys(places[d]).length)] // random comes from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -132,60 +132,70 @@ function initMap() {
             }
 
             var departure = Date.now()
-            console.log(destinations)
+            //console.log(destinations)
             for (var i = 0; i < random_destinations.length; i++) {
                 var d = random_destinations[i].address
-                console.log(d)
+                //console.log(d)
                 var d_text = random_destinations[i].name
                 var route_text = previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + d_text
                 $(routeids[i]).html(route_text)
                 complete_route = complete_route + previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> '
-                departure = calculateAndDisplayRoute(directionsService, directionsDisplays[i], previous, d, departure);
-                console.log(random_destinations[i].lat + " " + random_destinations[i].lng)
+                departure = await calculateAndDisplayRoute(directionsService, directionsDisplays[i], previous, d, departure);
+                console.log(departure)
+                if (departure == null) {
+                    break
+                }
+                //console.log(random_destinations[i].lat + " " + random_destinations[i].lng)
                 markersDisplays[i + 1].setPosition({lat: random_destinations[i].lat, lng: random_destinations[i].lng})
                 markersDisplays[i + 1].setMap(map)
                 previous = d;
                 previous_text = d_text;
                 $(hiddencontainers[i]).show()
             }
-            console.log(d + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + o)
-            calculateAndDisplayRoute(directionsService, directionsDisplays[3], d, o, departure);
-            $("#route4").html(d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text)
-            complete_route = complete_route + d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text
-            $('#hiddencontainer4').show()
-            //showRoute(0)
-            document.getElementById("complete-route").innerHTML = complete_route
+            if (departure == null) {
+                //console.log("warning no directions available")
+                $("#route4").html("No route available please try another start location")
+                showRoute(3)
+            } else {
+                //console.log(d + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + o)
+                calculateAndDisplayRoute(directionsService, directionsDisplays[3], d, o, departure);
+                $("#route4").html(d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text)
+                complete_route = complete_route + d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text
+                //showRoute(0)
+                document.getElementById("complete-route").innerHTML = complete_route
+                showAllRoutes()
+            }
             document.getElementById("search").open = false;
-            showAllRoutes()
+            $('#hiddencontainer4').show()
         }
-    )
-    ;
+    );
 }
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer, origin, destination, departure) {
-    console.log("origin" + origin)
-    console.log("destination" + destination)
-    directionsService
-        .route({
-            origin: origin,
-            destination: destination,
-            travelMode: 'TRANSIT',
-            transitOptions: {
-                departureTime: new Date(departure),
-                modes: ["BUS"]
-            }
-        })
-        .then((response) => {
-            console.log(response)
+    //console.log("origin" + origin)
+    //console.log("destination" + destination)
+    var request = {
+        origin: origin,
+        destination: destination,
+        travelMode: 'TRANSIT',
+        transitOptions: {
+            departureTime: new Date(departure),
+            modes: ["BUS"]
+        }
+    };
+    var result = directionsService.route(request, function (response, status) {
+        if (status == 'OK') {
             directionsRenderer.setDirections(response);
-            // get the arrival time
             if (Object.keys(response["routes"][response["routes"].length - 1]["legs"][[response["routes"][response["routes"].length - 1]["legs"].length - 1]]).includes("arrival_time")) {
                 return addHour(response["routes"][response["routes"].length - 1]["legs"][[response["routes"][response["routes"].length - 1]["legs"].length - 1]].arrival_time.value)
             }
             return addHour(departure)
-        })
-        .catch((e) => window.alert("Directions request failed due to " + status));
-    return addHour(departure)
+        }
+    }).catch(e => {
+        return null
+    });
+    ;
+    return result
 }
 
 function addHour(time) { // from https://stackoverflow.com/questions/1050720/adding-hours-to-javascript-date-object
@@ -197,7 +207,7 @@ function addStop() {
     var max_stops = 3;
     var number_stops = document.getElementsByClassName("waypoints").length
     if (number_stops < max_stops) {
-        console.log("adding stop")
+        //console.log("adding stop")
         $('#waypoint-stops').append('<div><select class="waypoints">\n' +
             '<option value="attraction">Attraction</option>\n' +
             '<option value="food">Food</option>\n' +
