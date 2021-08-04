@@ -79,20 +79,12 @@ function showError() {
 }
 
 
-// the following is based on the code from https://developers.google.com/maps/documentation/javascript/examples/directions-simple#maps_directions_simple-javascript
-const directionsService = new google.maps.DirectionsService();
-const directionsRenderer = new google.maps.DirectionsRenderer();
-const geocoder = new google.maps.Geocoder();
-
 function initMap() {
-    const menuI = document.querySelector(".hamburger-menu");
-
-    const navbar = document.querySelector(".navbar");
-
-    menuI.addEventListener("click", () => {
-        navbar.classList.toggle("change");
-    });
+    // the following is based on the code from https://developers.google.com/maps/documentation/javascript/examples/directions-simple#maps_directions_simple-javascript
     const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    autocomplete()
+
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 11,
         center: {
@@ -344,7 +336,16 @@ function initMap() {
     });
     directionsRenderer.setMap(map);
     directionsRenderer.setPanel(document.getElementById("sidebar"));
+// from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html
+    $(document).on('submit', '#post-form', function (e) {
+        e.preventDefault();
+        findRoute()
 
+    })
+
+    function findRoute() {
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+    }
 
     //const onChangeHandler = function () {
     // calculateAndDisplayRoute(directionsService, directionsRenderer);
@@ -353,10 +354,6 @@ function initMap() {
     //document.getElementById("from").addEventListener("change", onChangeHandler);
 }
 
-
-function findRoute() {
-    calculateAndDisplayRoute(directionsService, directionsRenderer);
-}
 
 // the following code is based on the google docs documentation from https://developers.google.com/maps/documentation/javascript/directions
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
@@ -376,7 +373,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
                 routingPreference: 'FEWER_TRANSFERS'
             }
         };
-        
+
         console.log(latlng)
         console.log(request)
         directionsService.route(request, function (response, status) {
@@ -420,12 +417,6 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
     }
 }
 
-// from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html
-$(document).on('submit', '#post-form', function (e) {
-    e.preventDefault();
-    findRoute()
-
-})
 
 function get_predict(directions_response) {
     $('#error').hide()
@@ -484,6 +475,7 @@ function get_predict(directions_response) {
             day: day,
         };
     }
+
     console.log(all_route_data)
     console.log(JSON.stringify(all_route_data))
     $.ajax({
@@ -507,14 +499,18 @@ function get_predict(directions_response) {
 
 // the following is based on the code presented in https://www.youtube.com/watch?v=BkGtNBrOhKU also available at https://github.com/sammy007-debug/Google-map-distance-api
 //create autocomplete objects for all inputs
-var options = {
-    componentRestrictions: {
-        country: "IE"
+
+function autocomplete() {
+    var options = {
+        componentRestrictions: {
+            country: "IE"
+        }
     }
+
+    var input1 = document.getElementById("from");
+    var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
+
+    var input2 = document.getElementById("to");
+    var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+
 }
-
-var input1 = document.getElementById("from");
-var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
-
-var input2 = document.getElementById("to");
-var autocomplete2 = new google.maps.places.Autocomplete(input2, options);

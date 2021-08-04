@@ -53,6 +53,7 @@
     <![endif]-->
     <link rel="stylesheet" href="{% static 'css/reset.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <script defer src="{% static 'javascript/navbar.js' %}"></script>
 
     {% block packages %}
 
@@ -70,9 +71,9 @@
         <nav>
             <div id="hide">
                 <ul>
-                    <li><a class="a2" href="#">Plan</a></li>
-                    <li><a class="a2" href="/explore/">Explore</a></li>
-                    <li><a class="a2" href="/tourism/">Tour</a></li>
+                    <li><a class="a2" href="{% url 'doubledecker:index' %}">Plan</a></li>
+                    <li><a class="a2" href="{% url 'doubledecker:explore' %}">Explore</a></li>
+                    <li><a class="a2" href="{% url 'doubledecker:tourism' %}">Day Trip Planner</a></li>
                 </ul>
             </div>
         </nav>
@@ -87,13 +88,13 @@
                 </div>
                 <ul class="nav-list">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Plan</a>
+                        <a class="nav-link" href="{% url 'doubledecker:index' %}">Plan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/explore/">Explore</a>
+                        <a class="nav-link" href="{% url 'doubledecker:explore' %}">Explore</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/explore/">Tour</a>
+                        <a class="nav-link" href="{% url 'doubledecker:tourism' %}">Day Trip Planner</a>
                     </li>
 
                 </ul>
@@ -102,45 +103,7 @@
     </div>
 </header>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="glass">
-                <!-- Current Weather Feature -->
-                <div class="weather-outer">
-
-                    <div class="app-title">
-                        <p>Weather</p>
-                    </div>
-                    <div class="notification"></div>
-                    <div class="weather-container">
-                        <div class="weather-icon">
-                            <img src="{% static '/icons/unknown.png' %}" alt=""/>
-                        </div>
-                        <div class="temperature-value">
-                            <p>- °<span>C</span></p>
-                        </div>
-                        <div class="temperature-description">
-                            <p>-</p>
-                        </div>
-                        <div class="location"></div>
-                    </div>
-                </div>
-
-
-                {% block content %}
-
-                {% endblock %}
-            </div>
-        </div>
-
-        <div class="col-lg-8 ml-lg-auto">
-            <div class="glass2">
-                <div id="map"></div>
-            </div>
-        </div>
-    </div>
-</div>
+{% block body %}{% endblock %}
 
 <footer>
     <div class="wrapper">
@@ -191,7 +154,7 @@
 
 <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
 <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&callback=initMap&libraries=&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&callback=initMap&libraries=places&"
         async></script>
 <script type="text/javascript">
 
