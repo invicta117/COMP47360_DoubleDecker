@@ -7,6 +7,7 @@ var hiddencontainers = ['#hiddencontainer1', '#hiddencontainer2', '#hiddencontai
 var routeids = ["#route1", "#route2", "#route3", "#route4"]
 var tourism = ["tourism1", "tourism2", "tourism3", "tourism4"]
 var directionsDisplays = [];
+var markersDisplays = [];
 var map;
 
 var places = {
@@ -69,19 +70,22 @@ function initMap() {
             polylineOptions: {strokeColor: colors[i]},
             suppressMarkers: true,
         });
+        var marker = new google.maps.Marker({
+            position: {lat: 53.34943864163513, lng: -6.260527882816787},
+            map: null,
+            label: {color: '#ffffff', text: String.fromCharCode('A'.charCodeAt() + i)} // from char code from https://stackoverflow.com/questions/12504042/what-is-a-method-that-can-be-used-to-increment-letters/34483399
+        });
         directionsDisplay.setPanel(document.getElementById(directionsdivs[i]));
         directionsDisplays.push(directionsDisplay)
+        markersDisplays.push(marker)
     }
     var submit = document.getElementById("submit")
     submit.addEventListener("click", () => {
 
         var o = document.getElementById("start").value
         if (o == "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
-            new google.maps.Marker({
-                position: {lat: 53.34943864163513, lng: -6.260527882816787},
-                map: map,
-                label: {color: '#ffffff', text: 'A'}
-            });
+            markersDisplays[0].setPosition({lat: 53.34943864163513, lng: -6.260527882816787})
+            markersDisplays[0].setMap(map)
         }
         var complete_route = ""
         var o_text = document.getElementById("start").selectedOptions[0].text
@@ -110,11 +114,8 @@ function initMap() {
             complete_route = complete_route + previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> '
             departure = calculateAndDisplayRoute(directionsService, directionsDisplays[i], previous, d, departure);
             console.log(random_destinations[i].lat + " " + random_destinations[i].lng)
-            new google.maps.Marker({
-                position: {lat: random_destinations[i].lat, lng: random_destinations[i].lng},
-                map: map,
-                label: {color: '#ffffff', text: String.fromCharCode('B'.charCodeAt() + i)} // from char code from https://stackoverflow.com/questions/12504042/what-is-a-method-that-can-be-used-to-increment-letters/34483399
-            });
+            markersDisplays[i + 1].setPosition({lat: random_destinations[i].lat, lng: random_destinations[i].lng})
+            markersDisplays[i + 1].setMap(map)
             previous = d;
             previous_text = d_text;
             $(hiddencontainers[i]).show()
@@ -127,6 +128,7 @@ function initMap() {
         //showRoute(0)
         document.getElementById("complete-route").innerHTML = complete_route
         document.getElementById("search").open = false;
+        showAllRoutes()
     });
 }
 
@@ -180,6 +182,13 @@ function removeStop() {
     }
 }
 
+function showAllRoutes() {
+    for (var d = 0; d < 4; d++) {
+        directionsDisplays[i].setMap(map)
+
+    }
+}
+
 function showRoute(i) {
     for (var d = 0; d < 4; d++) {
         if (d == i) {
@@ -188,4 +197,16 @@ function showRoute(i) {
             directionsDisplays[d].setMap(null)
         }
     }
+// the following implementation of how to close detail tags is from https://stackoverflow.com/questions/16751345/automatically-close-all-the-other-details-tags-after-opening-a-specific-detai/56194608
+    var details = document.querySelectorAll("details");
+    details.forEach((target) => {
+        target.addEventListener("click", () => {
+            details.forEach((detail) => {
+                if (detail !== target) {
+                    detail.open = false;
+                }
+            });
+        });
+    });
 }
+
