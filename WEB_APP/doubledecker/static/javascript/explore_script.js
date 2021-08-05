@@ -10,12 +10,6 @@ var hour="";
 
 function initMap() {
 
-  // nav bar work
-  const menuI = document.querySelector(".hamburger-menu");
-  const navbar = document.querySelector(".navbar");
-  menuI.addEventListener("click", () => {
-    navbar.classList.toggle("change");
-  });
 
   // google service for route and map displays
   directionsService = new google.maps.DirectionsService();

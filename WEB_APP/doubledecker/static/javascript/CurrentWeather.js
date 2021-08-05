@@ -1,3 +1,4 @@
+
 //Weather
 //SELECT ELEMENTS
 const locationEle = locationElement = document.querySelector(".location");
@@ -37,7 +38,7 @@ function ShowCurrentWeather(){
 //DISPLAY WEATHER TO UI
 function displayWeather() {
     locationEle.innerHTML = "Dublin";
-    iconEle.innerHTML = `<img src="static/icons/${weather.iconId}.png"/>`;
+    iconEle.innerHTML = `<img src="./icons/${weather.iconId}.png"/>`;
     temperatureEle.innerHTML = `${weather.temperature.value}°<span>C</span>`;
     descriptionEle.innerHTML = weather.description;
 }
