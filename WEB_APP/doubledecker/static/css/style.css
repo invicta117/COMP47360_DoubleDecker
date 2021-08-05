@@ -86,18 +86,11 @@ a:hover {
 a.a2 {
     font-family: "Eras ITC", "Eras bold ITC", sans-serif;
     color: #ff9f1c;
-    padding-left: 180px;
     text-decoration: none;
 }
 
 a.a2:hover {
     color: #CC2936;
-}
-
-header img {
-    float: left;
-    margin-top: 15px;
-    margin-left: 15px;
 }
 
 strong {
@@ -118,9 +111,14 @@ small {
 
 /* HEADER CSS */
 
+header img {
+    float: left;
+    margin: 10px;
+    height: 43px;
+}
 header {
     background-color: #537a80;
-    height: 100px;
+    height: 65px;
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
@@ -129,22 +127,21 @@ header {
 
 header nav {
     float: centre;
+} 
 
-}
-
-header nav ul li {
-    float: centre;
+nav ul li {
     display: inline-block;
-    margin-top: 55px;
+    margin-top: 32px;
+    margin-right: 150px;
+    margin-left: 80px;
 }
 
-header nav ul li a {
+nav ul li a {
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 550;
     display: block;
-    margin-right: 10px;
 }
-/* footrer */
+/* footer */
 
 footer {
     padding-top: 30px;
@@ -176,9 +173,8 @@ footer {
 /* SOME CHANGES TO BOOTSTRAP CLASSES */
 
 .row.justify-content-center {
-    padding-top: 25px;
+    padding-top: 40px;
 }
-
 
 #abs1 {
     z-index: 5;
@@ -190,13 +186,13 @@ footer {
     justify-content: center;
 }
 .container-fluid{
-    margin-top: 120px;
+    margin-top: 80px;
 }
 /* HIDDEN NAVBAR CSS */
 /* code inspired by the following youtube channel https://www.youtube.com/watch?v=BN6fH1nRDxA */
 .container-nav {
     width: 100%;
-    height: 180px;
+    height: 20px;
     background-size: cover;
 }
 
@@ -209,8 +205,8 @@ footer {
     width: 35px;
     height: 30px;
     position: fixed;
-    top: 45px;
-    right: 50px;
+    top: 23px;
+    right: 20px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -219,7 +215,7 @@ footer {
 
 .line {
     width: 100%;
-    height: 4px;
+    height: 3px;
     background-color: #ff9f1c;
     transition: 0.8s;
 }
@@ -241,7 +237,6 @@ footer {
     width: 300px;
     height: 100%;
     background-color: #e6eef0;
-
     position: fixed;
     top: 0;
     right: -300px;
@@ -255,9 +250,8 @@ footer {
     right: 0;
 }
 
-.nav-list {
+ul.nav-list {
     text-align: center;
-    
 }
 
 .nav-item {
@@ -619,16 +613,27 @@ summary {
     border-color: #CC2936;
 }
 
-.btn-primary {
+#searchTxt{
+    border-top-right-radius: 500px;
+    border-bottom-right-radius: 500px;
+    margin-right: 20px;
+}
+
+#clear{
+    margin-left: 15px;
+}
+
+/* .btn-primary {
     border-radius: 500px;
     color: #fff;
     background-color: #ff9f1c;
     border-color: #ff9f1c;
-
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 .btn-primary:hover {
     background-color: #CC2936;
     border-color: #CC2936;
     
-}
+} */
