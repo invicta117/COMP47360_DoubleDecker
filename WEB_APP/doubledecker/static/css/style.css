@@ -33,9 +33,6 @@ h1 {
     font-weight: bold;
     color: rgb(255, 255, 255);
     font-size: 28px;
-    padding-top: 10px;
-    margin-bottom: 20px;
-    margin-left: 120px;
 }
 
 h2 {
@@ -87,6 +84,7 @@ a.a2 {
     font-family: "Eras ITC", "Eras bold ITC", sans-serif;
     color: #ff9f1c;
     text-decoration: none;
+    margin-right: 290px;
 }
 
 a.a2:hover {
@@ -106,11 +104,14 @@ small {
 .wrapper {
     margin: 0 auto;
     padding: 0 10px;
-    width: 940px;
+    width: 1740px;
 }
 
 /* HEADER CSS */
-
+header h1 {
+    float: left;
+    padding-top: 28px;
+}
 header img {
     float: left;
     margin: 10px;
@@ -126,14 +127,12 @@ header {
 }
 
 header nav {
-    float: centre;
+    float: right;
 } 
 
 nav ul li {
     display: inline-block;
     margin-top: 32px;
-    margin-right: 150px;
-    margin-left: 80px;
 }
 
 nav ul li a {
@@ -141,6 +140,7 @@ nav ul li a {
     font-weight: 550;
     display: block;
 }
+
 /* footer */
 
 footer {
@@ -164,8 +164,13 @@ footer {
     margin: 10px 0;
 }
 
-@media (max-width: 1320px) {
+@media (max-width: 1500px) {
     #hide {
+        display: none;
+    }
+}
+@media (max-width: 390px) {
+    #hide2 {
         display: none;
     }
 }
@@ -376,12 +381,12 @@ ul.nav-list {
 
 /* the coloumns */
 
-.col-md-4 {
+.col-lg-4 {
     padding-top: 40px;
     padding-left: 30px;
 }
 
-.col-md-8 {
+.col-lg-8 {
     padding-top: 40px;
     padding-right: 30px;
     padding-left: 35px;

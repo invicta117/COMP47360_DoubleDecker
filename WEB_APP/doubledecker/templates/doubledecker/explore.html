@@ -1,43 +1,38 @@
-{% extends './base.html' %}
-{% load static %}
+{% extends './base.html' %} {% load static %} {% block packages %}
 
+<script src="{% static 'javascript/explore_script.js' %}"></script>
 
-{% block packages %}
-
-    <script src="{% static 'javascript/explore_script.js' %}"></script>
-
-{% endblock %}
-
-{% block body %}
-    <div class="container-fluid">
-
-        <div class="row justify-content-center">
-            <div class="col-6">
-                <div class="glass2">
-                    <div id="map"></div>
-                </div>
-
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-4">
-                <div class="input-group">
-                    <input id="searchTxt" type="text" class="form-control" placeholder="Search for route..."/>
-                    <span class="input-group-btn">
-              <button class="btn btn-primary" type="submit" id="myBtn">
-                Add
-              </button>
-            </span>
-                    <span class="input-group-btn">
-              <button class="btn btn-secondary" onclick="clearItem()" type="button">
-                clear all
-              </button>
-            </span>
-                </div>
-
-            </div>
-        </div>
+{% endblock %} {% block body %}
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="glass2">
+        <div id="map"></div>
+      </div>
     </div>
-
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <div class="input-group">
+        <input
+          id="searchTxt"
+          type="text"
+          class="form-control"
+          placeholder="Search for route..."
+        />
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="submit" id="myBtn">
+            Add
+          </button>
+        </span>
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" onclick="clearItem()" type="button">
+            clear all
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

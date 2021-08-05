@@ -1,114 +1,135 @@
-{% extends './base.html' %}
-{% load static %}
+{% extends './base.html' %} {% load static %} {% block packages %}
 
-{% block packages %}
+<script src="{% static 'javascript/script.js' %}"></script>
 
-    <script src="{% static 'javascript/script.js' %}"></script>
+{% endblock %} {% block body %}
 
-{% endblock %}
-
-{% block body %}
-
-    <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="glass">
-                <!-- Current Weather Feature -->
-                <div class="weather-outer">
-
-                    <div class="app-title">
-                        <p>Weather</p>
-                    </div>
-                    <div class="notification"></div>
-                    <div class="weather-container">
-                        <div class="weather-icon">
-                            <img src="{% static '/icons/unknown.png' %}" alt=""/>
-                        </div>
-                        <div class="temperature-value">
-                            <p>- °<span>C</span></p>
-                        </div>
-                        <div class="temperature-description">
-                            <p>-</p>
-                        </div>
-                        <div class="location"></div>
-                    </div>
-
-                    <!--input group for origin and destination-->
-                    <form action="" id="post-form">
-
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Origin"
-                                   aria-label="Recipient's username" aria-describedby="basic-addon2" id="from"
-                                   name="from" required>
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" type="button" onclick="getLocation()">My
-                                    Location
-                                </button>
-                            </div>
-
-                        </div>
-                        <!--input group for origin and destination-->
-                        <form action="" id="post-form">
-                            <div class="input-group mb-3">
-                                <input class="form-control" type="text" id="to" name="to" placeholder="Destination"
-                                       required/>
-                            </div>
-                            <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
-
-                            <div class="input-group mb-3" id="datetimepicker1" data-target-input="nearest">
-
-                                <input type="text" class="form-control datetimepicker-input"
-                                       data-target="#datetimepicker1" placeholder="Departure Time"/>
-                                <div class="input-group-append" data-target="#datetimepicker1"
-                                     data-toggle="datetimepicker">
-
-                                    <button class="btn btn-secondary" type="button"><i
-                                            class="fa fa-calendar"></i></button>
-                                </div>
-
-                            </div>
-
-                            <div class="inputContainer">
-
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-secondary" type="submit" onclick="findRoute()">
-                                            GO !
-                                        </button>
-                                    </span>
-                            </div>
-                            <!-- from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html-->
-
-                            {% csrf_token %}
-                            <span class="input-group-btn"></span>
-                        </form>
-
-                        <div class="loading">
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div id="error"></div>
-                <div id="response">
-                    <h4>Expected Journey Time:</h4>
-                    <div id="result"></div>
-
-                    <details>
-                        <summary>Directions</summary>
-                        <p id="sidebar"></p>
-                    </details>
-                </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="glass">
+        <!-- Current Weather Feature -->
+        <div class="weather-outer">
+          <div class="app-title">
+            <p>Weather</p>
+          </div>
+          <div class="notification"></div>
+          <div class="weather-container">
+            <div class="weather-icon">
+              <img src="{% static '/icons/unknown.png' %}" alt="" />
             </div>
-        </div>
-        <div class="col-md-8 ml-md-auto">
-            <div class="glass2">
-                <div id="map"></div>
+            <div class="temperature-value">
+              <p>- °<span>C</span></p>
             </div>
+            <div class="temperature-description">
+              <p>-</p>
+            </div>
+            <div class="location"></div>
+          </div>
+
+          <!--input group for origin and destination-->
+          <form action="" id="post-form">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Origin"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                id="from"
+                name="from"
+                required
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-secondary"
+                  type="button"
+                  onclick="getLocation()"
+                >
+                  My Location
+                </button>
+              </div>
+            </div>
+            <!--input group for origin and destination-->
+            <form action="" id="post-form">
+              <div class="input-group mb-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="to"
+                  name="to"
+                  placeholder="Destination"
+                  required
+                />
+              </div>
+              <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
+
+              <div
+                class="input-group mb-3"
+                id="datetimepicker1"
+                data-target-input="nearest"
+              >
+                <input
+                  type="text"
+                  class="form-control datetimepicker-input"
+                  data-target="#datetimepicker1"
+                  placeholder="Departure Time"
+                />
+                <div
+                  class="input-group-append"
+                  data-target="#datetimepicker1"
+                  data-toggle="datetimepicker"
+                >
+                  <button class="btn btn-secondary" type="button">
+                    <i class="fa fa-calendar"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="inputContainer">
+                <span class="input-group-btn">
+                  <button
+                    class="btn btn-secondary"
+                    type="submit"
+                    onclick="findRoute()"
+                  >
+                    GO !
+                  </button>
+                </span>
+              </div>
+              <!-- from  https://www.youtube.com/watch?v=_3xj9B0qqps&t=1739s and corresponding github https://github.com/veryacademy/YT-Django-Iris-App-3xj9B0qqps/blob/master/templates/predict.html-->
+
+              {% csrf_token %}
+              <span class="input-group-btn"></span>
+            </form>
+
+            <div class="loading">
+              <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
+        <div id="error"></div>
+        <div id="response">
+          <h4>Expected Journey Time:</h4>
+          <div id="result"></div>
+
+          <details>
+            <summary>Directions</summary>
+            <p id="sidebar"></p>
+          </details>
+        </div>
+      </div>
     </div>
+    <div class="col-lg-8 ml-lg-auto">
+      <div class="glass2">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
