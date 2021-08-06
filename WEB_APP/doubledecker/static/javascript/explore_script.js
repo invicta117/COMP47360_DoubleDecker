@@ -2,20 +2,18 @@
 // Initialize and add the map
 var map;
 const listPos = [];
-const route_name = []
-
+const route_name = [];
+var directionsDisplays,
+  directionsService;
+const depTime = new Date()
+var hour="";
 
 function initMap() {
-  // nav bar work
 
-  const menuI = document.querySelector(".hamburger-menu");
 
-  const navbar = document.querySelector(".navbar");
-
-  menuI.addEventListener("click", () => {
-    navbar.classList.toggle("change");
-  });
-  const directionsService = new google.maps.DirectionsService();
+  // google service for route and map displays
+  directionsService = new google.maps.DirectionsService();
+  directionsDisplays = new Array();
   // The location of Dublin
   const Dublin = {
     lat: 53.3498,
@@ -25,57 +23,286 @@ function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
     center: Dublin,
-  });
-
-
-  fetch("/api/route-line")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-
-      // console.log(data)
-      document.getElementById("myBtn").addEventListener("click", function () {
-        let routeID = []
-        r = document.getElementById("searchTxt").value;
-        data.forEach(route => {
-          if (route.route_short_name == r) {
-            routeID.push(route.shape_pt_sequence,
-              route.route_short_name,
-              route.route_id,
-              route.shape_pt_lat,
-              route.shape_pt_lon)
+    styles: [
+      {
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#ebe3cd"
           }
+        ]
+      },
+      {
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#523735"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#f5f1e6"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#c9b2a6"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#dcd2be"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#ae9e90"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape.natural",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#93817c"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#a5b076"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#447530"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#f5f1e6"
+          }
+        ]
+      },
+      {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#fdfcf8"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#f8c967"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#e9bc62"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#e98d58"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#db8555"
+          }
+        ]
+      },
+      {
+        "featureType": "road.local",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#806b63"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#8f7d77"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.line",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#ebe3cd"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.station",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#dfd2ae"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.station.bus",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#b9d3c2"
+          }
+        ]
+      },{
+        "featureType": "landscape",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#92998d"
+          }
+        ]
+      }
+    ]
+  });
+  document.getElementById("myBtn").addEventListener("click", function () {
+    const route_short_name = document.getElementById("searchTxt").value;
 
-        })
-        console.log("routeID:", routeID)
-        const stop1 = routeID.slice(0, 5);
-        console.log(stop1)
-        const stoplast = routeID.slice(-5);
-        console.log(stoplast)
+    fetch("/api/stations/?station=" + route_short_name )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        //this helps clear previous route when clearAll is called.
+        listPos.pop();
 
+        hour = data[0].departure_time
+
+
+        //setting the time for each bus to get the most correct route.
+        if (data[0].stop_lat == undefined){
+          hour = new Date();
+        }else{
+          console.log(typeof(hour))
+          depTime.setHours(hour.substring(0,2))
+          depTime.setMinutes(hour.substring(3,5));
+          console.log(depTime)
+        }
+
+
+
+        stop1 = data[0];
+        stoplast = data[1];
         listPos.push({
-          key: ["f_lat", "f_lng", "l_lat", "l_lng"],
-          value: [stop1[3], stop1[4], stoplast[3], stoplast[4]],
+          key: [route_short_name],
+          value: [stop1.stop_lat, stop1.stop_lon, stoplast.stop_lat, stoplast.stop_lon],
         })
 
-        console.log(listPos)
+        console.log("list of positions:", listPos)
         // console.log(listPos[0].value[0])
         // this here is the function which works out the distance of the way points
         for (var i = 0; i < listPos.length; i++) {
-          const bounds = new google.maps.LatLngBounds();
-          const startPoint = new google.maps.LatLng(
+          bounds = new google.maps.LatLngBounds();
+          startPoint = new google.maps.LatLng(
             listPos[i].value[0],
             listPos[i].value[1]
           );
-          const endPoint = new google.maps.LatLng(
+          endPoint = new google.maps.LatLng(
             listPos[i].value[2],
             listPos[i].value[3]
           );
 
-          const directionsDisplay = new google.maps.DirectionsRenderer({
+          directionsDisplay = new google.maps.DirectionsRenderer({
             map: map,
-            preserveViewport: true,
+            suppressMarkers: true
           });
           calculateAndDisplayRoute(
             directionsService,
@@ -85,11 +312,23 @@ function initMap() {
             bounds
           );
         }
+        directionsDisplays.push(directionsDisplay);
       });
 
+  })
 
-    })
+}
+console.log("this is outside:", listPos)
 
+function clearItem() {
+  // Clean previous routes
+  for (var i = 0; i < directionsDisplays.length; i++) {
+    console.log(directionsDisplays)
+    directionsDisplays[i].setMap(null);
+  }
+  directionsDisplays.pop();
+  listPos.pop();
+  // console.log(`I am directions array after ${directionsDisplays}`);
 }
 
 function calculateAndDisplayRoute(
@@ -99,19 +338,28 @@ function calculateAndDisplayRoute(
   endPoint,
   bounds
 ) {
+
+  console.log("this is dep time:", depTime);
+  
   directionsService.route({
       origin: startPoint,
       destination: endPoint,
-      travelMode: "TRANSIT",
+      travelMode: 'TRANSIT',
+      transitOptions: {
+        // departureTime: new Date(Date.parse(depTime)),
+        modes: ['BUS'],
+        routingPreference: 'FEWER_TRANSFERS'
+        
+      },
     },
     function (response, status) {
       if (status === "OK") {
-        console.log(response);
+        console.log("I am response: ", response);
         directionsDisplay.setDirections(response);
         bounds.union(response.routes[0].bounds);
         map.fitBounds(bounds);
       } else {
-        window.alert("Impossible d afficher la route " + status);
+        window.alert("This route is not in service. " + status);
       }
     }
   );
