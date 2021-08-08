@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from joblib import load
 import os
-from .models import Weather, RouteStops
+from .models import Weather
 from math import ceil, floor
 import pickle
 import pandas as pd
@@ -181,7 +181,6 @@ def model(request):
         return time
 
     if request.POST.get('action') == 'post':
-
         journeys = request.POST.get('journeys')
         parsed_j = json.loads(journeys)
         response = ""
