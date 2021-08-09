@@ -4,32 +4,63 @@
 
 {% endblock %} {% block body %}
 <div class="container-fluid">
-  <div class="row justify-content-center">
-    <div class="col-6">
-      <div class="glass2">
-        <div id="map"></div>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="glass">
+        <!-- Current Weather Feature -->
+        <div class="weather-outer" style="padding-top: 80px">
+          <div class="app-title">
+            <p>Weather</p>
+          </div>
+          <div class="notification"></div>
+          <div class="weather-container">
+            <div class="weather-icon">
+              <img src="{% static '/icons/unknown.png' %}" alt="" />
+            </div>
+            <div class="temperature-value">
+              <p>- °<span>C</span></p>
+            </div>
+            <div class="temperature-description">
+              <p>-</p>
+            </div>
+            <div class="location"></div>
+          </div>
+          <div
+            class="input-group"
+            style="padding-top: 70px; padding-bottom: 30px"
+          >
+            <input
+              id="searchTxt"
+              type="text"
+              class="form-control"
+              placeholder="Search for route..."
+            />
+            <span class="input-group-btn">
+              <button
+                class="btn btn-secondary"
+                type="submit"
+                id="myBtn"
+                style="margin-right: 15px"
+              >
+                Add
+              </button>
+            </span>
+            <span class="input-group-btn">
+              <button
+                class="btn btn-secondary"
+                onclick="clearItem()"
+                type="button"
+              >
+                clear all
+              </button>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-4">
-      <div class="input-group">
-        <input
-          id="searchTxt"
-          type="text"
-          class="form-control"
-          placeholder="Search for route..."
-        />
-        <span class="input-group-btn">
-          <button class="btn btn-secondary" type="submit" id="myBtn">
-            Add
-          </button>
-        </span>
-        <span class="input-group-btn">
-          <button class="btn btn-secondary" onclick="clearItem()" type="button">
-            clear all
-          </button>
-        </span>
+    <div class="col-lg-8 ml-lg-auto" style="margin-bottom: 30px">
+      <div class="glass2">
+        <div id="map"></div>
       </div>
     </div>
   </div>
