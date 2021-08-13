@@ -67,9 +67,9 @@
 
 
         <div class="wrapper">
-            <img src="{% static '/images/mobile.png' %}" alt="logo" />
+                <a href="{% url 'doubledecker:index' %}"><img src="{% static '/images/mobile.png' %}" alt="name" /></a>
             <div id="hide2">
-                <h1>DOUBLE DECKER</h1>
+                <h1><a class="a3" href="{% url 'doubledecker:index' %}">DOUBLE DECKER</a></h1>
             </div>
             <nav>
                 <div id="hide">
@@ -169,6 +169,11 @@
     window.onload = function () {
         ShowCurrentWeather();
     }
+</script>
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
 </script>
 
 </body>

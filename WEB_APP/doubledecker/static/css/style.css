@@ -92,6 +92,14 @@ a.a2 {
 a.a2:hover {
     color: #CC2936;
 }
+a.a3{
+    font-family: "Eras ITC", "Eras bold ITC", sans-serif;
+    color: #ffffff;
+    text-decoration: none;
+}
+a.a3:hover{
+    color: none;
+}
 
 strong {
     font-weight: bold;
@@ -134,7 +142,7 @@ header nav {
 
 nav ul li {
     display: inline-block;
-    margin-top: 32px;
+    margin-top: 35px;
 }
 
 nav ul li a {
@@ -629,18 +637,3 @@ summary {
 #clear{
     margin-left: 15px;
 }
-
-/* .btn-primary {
-    border-radius: 500px;
-    color: #fff;
-    background-color: #ff9f1c;
-    border-color: #ff9f1c;
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-.btn-primary:hover {
-    background-color: #CC2936;
-    border-color: #CC2936;
-    
-} */
