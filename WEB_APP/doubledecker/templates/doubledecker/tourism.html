@@ -15,9 +15,6 @@
           </div>
           <div class="notification"></div>
           <div class="weather-container">
-            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="This tool helps to organise a trip for a meal and this way to explore Dublin from current position or a chosen position">
-              <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Instructions</button>
-            </span>
             <div class="weather-icon">
               <img src="{% static '/icons/unknown.png' %}" alt="" />
             </div>
@@ -82,6 +79,26 @@
             <button class="btn btn-secondary" type="button" id="submit">
               GO!
             </button>
+            <span
+              style="margin-left: 15px"
+              class="d-inline-block"
+              tabindex="0"
+              data-toggle="tooltip"
+              data-html="true"
+              title="This tool helps to curate a random trip. <br><br>
+              1. First Choose a start location.<br><br>
+              2. Choose a type of activity. Add or remove events as you please, then press GO! and your route is diplayed. <br><br>
+              3. Each different trip is a new color."
+            >
+              <button
+                class="btn btn-secondary"
+                style="pointer-events: none"
+                type="button"
+                disabled
+              >
+                <i class="bi bi-info-lg"></i>
+              </button>
+            </span>
           </div>
         </details>
         <h5 id="complete-route"></h5>

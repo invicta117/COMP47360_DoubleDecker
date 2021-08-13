@@ -15,9 +15,6 @@
           </div>
           <div class="notification"></div>
           <div class="weather-container">
-            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Here you can  choose your current location or a location where you plan to be and a destination to plan out your trips">
-              <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Instructions</button>
-            </span>
             <div class="weather-icon">
               <img src="{% static '/icons/unknown.png' %}" alt="" />
             </div>
@@ -29,20 +26,10 @@
             </div>
             <div class="location"></div>
           </div>
-          <div class="inputContainer">
-            <button
-              class="btn btn-secondary"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="how to do use this?"
-            >
-              <i class="bi bi-info-lg"></i>
-            </button>
-          </div>
+
           <!--input group for origin and destination-->
           <form action="" id="post-form">
             <div class="input-group mb-3">
-              
               <input
                 type="text"
                 class="form-control"
@@ -107,6 +94,28 @@
                     onclick="findRoute()"
                   >
                     GO !
+                  </button>
+                </span>
+                <span
+                  style="margin-left: 15px"
+                  class="d-inline-block"
+                  tabindex="0"
+                  data-toggle="tooltip"
+                  data-html="true"
+                  title="This tool Helps you get plan your trip from A to B <br><br>
+                  It provides our own predictions of Dublin bus only journey times<br><br>
+                  1. Input your Origin and Destination <br>
+                  2. Select an optional time or Departure, elst it's set for now. <br>
+                  3. Press GO!<br><br>
+                  Click on Directions if further information is needed on the journey."
+                >
+                  <button
+                    class="btn btn-secondary"
+                    style="pointer-events: none"
+                    type="button"
+                    disabled
+                  >
+                    <i class="bi bi-info-lg"></i>
                   </button>
                 </span>
               </div>
