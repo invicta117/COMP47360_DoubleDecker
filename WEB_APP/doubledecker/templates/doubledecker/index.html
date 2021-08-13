@@ -15,6 +15,9 @@
           </div>
           <div class="notification"></div>
           <div class="weather-container">
+            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Here you can  choose your current location or a location where you plan to be and a destination to plan out your trips">
+              <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Instructions</button>
+            </span>
             <div class="weather-icon">
               <img src="{% static '/icons/unknown.png' %}" alt="" />
             </div>
@@ -39,6 +42,7 @@
           <!--input group for origin and destination-->
           <form action="" id="post-form">
             <div class="input-group mb-3">
+              
               <input
                 type="text"
                 class="form-control"
