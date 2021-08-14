@@ -98,7 +98,7 @@ def model(request):
 
         days = {"Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday": 0, "Sunday": 0}
         days[day] = 1
-        current = Weather.objects.order_by('current').first()
+        current = Weather.objects.order_by('-current').first()
         temp = (getattr(current, 'temperature'))
         rain = getattr(current, 'rain_1h')
         msl = getattr(current, 'pressure')
