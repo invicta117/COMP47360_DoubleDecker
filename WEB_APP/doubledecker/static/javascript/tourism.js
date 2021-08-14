@@ -105,10 +105,12 @@ function initMap() {
     start.addEventListener("change", async () => {
         var o = document.getElementById("start").value
         if (o == "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
+            reset()
             markersDisplays[0].setPosition({lat: 53.34943864163513, lng: -6.260527882816787})
             map.panTo({lat: 53.34943864163513, lng: -6.260527882816787})
             markersDisplays[0].setMap(map)
         } else {
+            reset()
             markersDisplays[0].setPosition({lat: pos.lat, lng: pos.lng})
             map.panTo({lat: pos.lat, lng: pos.lng})
             markersDisplays[0].setMap(map)
@@ -166,7 +168,6 @@ function initMap() {
             if (departure == null) {
                 //console.log("warning no directions available")
                 $("#route4").html("No route available please try another start location")
-                showRoute(3)
             } else {
                 //console.log(d + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + o)
                 calculateAndDisplayRoute(directionsService, directionsDisplays[3], d, o, departure);
@@ -237,6 +238,15 @@ function showAllRoutes() {
     for (var i = 0; i < 4; i++) {
         directionsDisplays[i].setMap(map)
 
+    }
+}
+
+function reset() {
+    document.getElementById("complete-route").innerHTML = ''
+    $(".hiddencontainer").hide()
+    for (var d = 0; d < 4; d++) {
+        directionsDisplays[d].setMap(null)
+        markersDisplays[d].setMap(null)
     }
 }
 
