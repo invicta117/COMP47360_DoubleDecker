@@ -78,11 +78,12 @@ function initMap() {
             map: null,
             label: {color: '#ffffff', text: String.fromCharCode('A'.charCodeAt() + i)} // from char code from https://stackoverflow.com/questions/12504042/what-is-a-method-that-can-be-used-to-increment-letters/34483399
         });
+
         directionsDisplay.setPanel(document.getElementById(directionsdivs[i]));
         directionsDisplays.push(directionsDisplay)
         markersDisplays.push(marker)
     }
-
+    markersDisplays[0].setMap(map)
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -90,9 +91,6 @@ function initMap() {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                 };
-                map.setCenter(pos);
-                markersDisplays[0].setPosition({lat: position.coords.latitude, lng: position.coords.longitude})
-                markersDisplays[0].setMap(map)
             },
             () => {
                 handleLocationError(true, infoWindow, map.getCenter());
@@ -103,14 +101,27 @@ function initMap() {
         handleLocationError(false, infoWindow, map.getCenter());
     }
 
+    var start = document.getElementById("start")
+    start.addEventListener("change", async () => {
+        var o = document.getElementById("start").value
+        if (o == "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
+            markersDisplays[0].setPosition({lat: 53.34943864163513, lng: -6.260527882816787})
+            map.panTo({lat: 53.34943864163513, lng: -6.260527882816787})
+            markersDisplays[0].setMap(map)
+        } else {
+            markersDisplays[0].setPosition({lat: pos.lat, lng: pos.lng})
+            map.panTo({lat: pos.lat, lng: pos.lng})
+            markersDisplays[0].setMap(map)
+        }
+        console.log("change")
+    })
+
+
     var submit = document.getElementById("submit")
     submit.addEventListener("click", async () => {
 
             var o = document.getElementById("start").value
-            if (o == "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
-                markersDisplays[0].setPosition({lat: 53.34943864163513, lng: -6.260527882816787})
-                markersDisplays[0].setMap(map)
-            } else {
+            if (o != "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
                 o = new google.maps.LatLng(pos.lat, pos.lng)
             }
             var complete_route = ""
@@ -165,7 +176,6 @@ function initMap() {
                 document.getElementById("complete-route").innerHTML = complete_route
                 showAllRoutes()
             }
-            document.getElementById("search").open = false;
             $('#hiddencontainer4').show()
         }
     );
