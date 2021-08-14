@@ -31,9 +31,6 @@ class TestViews(TestCase):
         url = reverse('Routes')
         self.assertEquals(resolve(url).func, ShowAllRoutes)
 
-    def test_Weather_url_is_resolved(self):
-        url = reverse('Weather')
-        self.assertEquals(resolve(url).func, ShowAllWeather)
 
     def test_currentWeather_url_is_resolved(self):
         url = reverse('currentWeather')

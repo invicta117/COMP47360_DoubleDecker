@@ -53,15 +53,6 @@ def ShowAllRoutes(request):
 
 
 @api_view(['GET'])
-def ShowAllWeather(request):
-    weather = Weather.objects.all()
-    serializer = WeatherSerializer(weather, many=True)
-    return Response(serializer.data)
-
-# from https://www.youtube.com/watch?v=vlxIjXLlmxQ&t=1926s
-
-
-@api_view(['GET'])
 def ShowAllRouteStops(request):
     routestops = RouteStops.objects.all()
     serializer = RoutesStopSerializer(routestops, many=True)
@@ -76,7 +67,9 @@ def ShowCurrentWeather(request):
     sql = f'''select current, temperature, description, weather_icon from weather order by current desc limit 1
     '''
     df = pd.read_sql_query(sql, engine)
-    return Response(df)
+    weather = Weather.objects.order_by('current').first()
+    serializer = WeatherSerializer(weather, many=False)
+    return Response(serializer.data)
 
 # from https://www.youtube.com/watch?v=vlxIjXLlmxQ&t=1926s
 
