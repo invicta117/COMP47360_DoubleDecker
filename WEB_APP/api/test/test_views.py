@@ -4,7 +4,7 @@ from collections import OrderedDict
 from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 from doubledecker.models import Weather
-from api.views import ShowAllWeather, apiOverview, ShowAllRoutes, ShowAllRouteStops, ShowCurrentWeather, ShowAllRouteLine, ShowRouteLine, routeStation
+from api.views import apiOverview, ShowAllRoutes, ShowAllRouteStops, ShowCurrentWeather, ShowAllRouteLine, ShowRouteLine, routeStation
 
 
 class TestViews(TestCase):

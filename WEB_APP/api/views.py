@@ -16,18 +16,6 @@ from sqlalchemy import create_engine
 local_path = os.path.abspath(os.curdir)
 
 
-URI = "localhost"
-PORT = "3306"
-PASSWORD = os.environ["DBPASS"]
-DB = "gtfs"
-
-USER = "student"  # note: USER will get user name of this computer.
-mysql_url = "mysql://{}:{}@{}:{}/{}".format(USER, PASSWORD, URI, PORT, DB)
-# -------------------------------------------------------
-
-# create the connection
-engine = create_engine(mysql_url, echo=True)
-
 # from https://www.youtube.com/watch?v=vlxIjXLlmxQ&t=1926s
 
 
@@ -64,10 +52,7 @@ def ShowAllRouteStops(request):
 
 @api_view(['GET'])
 def ShowCurrentWeather(request):
-    sql = f'''select current, temperature, description, weather_icon from weather order by current desc limit 1
-    '''
-    df = pd.read_sql_query(sql, engine)
-    weather = Weather.objects.order_by('current').first()
+    weather = Weather.objects.order_by('-current').first()
     serializer = WeatherSerializer(weather, many=False)
     return Response(serializer.data)
 

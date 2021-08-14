@@ -8,7 +8,7 @@ from rest_framework.test import APITestCase
 from rest_framework.test import APIRequestFactory
 from rest_framework.test import APIClient
 from django.urls import resolve, reverse
-from api.views import apiOverview,ShowAllRoutes,ShowAllWeather,ShowAllRouteStops,ShowCurrentWeather, ShowAllRouteLine,ShowRouteLine,routeStation
+from api.views import apiOverview,ShowAllRoutes,ShowAllRouteStops,ShowCurrentWeather, ShowAllRouteLine,ShowRouteLine,routeStation
 # we can import the module we wanna test
 
 
