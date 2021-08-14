@@ -29,59 +29,86 @@
                     </div>
 
 
-                        <h5>Select start location</h5>
-                        <select id="start">
-                            <option
-                                    value="General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland"
-                            >
-                                City Center
-                            </option>
-                            <option value="My Location">My Location</option>
+                    <h5>Select start location</h5>
+                    <select id="start">
+                        <option
+                                value="General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland"
+                        >
+                            City Center
+                        </option>
+                        <option value="My Location">My Location</option>
+                    </select>
+
+                    <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
+
+                    <h5>Add/remove waypoints to your trip</h5>
+                    <div id="waypoint-stops">
+                        <select class="waypoints">
+                            <option value="attraction">Attraction</option>
+                            <option value="food">Food</option>
                         </select>
+                    </div>
 
-                        <h5>Add/remove waypoints to your trip</h5>
-                        <div id="waypoint-stops">
-                            <select class="waypoints">
-                                <option value="attraction">Attraction</option>
-                                <option value="food">Food</option>
-                            </select>
+                    <div class="inputContainer">
+
+                        <button
+                                class="btn btn-secondary"
+                                type="button"
+                                id="add-stop"
+                                onclick="addStop()"
+                        >
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+
+                        <button
+                                class="btn btn-secondary"
+                                type="button"
+                                id="remove-stop"
+                                onclick="removeStop()"
+                        >
+                            <i class="bi bi-dash-lg"></i>
+                        </button>
+                    </div>
+
+
+                    <div class="inputContainer">
+
+                        <div
+                                class="input-group mb-3"
+                                id="datetimepicker1"
+                                data-target-input="nearest"
+                        >
+                            <input
+                                    type="text"
+                                    class="form-control datetimepicker-input"
+                                    data-target="#datetimepicker1"
+                                    placeholder="Departure Time"
+                            />
+                            <div
+                                    class="input-group-append"
+                                    data-target="#datetimepicker1"
+                                    data-toggle="datetimepicker"
+                            >
+                                <button class="btn btn-secondary" type="button">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="inputContainer">
-                            <button
-                                    class="btn btn-secondary"
-                                    type="button"
-                                    id="add-stop"
-                                    onclick="addStop()"
-                            >
-                                <i class="bi bi-plus-lg"></i>
-                            </button>
-
-                            <button
-                                    class="btn btn-secondary"
-                                    type="button"
-                                    id="remove-stop"
-                                    onclick="removeStop()"
-                            >
-                                <i class="bi bi-dash-lg"></i>
-                            </button>
-                        </div>
-
-                        <div class="inputContainer">
-                            <button class="btn btn-secondary" type="button" id="submit">
-                                GO!
-                            </button>
-                            <span
-                                    style="margin-left: 15px"
-                                    class="d-inline-block"
-                                    tabindex="0"
-                                    data-toggle="tooltip"
-                                    data-html="true"
-                                    title="This tool helps to curate a random trip. <br><br>
+                        <button class="btn btn-secondary" type="button" id="submit">
+                            GO!
+                        </button>
+                        <span
+                                style="margin-left: 15px"
+                                class="d-inline-block"
+                                tabindex="0"
+                                data-toggle="tooltip"
+                                data-html="true"
+                                title="This tool helps to curate a random trip. <br><br>
               1. First Choose a start location.<br><br>
               2. Choose a type of activity. Add or remove events as you please, then press GO! and your route is diplayed. <br><br>
               3. Each different trip is a new color."
-                            >
+                        >
               <button
                       class="btn btn-secondary"
                       style="pointer-events: none"
@@ -91,7 +118,7 @@
                 <i class="bi bi-info-lg"></i>
               </button>
             </span>
-                        </div>
+                    </div>
 
                     <h5 id="complete-route"></h5>
                     <div class="hiddencontainer" id="hiddencontainer1">

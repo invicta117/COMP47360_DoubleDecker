@@ -466,7 +466,6 @@ ul.nav-list {
 
 .weather-container {
     padding: 10px 0;
-
 }
 
 .weather-icon {
@@ -626,6 +625,10 @@ summary {
 .btn-secondary:hover {
     background-color: #CC2936;
     border-color: #CC2936;
+}
+
+#datetimepicker1{
+    margin-top: 15px;
 }
 
 #searchTxt{

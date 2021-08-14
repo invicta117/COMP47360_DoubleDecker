@@ -144,7 +144,7 @@ function initMap() {
                 random_destinations.push(place)
             }
 
-            var departure = Date.now()
+            var departure = $('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"]
             //console.log(destinations)
             for (var i = 0; i < random_destinations.length; i++) {
                 var d = random_destinations[i].address
@@ -195,6 +195,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, origin,
         }
     };
     var result = directionsService.route(request, function (response, status) {
+        console.log(response)
         if (status == 'OK') {
             directionsRenderer.setDirections(response);
             if (Object.keys(response["routes"][response["routes"].length - 1]["legs"][[response["routes"][response["routes"].length - 1]["legs"].length - 1]]).includes("arrival_time")) {
@@ -280,3 +281,8 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     );
     infoWindow.open(map);
 }
+
+// the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html
+$(function () {
+    $("#datetimepicker1").datetimepicker();
+});
