@@ -67,9 +67,9 @@
 
 
         <div class="wrapper">
-            <img src="{% static '/images/mobile.png' %}" alt="logo" />
+                <a href="{% url 'doubledecker:index' %}"><img src="{% static '/images/mobile.png' %}" alt="name" /></a>
             <div id="hide2">
-                <h1>DOUBLE DECKER</h1>
+                <h1><a class="a3" href="{% url 'doubledecker:index' %}">DOUBLE DECKER</a></h1>
             </div>
             <nav>
                 <div id="hide">
@@ -77,11 +77,13 @@
                         <li><a class="a2" href="{% url 'doubledecker:index' %}">Plan</a></li>
                         <li><a class="a2" href="{% url 'doubledecker:explore' %}">Explore</a></li>
                         <li><a class="a2" href="{% url 'doubledecker:tourism' %}">Day Trip Planner</a></li>
+                        
                     </ul>
                 </div>
             </nav>
         </div>
         <div class="container-nav">
+            
             <div id="abs1">
                 <nav class="navbar">
                     <div class="hamburger-menu">
@@ -150,7 +152,7 @@
                 weather.iconId = data['weather_icon'];
                 weather.city = 'Dublin City';
                 weather.country = 'IE';
-                console.log(weather.iconId);
+
             }).then(function () {
                 displayWeather();
             })
@@ -169,6 +171,11 @@
     window.onload = function () {
         ShowCurrentWeather();
     }
+</script>
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
 </script>
 
 </body>

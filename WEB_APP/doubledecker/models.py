@@ -8,6 +8,33 @@
 from django.db import models
 
 
+class Weather(models.Model):
+    lat = models.FloatField(blank=True, null=True)
+    lon = models.FloatField(blank=True, null=True)
+    timezone = models.CharField(max_length=128, blank=True, null=True)
+    current = models.DateTimeField(primary_key=True)
+    weather_id = models.IntegerField()
+    weather_icon = models.CharField(max_length=10, blank=True, null=True)
+    visibility = models.FloatField(blank=True, null=True)
+    wind_speed = models.FloatField(blank=True, null=True)
+    wind_deg = models.FloatField(blank=True, null=True)
+    wind_gust = models.FloatField(blank=True, null=True)
+    temperature = models.FloatField(blank=True, null=True)
+    feels_like = models.FloatField(blank=True, null=True)
+    temp_min = models.FloatField(blank=True, null=True)
+    temp_max = models.FloatField(blank=True, null=True)
+    pressure = models.FloatField(blank=True, null=True)
+    humidity = models.FloatField(blank=True, null=True)
+    rain_1h = models.FloatField(blank=True, null=True)
+    snow_1h = models.FloatField(blank=True, null=True)
+    sunrise = models.DateTimeField(blank=True, null=True)
+    sunset = models.DateTimeField(blank=True, null=True)
+    description = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        db_table = 'weather'
+
+
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
@@ -90,17 +117,16 @@ class Calendar(models.Model):
     end_date = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'calendar'
 
 
 class CalendarDates(models.Model):
-    service = models.OneToOneField(Calendar, models.DO_NOTHING, primary_key=True)
+    service = models.OneToOneField(
+    Calendar, models.DO_NOTHING, primary_key=True)
     date = models.CharField(max_length=10)
     exception_type = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'calendar_dates'
         unique_together = (('service', 'date'),)
 
@@ -111,7 +137,8 @@ class DjangoAdminLog(models.Model):
     object_repr = models.CharField(max_length=200)
     action_flag = models.PositiveSmallIntegerField()
     change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+    content_type = models.ForeignKey(
+        'DjangoContentType', models.DO_NOTHING, blank=True, null=True)
     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
 
     class Meta:
@@ -158,7 +185,6 @@ class Routes(models.Model):
     route_type = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'routes'
 
 
@@ -170,7 +196,6 @@ class Shapes(models.Model):
     shape_dist_traveled = models.FloatField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'shapes'
         unique_together = (('shape_id', 'shape_pt_sequence'),)
 
@@ -187,7 +212,6 @@ class StopTimes(models.Model):
     shape_dist_traveled = models.FloatField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'stop_times'
         unique_together = (('trip', 'arrival_time', 'stop'),)
 
@@ -199,51 +223,21 @@ class Stops(models.Model):
     stop_lon = models.FloatField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'stops'
         unique_together = (('stop_id', 'stop_name'),)
 
 
 class Trips(models.Model):
     route = models.ForeignKey(Routes, models.DO_NOTHING, blank=True, null=True)
-    service = models.ForeignKey(Calendar, models.DO_NOTHING, blank=True, null=True)
+    service = models.ForeignKey(
+        Calendar, models.DO_NOTHING, blank=True, null=True)
     trip_id = models.CharField(primary_key=True, max_length=60)
     shape = models.ForeignKey(Shapes, models.DO_NOTHING, blank=True, null=True)
     trip_headsign = models.CharField(max_length=200, blank=True, null=True)
     direction_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'trips'
-
-
-class Weather(models.Model):
-    lat = models.FloatField(blank=True, null=True)
-    lon = models.FloatField(blank=True, null=True)
-    timezone = models.CharField(max_length=128, blank=True, null=True)
-    current = models.DateTimeField(primary_key=True)
-    weather_id = models.IntegerField()
-    weather_icon = models.CharField(max_length=10, blank=True, null=True)
-    visibility = models.FloatField(blank=True, null=True)
-    wind_speed = models.FloatField(blank=True, null=True)
-    wind_deg = models.FloatField(blank=True, null=True)
-    wind_gust = models.FloatField(blank=True, null=True)
-    temperature = models.FloatField(blank=True, null=True)
-    feels_like = models.FloatField(blank=True, null=True)
-    temp_min = models.FloatField(blank=True, null=True)
-    temp_max = models.FloatField(blank=True, null=True)
-    pressure = models.FloatField(blank=True, null=True)
-    humidity = models.FloatField(blank=True, null=True)
-    rain_1h = models.FloatField(blank=True, null=True)
-    snow_1h = models.FloatField(blank=True, null=True)
-    sunrise = models.DateTimeField(blank=True, null=True)
-    sunset = models.DateTimeField(blank=True, null=True)
-    description = models.CharField(max_length=100, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'weather'
-        unique_together = (('current', 'weather_id'),)
 
 
 class RouteStops(models.Model):
@@ -253,6 +247,18 @@ class RouteStops(models.Model):
     route_short_name = models.CharField(max_length=225)
 
     class Meta:
-        managed = False
         db_table = 'route_stops'
         unique_together = (('stop_name', 'route_short_name'),)
+
+
+class SeqRoutes(models.Model):
+    route_id = models.CharField(max_length=60, primary_key=True)
+    route_short_name = models.CharField(max_length=60, blank=True)
+    shape_pt_lat = models.FloatField(blank=True, null=True)
+    shape_pt_lon = models.FloatField(blank=True, null=True)
+    shape_pt_sequence = models.SmallIntegerField()
+
+    class Meta:
+        db_table = 'seq_routes'
+        unique_together = (('route_id', 'route_short_name'),)
+

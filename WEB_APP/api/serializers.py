@@ -11,7 +11,7 @@ class RoutesSerializer(serializers.ModelSerializer):
 class WeatherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Weather
-        fields = '__all__'
+        fields = ['current', 'temperature', 'description', 'weather_icon']
 
 
 class RoutesStopSerializer(serializers.ModelSerializer):

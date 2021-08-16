@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from joblib import load
 import os
-from .models import Weather, RouteStops
+from .models import Weather
 from math import ceil, floor
 import pickle
 import pandas as pd
@@ -42,6 +42,8 @@ sepmodel = load("../DATA_ANALYTICS/MODELS/sepgbr.joblib")
 octmodel = load("../DATA_ANALYTICS/MODELS/octgbr.joblib")
 novmodel = load("../DATA_ANALYTICS/MODELS/novgbr.joblib")
 decmodel = load("../DATA_ANALYTICS/MODELS/decgbr.joblib")
+
+error = {1: 28, 2: 27, 3: 26, 4: 27, 5: 28, 6: 26, 7: 25, 8: 26, 9: 27, 10: 27, 11: 29, 12: 25}
 
 
 class RouteNotAvailable(Exception):
@@ -98,7 +100,7 @@ def model(request):
 
         days = {"Monday": 0, "Tuesday": 0, "Wednesday": 0, "Thursday": 0, "Friday": 0, "Saturday": 0, "Sunday": 0}
         days[day] = 1
-        current = Weather.objects.order_by('current').first()
+        current = Weather.objects.order_by('-current').first()
         temp = (getattr(current, 'temperature'))
         rain = getattr(current, 'rain_1h')
         msl = getattr(current, 'pressure')
@@ -108,7 +110,7 @@ def model(request):
         except IndexError as e:
             raise RouteNotAvailable
         # assume june july and august all schools off and we are using monthly data so do not need to give model that detail for those months as will be constant col
-        holidays = ["2020-01-06", "2021-02-17", "2021-02-18", "2021-02-19", "2021-02-20", "2021-02-21", "2021-04-03",
+        holidays = ["2021-01-06", "2021-02-17", "2021-02-18", "2021-02-19", "2021-02-20", "2021-02-21", "2021-04-03",
                     "2021-04-04", "2021-04-05", "2021-04-06", "2021-04-07", "2021-04-08", "2021-04-09", "2021-04-10",
                     "2021-04-11", "2021-04-12", "2021-04-13", "2021-04-14", "2021-04-15", "2021-04-16", "2021-04-17",
                     "2021-04-18", "2021-04-19", "2020-06-07", "2021-09-25", "2021-09-26", "2021-09-27", "2021-09-28",
@@ -116,7 +118,7 @@ def model(request):
                     "2021-11-12", "2021-11-13", "2021-11-14", "2021-12-22", "2021-12-23", "2021-12-24", "2021-12-25",
                     "2021-12-26", "2021-12-27", "2021-12-28", "2021-12-29", "2021-12-30", "2021-12-31"]
         holiday = 0
-        if datetime.fromtimestamp(1.62639e+18 / 1e9).strftime("%Y-%m-%d") in holidays:
+        if datetime.fromtimestamp(DayOfService).strftime("%Y-%m-%d") in holidays:
             holiday = 1
 
         total_time = 0
@@ -172,16 +174,19 @@ def model(request):
             features["rhum"] = rhum
             features["msl"] = msl
             hour = departure.split(":")[0]
-            features["hour" + "_" + hour[1:] if hour.startswith("0") else "hour" + "_" + hour] = 1
+            hour = hour[1:] if hour.startswith("0") else "hour" + "_" + hour
+            if hour in features.keys():
+                features[hour] = 1
             df = df.append(features, ignore_index=True)
 
         result = loadedmodel.predict(df)
         total_time += sum([math.e ** r for r in result])
         time = timedelta(seconds=total_time)
-        return time
+        error_range = error[month] * len(routes)
+        return time, error_range
 
     if request.POST.get('action') == 'post':
-
+        print(request.POST)
         journeys = request.POST.get('journeys')
         parsed_j = json.loads(journeys)
         response = ""
@@ -197,13 +202,26 @@ def model(request):
             departure = int(parsed_j[str(i)]['departure'])
             departure = datetime.fromtimestamp(departure / 1e3).strftime("%H:%M:%S")
             try:
-                journey_time = (route_journey_time(DayOfService, day, LineId, olat, olng, dlat, dlng, departure))
+                journey_time, error_range = (
+                    route_journey_time(DayOfService, day, LineId, olat, olng, dlat, dlng, departure))
                 total_journey_time = total_journey_time + journey_time
                 journey_time = str(journey_time)
                 hours = int(journey_time.split(":")[0])
                 mins = int(journey_time.split(":")[1])
                 sec = float(journey_time.split(":")[2])
-                arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds".format(hours, mins, sec)
+                if error_range < 60:
+                    arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds <br>±{} Seconds".format(hours, mins, sec,
+                                                                                            error_range)
+                elif error_range < 60 * 60:
+                    arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds <br>± {} Mins {} Seconds".format(hours, mins, sec,
+                                                                                                     error_range // 60,
+                                                                                                     error_range % 60)
+                else:
+                    arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds <br>± {} Hours {} Mins {} Seconds".format(hours,
+                                                                                                              mins, sec,
+                                                                                                              error_range // (60 * 60),
+                                                                                                              error_range // 60,
+                                                                                                              error_range % 60)
                 response += "<p><span class='lineid'>{} Bus</span> : {}</p>".format(LineId, arrival_time)
             except RouteNotAvailable:
                 response += "<p><span class='lineid'>{} Bus</span> : {}</p>".format(LineId,
@@ -217,7 +235,10 @@ def model(request):
             mins = int(journey_time.split(":")[1])
             sec = float(journey_time.split(":")[2])
             arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds".format(hours, mins, sec)
-            response += "<p><span class='lineid'>{}</span> : {}</p>".format("Total Time", arrival_time)
+            if total_journey_time > timedelta(seconds=0):
+                response += "<p><span class='lineid'>{}</span> : {}</p>".format("Total Time", arrival_time)
+            else:
+                response += "<p><span class='lineid'>{}</span> : {}</p>".format("Total Time", "N.A.")
         return JsonResponse({'result': response}, safe=False)
 
 

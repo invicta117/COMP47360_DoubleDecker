@@ -91,9 +91,31 @@
                   <button
                     class="btn btn-secondary"
                     type="submit"
-                    onclick="findRoute()"
+                    id="submit"
                   >
                     GO !
+                  </button>
+                </span>
+                <span
+                  style="margin-left: 15px"
+                  class="d-inline-block"
+                  tabindex="0"
+                  data-toggle="tooltip"
+                  data-html="true"
+                  title="This tool Helps you get plan your trip from A to B <br><br>
+                  It provides our own predictions of Dublin bus only journey times<br><br>
+                  1. Input your Origin and Destination <br>
+                  2. Select an optional time or Departure, elst it's set for now. <br>
+                  3. Press GO!<br><br>
+                  Click on Directions if further information is needed on the journey."
+                >
+                  <button
+                    class="btn btn-secondary"
+                    style="pointer-events: none"
+                    type="button"
+                    disabled
+                  >
+                    <i class="bi bi-info-lg"></i>
                   </button>
                 </span>
               </div>
@@ -117,7 +139,7 @@
           <h4>Expected Journey Time:</h4>
           <div id="result"></div>
 
-          <details>
+          <details style="padding: 15px">
             <summary>Directions</summary>
             <p id="sidebar"></p>
           </details>
