@@ -50,7 +50,7 @@ function showUserLocation(position) {
     //  if (response.results[0]) {
     //      var formatted = response.results[0].formatted_address
     //      formatted = formatted.replace("Co. ", "")
-    //      console.log(formatted)
+    //      \.log(formatted)
     //
     //  } else {
     //    window.alert("No results found");
@@ -357,9 +357,9 @@ function initMap() {
 
 // the following code is based on the google docs documentation from https://developers.google.com/maps/documentation/javascript/directions
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-    console.log("test" + document.getElementById("from").value)
+    //console.log("test" + document.getElementById("from").value)
     var datetime = $('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"]
-    console.log(datetime)
+    //console.log(datetime)
     if (document.getElementById("from").value == "CURRENT LOCATION") {
         var request = {
             origin: latlng,
@@ -374,11 +374,11 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
             }
         };
 
-        console.log(latlng)
-        console.log(request)
+        //console.log(latlng)
+        //console.log(request)
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
-                // console.log(response)
+                //console.log("response")
                 directionsRenderer.setDirections(response);
                 get_predict(response)
             } else {
@@ -401,10 +401,11 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
                 modes: ["BUS"]
             }
         };
-        console.log(request)
+        //console.log(request)
         directionsService.route(request, function (response, status) {
+            console.log(response)
             if (status == 'OK') {
-                //console.log(response)
+                console.log(response)
                 directionsRenderer.setDirections(response);
                 get_predict(response)
             } else {
@@ -432,11 +433,14 @@ function get_predict(directions_response) {
             var step_options = directions_response["routes"][0]["legs"][0]["steps"][step]
             for (var step_option in step_options) {
                 if (step_option == "transit") {
+                    console.log(step_options["duration"].text)
+                    console.log(step_options[step_option]["arrival_stop"]["name"])
+                    console.log(step_options[step_option]["departure_stop"]["name"])
+                    first_bus = step_options
+                    all_route_data[i] = leg_data(first_bus)
+                    i++;
                     if (step_options[step_option]["line"]["agencies"][0]["name"] == "Dublin Bus") {
-                        console.log(step_options[step_option])
-                        first_bus = step_options
-                        all_route_data[i] = leg_data(first_bus)
-                        i++;
+                        //console.log(step_options[step_option])
                     }
 
                 }
@@ -452,6 +456,7 @@ function get_predict(directions_response) {
 
     function leg_data(first_bus) {
         var line = first_bus["transit"]["line"]["short_name"]
+        console.log(line)
         var departure = first_bus["transit"]["departure_time"]["value"].getTime()
         var olat = first_bus["transit"]["departure_stop"]["location"]["lat"]
         var olng = first_bus["transit"]["departure_stop"]["location"]["lng"]
@@ -476,8 +481,8 @@ function get_predict(directions_response) {
         };
     }
 
-    console.log(all_route_data)
-    console.log(JSON.stringify(all_route_data))
+    //console.log(all_route_data)
+    //console.log(JSON.stringify(all_route_data))
     $.ajax({
         type: 'POST',
         url: './model/',
@@ -492,7 +497,7 @@ function get_predict(directions_response) {
             document.getElementById("result").innerHTML = json['result']
         },
         error: function (xhr, errmsg, err) {
-            console.log("error")
+            //console.log("error")
         }
     });
 }

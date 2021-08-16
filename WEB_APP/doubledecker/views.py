@@ -172,7 +172,9 @@ def model(request):
             features["rhum"] = rhum
             features["msl"] = msl
             hour = departure.split(":")[0]
-            features["hour" + "_" + hour[1:] if hour.startswith("0") else "hour" + "_" + hour] = 1
+            hour = hour[1:] if hour.startswith("0") else "hour" + "_" + hour
+            if hour in features.keys():
+                features[hour] = 1
             df = df.append(features, ignore_index=True)
 
         result = loadedmodel.predict(df)
@@ -217,7 +219,10 @@ def model(request):
             mins = int(journey_time.split(":")[1])
             sec = float(journey_time.split(":")[2])
             arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds".format(hours, mins, sec)
-            response += "<p><span class='lineid'>{}</span> : {}</p>".format("Total Time", arrival_time)
+            if total_journey_time > timedelta(seconds=0):
+                response += "<p><span class='lineid'>{}</span> : {}</p>".format("Total Time", arrival_time)
+            else:
+                response += "<p><span class='lineid'>{}</span> : {}</p>".format("Total Time", "N.A.")
         return JsonResponse({'result': response}, safe=False)
 
 
