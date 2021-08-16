@@ -433,7 +433,7 @@ function get_predict(directions_response) {
             var step_options = directions_response["routes"][0]["legs"][0]["steps"][step]
             for (var step_option in step_options) {
                 if (step_option == "transit") {
-                    console.log(step_options)
+                    //console.log(step_options)
                     //console.log(step_options[step_option]["arrival_stop"]["name"])
                     //console.log(step_options[step_option]["departure_stop"]["name"])
 

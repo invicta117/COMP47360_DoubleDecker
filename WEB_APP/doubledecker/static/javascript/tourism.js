@@ -115,7 +115,7 @@ function initMap() {
             map.panTo({lat: pos.lat, lng: pos.lng})
             markersDisplays[0].setMap(map)
         }
-        console.log("change")
+        //console.log("change")
     })
 
 
@@ -154,7 +154,7 @@ function initMap() {
                 $(routeids[i]).html(route_text)
                 complete_route = complete_route + previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> '
                 departure = await calculateAndDisplayRoute(directionsService, directionsDisplays[i], previous, d, departure);
-                console.log(departure)
+                //console.log(departure)
                 if (departure == null) {
                     break
                 }
@@ -195,7 +195,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, origin,
         }
     };
     var result = directionsService.route(request, function (response, status) {
-        console.log(response)
+        //console.log(response)
         if (status == 'OK') {
             directionsRenderer.setDirections(response);
             if (Object.keys(response["routes"][response["routes"].length - 1]["legs"][[response["routes"][response["routes"].length - 1]["legs"].length - 1]]).includes("arrival_time")) {
