@@ -43,6 +43,8 @@ octmodel = load("../DATA_ANALYTICS/MODELS/octgbr.joblib")
 novmodel = load("../DATA_ANALYTICS/MODELS/novgbr.joblib")
 decmodel = load("../DATA_ANALYTICS/MODELS/decgbr.joblib")
 
+error = {1: 28, 2: 27, 3: 26, 4: 27, 5: 28, 6: 26, 7: 25, 8: 26, 9: 27, 10: 27, 11: 29, 12: 25}
+
 
 class RouteNotAvailable(Exception):
     """Raised when there was no route available from the origin stop to the destination stop"""  # gtfs appraently not complete
@@ -172,13 +174,16 @@ def model(request):
             features["rhum"] = rhum
             features["msl"] = msl
             hour = departure.split(":")[0]
-            features["hour" + "_" + hour[1:] if hour.startswith("0") else "hour" + "_" + hour] = 1
+            hour = hour[1:] if hour.startswith("0") else "hour" + "_" + hour
+            if hour in features.keys():
+                features[hour] = 1
             df = df.append(features, ignore_index=True)
 
         result = loadedmodel.predict(df)
         total_time += sum([math.e ** r for r in result])
         time = timedelta(seconds=total_time)
-        return time
+        error_range = error[month] * len(routes)
+        return time, error_range
 
     if request.POST.get('action') == 'post':
         print(request.POST)
@@ -197,13 +202,26 @@ def model(request):
             departure = int(parsed_j[str(i)]['departure'])
             departure = datetime.fromtimestamp(departure / 1e3).strftime("%H:%M:%S")
             try:
-                journey_time = (route_journey_time(DayOfService, day, LineId, olat, olng, dlat, dlng, departure))
+                journey_time, error_range = (
+                    route_journey_time(DayOfService, day, LineId, olat, olng, dlat, dlng, departure))
                 total_journey_time = total_journey_time + journey_time
                 journey_time = str(journey_time)
                 hours = int(journey_time.split(":")[0])
                 mins = int(journey_time.split(":")[1])
                 sec = float(journey_time.split(":")[2])
-                arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds".format(hours, mins, sec)
+                if error_range < 60:
+                    arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds <br>±{} Seconds".format(hours, mins, sec,
+                                                                                            error_range)
+                elif error_range < 60 * 60:
+                    arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds <br>± {} Mins {} Seconds".format(hours, mins, sec,
+                                                                                                     error_range // 60,
+                                                                                                     error_range % 60)
+                else:
+                    arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds <br>± {} Hours {} Mins {} Seconds".format(hours,
+                                                                                                              mins, sec,
+                                                                                                              error_range // (60 * 60),
+                                                                                                              error_range // 60,
+                                                                                                              error_range % 60)
                 response += "<p><span class='lineid'>{} Bus</span> : {}</p>".format(LineId, arrival_time)
             except RouteNotAvailable:
                 response += "<p><span class='lineid'>{} Bus</span> : {}</p>".format(LineId,
@@ -217,7 +235,10 @@ def model(request):
             mins = int(journey_time.split(":")[1])
             sec = float(journey_time.split(":")[2])
             arrival_time = "{:1} Hours {:2} Mins {:.0f} Seconds".format(hours, mins, sec)
-            response += "<p><span class='lineid'>{}</span> : {}</p>".format("Total Time", arrival_time)
+            if total_journey_time > timedelta(seconds=0):
+                response += "<p><span class='lineid'>{}</span> : {}</p>".format("Total Time", arrival_time)
+            else:
+                response += "<p><span class='lineid'>{}</span> : {}</p>".format("Total Time", "N.A.")
         return JsonResponse({'result': response}, safe=False)
 
 
