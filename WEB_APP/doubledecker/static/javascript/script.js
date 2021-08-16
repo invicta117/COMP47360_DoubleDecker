@@ -403,9 +403,9 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
         };
         //console.log(request)
         directionsService.route(request, function (response, status) {
-            console.log(response)
+            //console.log(response)
             if (status == 'OK') {
-                console.log(response)
+                //console.log(response)
                 directionsRenderer.setDirections(response);
                 get_predict(response)
             } else {
@@ -433,16 +433,13 @@ function get_predict(directions_response) {
             var step_options = directions_response["routes"][0]["legs"][0]["steps"][step]
             for (var step_option in step_options) {
                 if (step_option == "transit") {
-                    console.log(step_options["duration"].text)
-                    console.log(step_options[step_option]["arrival_stop"]["name"])
-                    console.log(step_options[step_option]["departure_stop"]["name"])
+                    console.log(step_options)
+                    //console.log(step_options[step_option]["arrival_stop"]["name"])
+                    //console.log(step_options[step_option]["departure_stop"]["name"])
+
                     first_bus = step_options
                     all_route_data[i] = leg_data(first_bus)
                     i++;
-                    if (step_options[step_option]["line"]["agencies"][0]["name"] == "Dublin Bus") {
-                        //console.log(step_options[step_option])
-                    }
-
                 }
             }
         }
@@ -455,8 +452,13 @@ function get_predict(directions_response) {
     }
 
     function leg_data(first_bus) {
-        var line = first_bus["transit"]["line"]["short_name"]
-        console.log(line)
+        if ("short_name" in first_bus["transit"]["line"]){
+            var line = first_bus["transit"]["line"]["short_name"]
+        } else{
+            var line = first_bus["transit"]["line"]["name"]
+        }
+
+        //console.log(line)
         var departure = first_bus["transit"]["departure_time"]["value"].getTime()
         var olat = first_bus["transit"]["departure_stop"]["location"]["lat"]
         var olng = first_bus["transit"]["departure_stop"]["location"]["lng"]
