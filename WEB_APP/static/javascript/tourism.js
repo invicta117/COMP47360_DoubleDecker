@@ -294,7 +294,7 @@ function initMap() {
               ]
             }
           ]
-        
+       
     });
 
     for (var i = 0; i < 4; i++) {
@@ -313,7 +313,9 @@ function initMap() {
         directionsDisplays.push(directionsDisplay)
         markersDisplays.push(marker)
     }
+
     markersDisplays[0].setMap(map)
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -321,6 +323,10 @@ function initMap() {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                 };
+
+                map.setCenter(pos);
+                markersDisplays[0].setPosition({lat: position.coords.latitude, lng: position.coords.longitude})
+                markersDisplays[0].setMap(map)
             },
             () => {
                 handleLocationError(true, infoWindow, map.getCenter());
@@ -330,6 +336,7 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
+
 
     var start = document.getElementById("start")
     start.addEventListener("change", async () => {
@@ -353,7 +360,11 @@ function initMap() {
     submit.addEventListener("click", async () => {
 
             var o = document.getElementById("start").value
-            if (o != "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
+
+            if (o == "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
+                markersDisplays[0].setPosition({lat: 53.34943864163513, lng: -6.260527882816787})
+                markersDisplays[0].setMap(map)
+            } else {
                 o = new google.maps.LatLng(pos.lat, pos.lng)
             }
             var complete_route = ""
@@ -374,7 +385,9 @@ function initMap() {
                 random_destinations.push(place)
             }
 
+
             var departure = $('#datetimepicker1').data("datetimepicker")["_viewDate"]["_d"]
+
             //console.log(destinations)
             for (var i = 0; i < random_destinations.length; i++) {
                 var d = random_destinations[i].address
@@ -384,7 +397,7 @@ function initMap() {
                 $(routeids[i]).html(route_text)
                 complete_route = complete_route + previous_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> '
                 departure = await calculateAndDisplayRoute(directionsService, directionsDisplays[i], previous, d, departure);
-                //console.log(departure)
+
                 if (departure == null) {
                     break
                 }
@@ -398,6 +411,7 @@ function initMap() {
             if (departure == null) {
                 //console.log("warning no directions available")
                 $("#route4").html("No route available please try another start location")
+
             } else {
                 //console.log(d + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + o)
                 calculateAndDisplayRoute(directionsService, directionsDisplays[3], d, o, departure);
@@ -407,6 +421,7 @@ function initMap() {
                 document.getElementById("complete-route").innerHTML = complete_route
                 showAllRoutes()
             }
+
             $('#hiddencontainer4').show()
         }
     );
@@ -425,7 +440,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer, origin,
         }
     };
     var result = directionsService.route(request, function (response, status) {
-        //console.log(response)
+
         if (status == 'OK') {
             directionsRenderer.setDirections(response);
             if (Object.keys(response["routes"][response["routes"].length - 1]["legs"][[response["routes"][response["routes"].length - 1]["legs"].length - 1]]).includes("arrival_time")) {
@@ -472,6 +487,7 @@ function showAllRoutes() {
     }
 }
 
+
 function reset() {
     document.getElementById("complete-route").innerHTML = ''
     $(".hiddencontainer").hide()
@@ -480,6 +496,7 @@ function reset() {
         markersDisplays[d].setMap(null)
     }
 }
+
 
 function showRoute(i) {
     for (var d = 0; d < 4; d++) {
@@ -511,6 +528,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     );
     infoWindow.open(map);
 }
+
 
 // the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html
 $(function () {

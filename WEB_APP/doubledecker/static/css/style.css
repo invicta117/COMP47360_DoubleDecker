@@ -92,14 +92,7 @@ a.a2 {
 a.a2:hover {
     color: #CC2936;
 }
-a.a3{
-    font-family: "Eras ITC", "Eras bold ITC", sans-serif;
-    color: #ffffff;
-    text-decoration: none;
-}
-a.a3:hover{
-    color: none;
-}
+
 
 strong {
     font-weight: bold;
@@ -639,4 +632,13 @@ summary {
 
 #clear{
     margin-left: 15px;
+}
+
+.a3{
+    font-family: "Eras ITC", "Eras bold ITC", sans-serif;
+    color: #ffffff;
+    text-decoration: none;
+}
+.a3:hover{
+    color: #721c24;
 }
