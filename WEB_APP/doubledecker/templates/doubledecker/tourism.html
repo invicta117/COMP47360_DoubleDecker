@@ -1,0 +1,120 @@
+{% extends './base.html' %} {% load static %} {% block packages %}
+
+<script src="{% static 'javascript/tourism.js' %}"></script>
+
+{% endblock %} {% block body %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="glass">
+        <!-- Current Weather Feature -->
+        <div class="weather-outer">
+          <div class="app-title">
+            <p>Weather</p>
+          </div>
+          <div class="notification"></div>
+          <div class="weather-container">
+            <div class="weather-icon">
+              <img src="{% static '/icons/unknown.png' %}" alt="" />
+            </div>
+            <div class="temperature-value">
+              <p>- °<span>C</span></p>
+            </div>
+            <div class="temperature-description">
+              <p>-</p>
+            </div>
+            <div class="location"></div>
+          </div>
+        </div>
+
+        <details id="search" open>
+          <summary class="search">
+            Search
+            <i class="bi bi-search"></i>
+          </summary>
+          <h5>Select start location</h5>
+          <select id="start">
+            <option value="My Location">My Location</option>
+            <option
+              value="General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland"
+            >
+              City Center
+            </option>
+          </select>
+
+          <h5>Add/remove waypoints to your trip</h5>
+          <div id="waypoint-stops">
+            <select class="waypoints">
+              <option value="attraction">Attraction</option>
+              <option value="food">Food</option>
+            </select>
+          </div>
+
+          <div class="inputContainer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              id="add-stop"
+              onclick="addStop()"
+            >
+              <i class="bi bi-plus-lg"></i>
+            </button>
+
+            <button
+              class="btn btn-secondary"
+              type="button"
+              id="add-stop"
+              onclick="removeStop()"
+            >
+              <i class="bi bi-dash-lg"></i>
+            </button>
+          </div>
+
+          <div class="inputContainer">
+            <button class="btn btn-secondary" type="button" id="submit">
+              GO!
+            </button>
+          </div>
+        </details>
+
+        <h5 id="complete-route"></h5>
+        <div class="hiddencontainer" id="hiddencontainer1">
+          <details onclick="showRoute(0)">
+            <summary class="tourism1" id="route1">Directions</summary>
+            <div id="directions1"></div>
+          </details>
+        </div>
+
+        <div class="hiddencontainer" id="hiddencontainer2">
+          <details onclick="showRoute(1)">
+            <summary class="tourism2" id="route2">Directions</summary>
+            <div id="directions2"></div>
+          </details>
+        </div>
+
+        <div class="hiddencontainer" id="hiddencontainer3">
+          <details onclick="showRoute(2)">
+            <summary class="tourism3" id="route3">Directions</summary>
+            <div id="directions3"></div>
+          </details>
+        </div>
+
+        <div class="hiddencontainer" id="hiddencontainer4">
+          <details onclick="showRoute(3)">
+            <summary class="tourism4" id="route4">Directions</summary>
+            <div id="directions4"></div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8 ml-lg-auto" style="margin-bottom: 30px">
+      <div class="glass2">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
