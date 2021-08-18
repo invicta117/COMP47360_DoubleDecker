@@ -12,12 +12,12 @@ import os
 # no idea the db URI --- need to be solved
 URI = "localhost"
 PORT = "3306"
-PASSWORD = "123"
+PASSWORD = "pass123"
 DB = "gtfs"
 USER = "student"  # note: USER will get user name of this computer.
 
 # weather api key
-appid = "92fb08f48a98e0f39b990060352ffebe"
+appid = "80be21662c6edc2838d4a9b95f552cfc"
 api = "https://api.openweathermap.org/data/2.5/onecall/timemachine"
 api_city = "https://api.openweathermap.org/data/2.5/weather"
 
