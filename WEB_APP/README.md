@@ -12,3 +12,6 @@ Install required packages:
 
     pip install -r requirements.txt
 
+Please ensure that you have created a new MySQL user and created the associated tables as outlined in the DATA folder in the COMP47360_DoubleDecker/DATA directory
+
+
