@@ -30,7 +30,7 @@ We thought we could bring spontaneity closer to our users by creating a day trip
 
 # Development Enviroment
 
-The development enviroment used was Pycharm 2021 Professional edition for creating the web application. Development environment for the DATA ANALYTICS was all done in Jupyter Notebook while the creation of databases and data in DATA was carried out using MySQL Workbench
+The development enviroment used was Pycharm 2021 Professional edition for creating the web application. Development environment for the DATA ANALYTICS was all done in Jupyter Notebook while the creation of databases and insertion of data in the folder DATA was carried out using MySQL Workbench
 
 # Executing Code
 
