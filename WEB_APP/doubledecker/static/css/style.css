@@ -21,6 +21,7 @@ body {
     /* Set up positioning */
     top: 0;
     left: 0;
+
 }
 
 p {
@@ -511,6 +512,7 @@ ul.nav-list {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
 }
 
 
@@ -607,6 +609,7 @@ summary {
 /* form css */
 .form-control {
     border-radius: 500px;
+    position: absolute;
 }
 
 .btn-secondary {
@@ -642,3 +645,7 @@ summary {
 .a3:hover{
     color: #721c24;
 }
+
+    
+.pac-container{
+    margin-top: -210px;}
