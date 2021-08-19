@@ -637,9 +637,6 @@ summary {
   margin-top: -210px;
 }
 .a3:hover {
-  color: #721c24;
-}
-
-.pac-container {
-  margin-top: -210px;
+  color: #ffffff;
+  text-decoration: none;
 }
