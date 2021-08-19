@@ -2,6 +2,8 @@
 
 # COMP47360_DoubleDecker
 
+Our live application: https://doubledecker.tk/
+
 Test coverage: 99%
 
 ## Welcome to Double Decker, Where to?
@@ -26,4 +28,10 @@ We thought we could bring spontaneity closer to our users by creating a day trip
   <img width="600" height="400"src="https://github.com/invicta117/COMP47360_DoubleDecker/blob/main/blob/images/Tour.gif">
 </p>
 
+# Development Enviroment
 
+The development enviroment used was Pycharm 2021 Professional edition for creating the web application. Development environment for the DATA ANALYTICS was all done in Jupyter Notebook while the creation of databases and insertion of data in the folder DATA was carried out using MySQL Workbench
+
+# Executing Code
+
+For more details on how to execute the code for each of the folders DATA, DATA_ANALYTICS, SCRAPER and WEB_APP please read the associated README provided in each of these folders.

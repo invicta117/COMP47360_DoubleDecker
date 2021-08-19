@@ -1,59 +1,52 @@
 {% load static %}
 <!--This code origionated from https://developers.google.com/maps/documentation/javascript/adding-a-google-map -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>D.Decker</title>
     <link rel='shortcut icon' type='image/png' href="{% static 'images/favicon.png' %}">
     <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width initial-scale=1.0"/>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-
-    <!-- the following is from https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
     </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
-    </script>
-
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 
     <!-- Font Awesome -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
 
     <!-- Bootstrap Icons cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"
-        integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+            integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
 
     <!-- Tempus Dominus Bootstrap 4 -->
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"
-        integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
+          href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"
+          integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous"/>
     <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"
-        integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
+            src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"
+            integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
 
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
     <script defer src="{% static 'javascript/navbar.js' %}"></script>
 
     {% block packages %}
@@ -63,54 +56,52 @@
 
 <body>
 
-    <header>
+<header>
 
 
-        <div class="wrapper">
-                <a href="{% url 'doubledecker:index' %}"><img src="{% static '/images/mobile.png' %}" alt="name" /></a>
-            <div id="hide2">
-                <h1><a class="a3" href="{% url 'doubledecker:index' %}">DOUBLE DECKER</a></h1>
+    <div class="wrapper">
+        <a href="{% url 'doubledecker:index' %}"><img src="{% static '/images/mobile.png' %}" alt="name"/></a>
+        <div id="hide2">
+            <h1><a class="a3" href="{% url 'doubledecker:index' %}">DOUBLE DECKER</a></h1>
+        </div>
+        <nav>
+            <div id="hide">
+                <ul>
+                    <li><a class="a2" href="{% url 'doubledecker:index' %}">Plan</a></li>
+                    <li><a class="a2" href="{% url 'doubledecker:explore' %}">Explore</a></li>
+                    <li><a class="a2" href="{% url 'doubledecker:tourism' %}">Day Trip Planner</a></li>
+
+                </ul>
             </div>
-            <nav>
-                <div id="hide">
-                    <ul>
-                        <li><a class="a2" href="{% url 'doubledecker:index' %}">Plan</a></li>
-                        <li><a class="a2" href="{% url 'doubledecker:explore' %}">Explore</a></li>
-                        <li><a class="a2" href="{% url 'doubledecker:tourism' %}">Day Trip Planner</a></li>
-                        
-                    </ul>
+        </nav>
+    </div>
+    <div class="container-nav">
+
+        <div id="abs1">
+            <nav class="navbar">
+                <div class="hamburger-menu">
+                    <div class="line line-1"></div>
+                    <div class="line line-2"></div>
+                    <div class="line line-3"></div>
                 </div>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'doubledecker:index' %}">Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'doubledecker:explore' %}">Explore</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'doubledecker:tourism' %}">Day Trip Planner</a>
+                    </li>
+
+                </ul>
             </nav>
         </div>
-        <div class="container-nav">
-            
-            <div id="abs1">
-                <nav class="navbar">
-                    <div class="hamburger-menu">
-                        <div class="line line-1"></div>
-                        <div class="line line-2"></div>
-                        <div class="line line-3"></div>
-                    </div>
-                    <ul class="nav-list">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'doubledecker:index' %}">Plan</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'doubledecker:explore' %}">Explore</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'doubledecker:tourism' %}">Day Trip Planner</a>
-                        </li>
+    </div>
+</header>
 
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    {% block body %}{% endblock %}
-
-
+{% block body %}{% endblock %}
 
 
 </body>
@@ -120,8 +111,8 @@
 
 <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
 <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&callback=initMap&libraries=places&"
-    async></script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPETuAHfCs0s7w6jHsU-5goCWlHPGNIkY&callback=initMap&libraries=places&"
+        async></script>
 <script type="text/javascript">
     //Weather
     //SELECT ELEMENTS
@@ -129,7 +120,6 @@
     const iconEle = document.querySelector(".weather-icon");
     const temperatureEle = document.querySelector(".temperature-value");
     const descriptionEle = document.querySelector(".temperature-description");
-
 
 
     //APP DATA
@@ -154,8 +144,8 @@
                 weather.country = 'IE';
 
             }).then(function () {
-                displayWeather();
-            })
+            displayWeather();
+        })
     }
 
 
@@ -163,7 +153,7 @@
     function displayWeather() {
         locationEle.innerHTML = "Dublin";
         var picture = "{{ STATIC_URL }}/static/icons/" + weather.iconId + ".png"
-        iconEle.innerHTML = `<img src="${picture}"/>`;
+        iconEle.innerHTML = `<img alt="current weather" src="${picture}"/>`;
         temperatureEle.innerHTML = `${weather.temperature.value}°<span>C</span>`;
         descriptionEle.innerHTML = weather.description;
     }
@@ -173,9 +163,9 @@
     }
 </script>
 <script>
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 </script>
 
 </body>
