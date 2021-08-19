@@ -396,6 +396,7 @@ function initMap() {
                 previous_text = d_text;
                 $(hiddencontainers[i]).show()
             }
+            markersDisplays[0].setMap(map)
             if (departure == null) {
                 //console.log("warning no directions available")
                 $("#route4").html("No route available please try another start location")
