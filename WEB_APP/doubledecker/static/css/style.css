@@ -1,644 +1,638 @@
-
 #map {
-    width: auto;
-    height: 620px;
-    padding-top: 20px;
+  width: auto;
+  height: 620px;
+  padding-top: 20px;
 }
 
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
-    background-color: #e6eef0;
-    font-family: "Eras ITC", "Eras bold ITC", sans-serif;
-    align-items: center;
-    /* Set rules to fill background */
-    max-width: 100%;
-    overflow-x: hidden;
-    /* Set up proportionate scaling */
-    width: 100%;
-    height: 100%;
+  background-color: #e6eef0;
+  font-family: "Eras ITC", "Eras bold ITC", sans-serif;
+  align-items: center;
+  /* Set rules to fill background */
+  max-width: 100%;
+  overflow-x: hidden;
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: 100%;
 
-    /* Set up positioning */
-    top: 0;
-    left: 0;
+  /* Set up positioning */
+  top: 0;
+  left: 0;
 }
 
 p {
-    line-height: 20px;
-    margin-bottom: 20px;
+  line-height: 20px;
+  margin-bottom: 20px;
 }
 
 h1 {
-    font-family: "Eras ITC", "Eras bold ITC", sans-serif;
-    font-weight: bold;
-    color: rgb(255, 255, 255);
-    font-size: 28px;
+  font-family: "Eras ITC", "Eras bold ITC", sans-serif;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  font-size: 28px;
 }
 
 h2 {
-    font-weight: 300;
-    color: #444;
-    font-size: 55px;
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 20px;
+  font-weight: 300;
+  color: #444;
+  font-size: 55px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 h3 {
-    font-size: 30px;
-    color: #444;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 20px;
+  font-size: 30px;
+  color: #444;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 h4 {
-    font-size: 24px;
-    color: #F08080;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    margin: 20px 0;
-    width: 100%;
-    display: block;
+  font-size: 24px;
+  color: #f08080;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 20px 0;
+  width: 100%;
+  display: block;
 }
 
 h5 {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    font-size: 15px;
-    color: #444;
-    font-weight: bold;
-    /* text-transform: uppercase; */
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-size: 15px;
+  color: #444;
+  font-weight: bold;
+  /* text-transform: uppercase; */
 }
 
 a {
-    text-decoration: none;
-    color: #4A5759;
+  text-decoration: none;
+  color: #4a5759;
 }
 
 a:hover {
-    color: #CC2936;
+  color: #cc2936;
 }
 
 a.a2 {
-    font-family: "Eras ITC", "Eras bold ITC", sans-serif;
-    color: #ff9f1c;
-    text-decoration: none;
-    margin-right: 290px;
+  font-family: "Eras ITC", "Eras bold ITC", sans-serif;
+  color: #ff9f1c;
+  text-decoration: none;
+  margin-right: 290px;
 }
 
 a.a2:hover {
-    color: #CC2936;
+  color: #cc2936;
 }
 
-
 strong {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 small {
-    font-size: 13px;
-    color: #777;
-    font-style: italic;
+  font-size: 13px;
+  color: #777;
+  font-style: italic;
 }
 
 .wrapper {
-    margin: 0 auto;
-    padding: 0 10px;
-    width: 1740px;
+  margin: 0 auto;
+  padding: 0 10px;
+  width: 1740px;
 }
 
 /* HEADER CSS */
 header h1 {
-    float: left;
-    padding-top: 28px;
+  float: left;
+  padding-top: 28px;
 }
 header img {
-    float: left;
-    margin: 10px;
-    height: 43px;
+  float: left;
+  margin: 10px;
+  height: 43px;
 }
 header {
-    background-color: #537a80;
-    height: 65px;
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
-    z-index: 4;
+  background-color: #537a80;
+  height: 65px;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  z-index: 4;
 }
 
 header nav {
-    float: right;
-} 
+  float: right;
+}
 
 nav ul li {
-    display: inline-block;
-    margin-top: 35px;
+  display: inline-block;
+  margin-top: 35px;
 }
 
 nav ul li a {
-    text-transform: uppercase;
-    font-weight: 550;
-    display: block;
+  text-transform: uppercase;
+  font-weight: 550;
+  display: block;
 }
 
 /* footer */
 
 footer {
-    padding-top: 30px;
+  padding-top: 30px;
 }
 #footer-info {
-    width: 380px;
-    float: left;
-    margin-top: 10px;
+  width: 380px;
+  float: left;
+  margin-top: 10px;
 }
 #footer-links {
-    width: 520px;
-    float: right;
+  width: 520px;
+  float: right;
 }
 #footer-links ul {
-    width: 150px;
-    float: left;
-    margin-left: 20px;
+  width: 150px;
+  float: left;
+  margin-left: 20px;
 }
 #footer-links ul li {
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 @media (max-width: 1500px) {
-    #hide {
-        display: none;
-    }
+  #hide {
+    display: none;
+  }
 }
 @media (max-width: 390px) {
-    #hide2 {
-        display: none;
-    }
+  #hide2 {
+    display: none;
+  }
 }
 
 /* SOME CHANGES TO BOOTSTRAP CLASSES */
 
 .row.justify-content-center {
-    padding-top: 40px;
+  padding-top: 40px;
 }
 
 #abs1 {
-    z-index: 5;
-    position: absolute;
+  z-index: 5;
+  position: absolute;
 }
 
 .input-group {
-    padding: 0 5px;
-    justify-content: center;
+  padding: 0 5px;
+  justify-content: center;
 }
-.container-fluid{
-    margin-top: 80px;
+.container-fluid {
+  margin-top: 80px;
 }
 /* HIDDEN NAVBAR CSS */
 /* code inspired by the following youtube channel https://www.youtube.com/watch?v=BN6fH1nRDxA */
 .container-nav {
-    width: 100%;
-    height: 20px;
-    background-size: cover;
+  width: 100%;
+  height: 20px;
+  background-size: cover;
 }
 
-.lineid{
-    font-weight: bold;
-
+.lineid {
+  font-weight: bold;
 }
 
 .hamburger-menu {
-    width: 35px;
-    height: 30px;
-    position: fixed;
-    top: 23px;
-    right: 20px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+  width: 35px;
+  height: 30px;
+  position: fixed;
+  top: 23px;
+  right: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .line {
-    width: 100%;
-    height: 3px;
-    background-color: #ff9f1c;
-    transition: 0.8s;
+  width: 100%;
+  height: 3px;
+  background-color: #ff9f1c;
+  transition: 0.8s;
 }
 
 .change .line-1 {
-    transform: rotateZ(-405deg) translate(-8px, 6px);
+  transform: rotateZ(-405deg) translate(-8px, 6px);
 }
 
 .change .line-2 {
-    opacity: 0;
+  opacity: 0;
 }
 
 .change .line-3 {
-    transform: rotateZ(405deg) translate(-8px, -6px);
+  transform: rotateZ(405deg) translate(-8px, -6px);
 }
 
-
 .navbar {
-    width: 300px;
-    height: 100%;
-    background-color: #e6eef0;
-    position: fixed;
-    top: 0;
-    right: -300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: right .8s cubic-bezier(1, 0, 0, 1);
+  width: 300px;
+  height: 100%;
+  background-color: #e6eef0;
+  position: fixed;
+  top: 0;
+  right: -300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: right 0.8s cubic-bezier(1, 0, 0, 1);
 }
 
 .change {
-    right: 0;
+  right: 0;
 }
 
 ul.nav-list {
-    text-align: center;
+  text-align: center;
 }
 
 .nav-item {
-    list-style: none;
-    margin: 25px;
+  list-style: none;
+  margin: 25px;
 }
 
 .nav-link {
-    text-decoration: none;
-    font-size: 22px;
-    color: #4A5759;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    position: relative;
-    padding: 3px 0;
+  text-decoration: none;
+  font-size: 22px;
+  color: #4a5759;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  padding: 3px 0;
 }
 
 .nav-link::before,
 .nav-link::after {
-    content: "";
-    width: 100%;
-    height: 2px;
-    background-color: #FF9F1C;
-    position: absolute;
-    left: 0;
-    transform: scaleX(0);
-    transition: transform 0.5s;
+  content: "";
+  width: 100%;
+  height: 2px;
+  background-color: #ff9f1c;
+  position: absolute;
+  left: 0;
+  transform: scaleX(0);
+  transition: transform 0.5s;
 }
 
 .nav-link::after {
-    bottom: 0;
-    transform-origin: right;
+  bottom: 0;
+  transform-origin: right;
 }
 
 .nav-link::before {
-    top: 0;
-    transform-origin: left;
+  top: 0;
+  transform-origin: left;
 }
 
 .nav-link:hover::before,
 .nav-link:hover::after {
-    transform: scaleX(1);
+  transform: scaleX(1);
 }
 
-#complete-route{
-    padding: 20px;
+#complete-route {
+  padding: 20px;
 }
 
 .location {
-    text-align: center;
-    padding: 0;
-    margin: 0 auto;
-    font-size: 2.1em;
+  text-align: center;
+  padding: 0;
+  margin: 0 auto;
+  font-size: 2.1em;
 }
-
 
 /* glass effect */
 .glass {
-    position: relative;
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    box-sizing: border-box;
-    width: auto;
-    height: 620px;
-    background: linear-gradient(
-            107.18deg,
-            rgba(255, 255, 255, 0.9) 0%,
-            rgba(255, 255, 255, 0.6) 100%
-    );
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    background-clip: padding-box;
-    overflow-y: auto;
+  position: relative;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+  width: auto;
+  height: 620px;
+  background: linear-gradient(
+    107.18deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background-clip: padding-box;
+  overflow-y: auto;
 }
 
 /* round the maps the same way */
 
 .glass2 {
-    position: relative;
-    box-sizing: border-box;
-    width: auto;
-    height: auto;
-    border-radius: 30px;
-    background-clip: padding-box;
-    overflow: auto;
+  position: relative;
+  box-sizing: border-box;
+  width: auto;
+  height: auto;
+  border-radius: 30px;
+  background-clip: padding-box;
+  overflow: auto;
 }
 
 /* scroll bar */
 
 ::-webkit-scrollbar {
-    width: 12px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
 [class*="text"] {
-    box-sizing: border-box;
-    color: #222222;
-    display: inline-block;
-    font-size: 18px;
-    border: none;
-    outline: none;
-    padding: .66em 1em;
-    text-decoration: none;
-    transition: 0.15s;
+  box-sizing: border-box;
+  color: #222222;
+  display: inline-block;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  padding: 0.66em 1em;
+  text-decoration: none;
+  transition: 0.15s;
 }
 
 .pill {
-    border-radius: 500px;
+  border-radius: 500px;
 }
-
 
 /* the coloumns */
 
 .col-lg-4 {
-    padding-top: 40px;
-    padding-left: 30px;
+  padding-top: 40px;
+  padding-left: 30px;
 }
 
 .col-lg-8 {
-    padding-top: 40px;
-    padding-right: 30px;
-    padding-left: 35px;
+  padding-top: 40px;
+  padding-right: 30px;
+  padding-left: 35px;
 }
 
 /*CSS code for the weather */
 
 * {
-    font-family: "Rimouski";
-    margin: 0;
-    padding: 0;
+  font-family: "Rimouski";
+  margin: 0;
+  padding: 0;
 }
 
 .app-title {
-    height: 20px;
-    border-radius: 10px 10px 0 0;
+  height: 20px;
+  border-radius: 10px 10px 0 0;
 }
 
 .app-title p {
-    text-align: center;
-    padding: 10px 0 0 0;
-    margin: 0 auto;
-    font-size: 1.2em;
-    color: #CC2936;
+  text-align: center;
+  padding: 10px 0 0 0;
+  margin: 0 auto;
+  font-size: 1.2em;
+  color: #cc2936;
 }
 
 .notification {
-    background-color: #CC2936;
-    display: none;
+  background-color: #cc2936;
+  display: none;
 }
 
 .notification {
-    color: #721c24;
-    font-size: 1.2em;
-    margin: 0;
-    text-align: center;
-    padding: 10px 0;
+  color: #721c24;
+  font-size: 1.2em;
+  margin: 0;
+  text-align: center;
+  padding: 10px 0;
 }
 
-.search{
-    width: 100%;
+.search {
+  width: 100%;
 }
 
-#search{
-    display: block;
-    width: 100%;
+#search {
+  display: block;
+  width: 100%;
 }
 
-.waypoints{
-    margin: 10px 0;
-    width: 100%;
+.waypoints {
+  margin: 10px 0;
+  width: 100%;
 }
 
-.search{
-    margin: 0;
+.search {
+  margin: 0;
 }
 
-#start{
-    width: 100%;
+#start {
+  width: 100%;
 }
 
 .container {
-    position: absolute;
-    align-items: center;
-    justify-content: center;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
 }
 
 .weather-container {
-    padding: 10px 0;
+  padding: 10px 0;
 }
 
 .weather-icon {
-    height: 128px;
+  height: 128px;
 }
 
 .weather-icon img {
-    display: block;
-    margin: 0 auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .temperature-value {
-    height: 60px;
+  height: 60px;
 }
 
 .temperature-value {
-    padding: 0;
-    margin: 0;
-    color: #293251;
-    font-size: 4em;
-    text-align: center;
-    cursor: pointer;
+  padding: 0;
+  margin: 0;
+  color: #293251;
+  font-size: 4em;
+  text-align: center;
+  cursor: pointer;
 }
 
 .temperature-value span {
-    color: #293251;
-    font-size: 0.5em;
+  color: #293251;
+  font-size: 0.5em;
 }
 
 .temperature-description {
-    padding: 8px;
-    margin: 0;
-    color: #293251;
-    text-align: center;
-    font-size: 1.2em;
+  padding: 8px;
+  margin: 0;
+  color: #293251;
+  text-align: center;
+  font-size: 1.2em;
 }
-
 
 .location {
-    margin: 0;
-    padding: 0;
-    color: #293251;
-    text-align: center;
-    font-size: 0.8em;
+  margin: 0;
+  padding: 0;
+  color: #293251;
+  text-align: center;
+  font-size: 0.8em;
 }
-
 
 .inputContainer {
-    padding: 0 0 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding: 0 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
-.remove{
-    display: inline;
-    padding: 0 10px;
+.remove {
+  display: inline;
+  padding: 0 10px;
 }
 
-.hiddencontainer{
-    display: none;
-    width: 100%;
+.hiddencontainer {
+  display: none;
+  width: 100%;
 }
 
-.remove:hover{
-    cursor: pointer;
-
+.remove:hover {
+  cursor: pointer;
 }
 
 #expectedtime {
-    padding: 10px;
-    font-weight: bold;
+  padding: 10px;
+  font-weight: bold;
 }
 
 .loading {
-    padding: 20px;
-    display: none;
+  padding: 20px;
+  display: none;
 }
 
 #result {
-    text-align: center;
+  text-align: center;
 }
 
 #response {
-    display: none;
-    margin: auto;
-    max-width: fit-content;
-    text-align: center;
+  display: none;
+  margin: auto;
+  max-width: fit-content;
+  text-align: center;
 }
 
 summary {
-    background: white;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #d4d8d4;
-    color: grey;
-    margin: 20px;
+  background: white;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #d4d8d4;
+  color: grey;
+  margin: 20px;
 }
 
-.tourism1{
-    border-right: 5px solid #0000ff;
+.tourism1 {
+  border-right: 5px solid #0000ff;
 }
 
-#tourism1{
-    color: #0000ff;
+#tourism1 {
+  color: #0000ff;
 }
 
-.tourism2{
-    border-right: 5px solid #00ff00;
+.tourism2 {
+  border-right: 5px solid #00ff00;
 }
 
-#tourism2{
-    color: #00ff00;
+#tourism2 {
+  color: #00ff00;
 }
 
-.tourism3{
-    border-right: 5px solid #ff0000;
+.tourism3 {
+  border-right: 5px solid #ff0000;
 }
 
-#tourism3{
-    color: #ff0000;
+#tourism3 {
+  color: #ff0000;
 }
 
-.tourism4{
-    border-right: 5px solid #000000;
+.tourism4 {
+  border-right: 5px solid #000000;
 }
 
-#tourism4{
-    color: #000000;
+#tourism4 {
+  color: #000000;
 }
 
-#error{
-    display: none;
-    text-align: center;
+#error {
+  display: none;
+  text-align: center;
 }
 
 @media only screen and (max-width: 992px) {
-    /* for the md bootstrap change*/
-    .glass {
-        overflow-y: visible;
-        height: auto;
-    }
+  /* for the md bootstrap change*/
+  .glass {
+    overflow-y: visible;
+    height: auto;
+  }
 }
 
 /* form css */
 .form-control {
-    border-radius: 500px;
+  border-radius: 500px;
 }
 
 .btn-secondary {
-    border-radius: 500px;
-    color: #fff;
-    background-color: #ff9f1c;
-    border-color: #ff9f1c;
+  border-radius: 500px;
+  color: #fff;
+  background-color: #ff9f1c;
+  border-color: #ff9f1c;
 }
 .btn-secondary:hover {
-    background-color: #CC2936;
-    border-color: #CC2936;
+  background-color: #cc2936;
+  border-color: #cc2936;
 }
 
-#datetimepicker1{
-    margin-top: 15px;
+#datetimepicker1 {
+  margin-top: 15px;
 }
 
-#searchTxt{
-    border-top-right-radius: 500px;
-    border-bottom-right-radius: 500px;
-    margin-right: 20px;
+#searchTxt {
+  border-top-right-radius: 500px;
+  border-bottom-right-radius: 500px;
+  margin-right: 20px;
 }
 
-#clear{
-    margin-left: 15px;
+#clear {
+  margin-left: 15px;
 }
 
-.a3{
-    font-family: "Eras ITC", "Eras bold ITC", sans-serif;
-    color: #ffffff;
-    text-decoration: none;
+.a3 {
+  font-family: "Eras ITC", "Eras bold ITC", sans-serif;
+  color: #ffffff;
+  text-decoration: none;
 }
-.a3:hover{
-    color: #721c24;
+.a3:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+.pac-container {
+  margin-top: -210px;
 }
