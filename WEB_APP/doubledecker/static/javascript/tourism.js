@@ -351,7 +351,7 @@ function initMap() {
 
     var submit = document.getElementById("submit")
     submit.addEventListener("click", async () => {
-
+            reset()
             var o = document.getElementById("start").value
             if (o != "General Post Office, Dublin, O'Connell Street Lower, North City, Dublin 1, Ireland") {
                 o = new google.maps.LatLng(pos.lat, pos.lng)
@@ -391,6 +391,7 @@ function initMap() {
                 //console.log(random_destinations[i].lat + " " + random_destinations[i].lng)
                 markersDisplays[i + 1].setPosition({lat: random_destinations[i].lat, lng: random_destinations[i].lng})
                 markersDisplays[i + 1].setMap(map)
+                directionsDisplays[i].setMap(map)
                 previous = d;
                 previous_text = d_text;
                 $(hiddencontainers[i]).show()
@@ -399,13 +400,14 @@ function initMap() {
                 //console.log("warning no directions available")
                 $("#route4").html("No route available please try another start location")
             } else {
+                directionsDisplays[3].setMap(map)
                 //console.log(d + ' <i class=\"bi bi-arrow-right\" id="' + tourism[i] + '"></i> ' + o)
                 calculateAndDisplayRoute(directionsService, directionsDisplays[3], d, o, departure);
                 $("#route4").html(d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text)
                 complete_route = complete_route + d_text + ' <i class=\"bi bi-arrow-right\" id="' + tourism[3] + '"></i> ' + o_text
                 //showRoute(0)
                 document.getElementById("complete-route").innerHTML = complete_route
-                showAllRoutes()
+
             }
             $('#hiddencontainer4').show()
         }
@@ -468,7 +470,6 @@ function removeStop() {
 function showAllRoutes() {
     for (var i = 0; i < 4; i++) {
         directionsDisplays[i].setMap(map)
-
     }
 }
 
